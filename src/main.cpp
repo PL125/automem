@@ -71,7 +71,7 @@ void write_address(int address, byte data)
 }
 
 void debug_eeprom(int address) {
-  byte data = read_address(1);
+  byte data = read_address(address);
   char buf[128];
   sprintf(buf, " 0x%02X ", data);
   Serial.print(buf);
@@ -118,41 +118,59 @@ void setup() {
   //print_eeprom();
 }
 
+char state = 'W';
 char option;
-char buffer[8];
+char address[8];
+char data[8];
 int current = 0;
 void loop() {
 
   if (Serial.available()) {
     char value = Serial.read();
 
-    if(value == '#') {
-      current = 0;
+    if(state == 'W') {
 
+      for(int i=0; i<8; i++) address[i] = 0;
+      for(int i=0; i<8; i++) data[i] = 0;
+
+      option = value;
+      state = 'A';
+    }
+
+    if(value == '#') {
       switch(option) {
         case 'R':
-          Serial.println(buffer);
-          debug_eeprom((int)buffer);
+          debug_eeprom((int)strtol(address, NULL, 16));
           break;
         case 'P':
           print_eeprom();
           break;
         case 'W':
-          write_address(0, 0xFE);
+          write_address((int)strtol(address, NULL, 16), (int)strtol(data, NULL, 16));
           break;
         default:
           Serial.println("Opção inválida");
       }
-    } else {
-      if(current == 0) {
-        option = value;
-        current++;
-      } else if(current < 7) {
-        buffer[current-1] = value;
+
+      current = 0;
+      state = 'W';
+    } else if (value == ',')  {
+      state = 'D';
+      current = 0;
+    }
+    else {
+      if(current < 7) {
+        switch(state) {
+          case 'A':
+            address[current] = value;
+            break;
+          case 'D':
+            data[current] = value;
+            break;
+        }
+        
         current++;
       }
     }
-
-    
   }
 }
