@@ -6,12 +6,12 @@
 //#define OUT 11
 //#define IN 12
 
-//#define WREN 6
+#define WREN 6
 //#define WRDI 4
 //#define RDSR 5
 //#define WRSR 1
-#define READ 3
-//#define WRITE 2
+#define READ 0x03
+#define WRITE 0x02
 
 
 byte read_address(int address)
@@ -41,8 +41,37 @@ byte read_address(int address)
   return result;
 }
 
-void debug_eeprom() {
-  byte data = read_address(0x0);
+void write_address(int address, byte data)
+{
+  SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
+  
+  digitalWrite(CS, LOW);
+  SPI.transfer(WREN);
+  digitalWrite(CS, HIGH);
+
+  digitalWrite(CS, LOW);
+  
+  //SPI.transfer(0);
+  SPI.transfer(WRITE);
+  //SPI.transfer(address >> 16);
+  SPI.transfer(address >> 8);
+  SPI.transfer(address);
+  //byte data = highByte(address);
+  //data = data << 3;
+  //data = data | 0x03;
+  
+  //SPI.transfer(data);
+  //SPI.transfer(lowByte(address));
+
+  SPI.transfer(data);
+   
+  digitalWrite(CS, HIGH); 
+  
+  SPI.endTransaction();
+}
+
+void debug_eeprom(int address) {
+  byte data = read_address(1);
   char buf[128];
   sprintf(buf, " 0x%02X ", data);
   Serial.print(buf);
@@ -89,15 +118,41 @@ void setup() {
   //print_eeprom();
 }
 
+char option;
+char buffer[8];
+int current = 0;
 void loop() {
+
   if (Serial.available()) {
-    switch(Serial.read()) {
-      case 'R':
-        debug_eeprom();
-        break;
-      case 'P':
-        print_eeprom();
-        break;
+    char value = Serial.read();
+
+    if(value == '#') {
+      current = 0;
+
+      switch(option) {
+        case 'R':
+          Serial.println(buffer);
+          debug_eeprom((int)buffer);
+          break;
+        case 'P':
+          print_eeprom();
+          break;
+        case 'W':
+          write_address(0, 0xFE);
+          break;
+        default:
+          Serial.println("Opção inválida");
+      }
+    } else {
+      if(current == 0) {
+        option = value;
+        current++;
+      } else if(current < 7) {
+        buffer[current-1] = value;
+        current++;
+      }
     }
+
+    
   }
 }
