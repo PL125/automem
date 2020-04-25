@@ -3,6 +3,9 @@
 
 #include "e95xx.h"
 
+E95xx::E95xx(int s) {
+    size = s;
+}
 
 void E95xx::setup() {
     SPI.begin();
@@ -51,7 +54,7 @@ void E95xx::write(int address, uint8_t data) {
 void E95xx::print() {
     char buf[128];
 
-    for(int i=0; i<4096;i++) {
+    for(int i=0; i<size;i++) {
         if((i&15)==0) {
         sprintf(buf, "\n0x%03X: ", i);
         Serial.print(buf);

@@ -1,10 +1,35 @@
 #include <Arduino.h>
 
 #include "arch/e95xx.h"
+#include "misc/i4gv.h"
 
 
-E95xx e;
+E95xx e(4096);
 
+
+int16_t hexadecimalToDecimal(char hexVal[]) 
+{    
+    uint8_t len = strlen(hexVal); 
+    uint8_t base = 1; 
+    int16_t dec_val = 0; 
+    for (uint8_t i=len-1; i>=0; i--) 
+    {    
+        if (hexVal[i]>='0' && hexVal[i]<='9') 
+        { 
+            dec_val += (hexVal[i] - 48)*base; 
+            base = base * 16; 
+        } 
+  
+        else if (hexVal[i]>='A' && hexVal[i]<='F') 
+        { 
+            dec_val += (hexVal[i] - 55)*base; 
+            base = base*16; 
+        } 
+    } 
+      
+      
+    return dec_val; 
+} 
 
 void debug_eeprom(int address) {
   uint8_t data = e.read(address);
@@ -26,6 +51,7 @@ char option;
 char address[8];
 char data[8];
 int current = 0;
+uint8_t code;
 void loop() {
 
   if (Serial.available()) {
@@ -44,7 +70,12 @@ void loop() {
       if(value == '#') {
         switch(option) {
           case 'R':
-            debug_eeprom((int)strtol(address, NULL, 16));
+            //debug_eeprom((int)strtol(address, NULL, 16));
+            code = I4gv::getImmoCode(&e);
+            char result[128];
+            sprintf(result, "%x", code);
+            Serial.println(result);
+            Serial.println(hexadecimalToDecimal(result));
             break;
           case 'P':
             e.print();

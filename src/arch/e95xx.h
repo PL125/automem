@@ -17,8 +17,10 @@
 
 class E95xx
 {  
-//    private:
+    private:
+        int size;
     public:
+        E95xx(int size);
         void setup();
         uint8_t read(int address);
         void write(int address, uint8_t data);
