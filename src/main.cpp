@@ -1,10 +1,8 @@
 #include <Arduino.h>
 
-#include "arch/e95xx.h"
-#include "misc/i4gv.h"
+#include "arch/e93xx.h"
 
-
-E95xx e(4096);
+E93xx e(256);
 
 
 void debug_eeprom(int address) {
@@ -47,8 +45,6 @@ void loop() {
         switch(option) {
           case 'R':
             debug_eeprom((int)strtol(address, NULL, 16));
-            //code = I4gv::getImmoCode(&e);
-            //Serial.println(code);
             break;
           case 'P':
             e.print();

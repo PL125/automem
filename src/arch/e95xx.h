@@ -10,8 +10,8 @@
 //#define WRDI 4
 //#define RDSR 5
 //#define WRSR 1
-#define READ 0x03
-#define WRITE 0x02
+#define READ 3
+#define WRITE 2
 
 #include <stdint.h>
 
