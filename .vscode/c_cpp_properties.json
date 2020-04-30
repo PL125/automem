@@ -8,13 +8,14 @@
             "includePath": [
                 "/home/paulo/Workspace/eeprom-programmer/include",
                 "/home/paulo/Workspace/eeprom-programmer/src",
+                "/home/paulo/Workspace/eeprom-programmer/.pio/libdeps/uno/LiquidCrystal_I2C_ID576",
+                "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "/home/paulo/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "/home/paulo/.platformio/packages/framework-arduino-avr/variants/standard",
                 "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 "/home/paulo/.platformio/packages/tool-unity",
                 ""
             ],
@@ -23,13 +24,14 @@
                 "path": [
                     "/home/paulo/Workspace/eeprom-programmer/include",
                     "/home/paulo/Workspace/eeprom-programmer/src",
+                    "/home/paulo/Workspace/eeprom-programmer/.pio/libdeps/uno/LiquidCrystal_I2C_ID576",
+                    "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "/home/paulo/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "/home/paulo/.platformio/packages/framework-arduino-avr/variants/standard",
                     "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                    "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     "/home/paulo/.platformio/packages/tool-unity",
                     ""
                 ]

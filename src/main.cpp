@@ -1,9 +1,12 @@
 #include <Arduino.h>
 
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 #include "arch/e93xx.h"
 
 E93xx e(512, 9, 8);
-
+LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 void debug_eeprom(int address) {
   uint8_t data = e.read(address);
@@ -12,9 +15,27 @@ void debug_eeprom(int address) {
   Serial.print(buf);
 }
 
+void render_menu(uint8_t cursor) {
+  lcd.setCursor(0, cursor);
+  lcd.print(">");
+
+  lcd.setCursor(1, 0);
+  lcd.print("D");
+  lcd.setCursor(1, 1);
+  lcd.print("Configuracoes");
+  lcd.setCursor(1, 2);
+  lcd.print("Informacoes");
+  lcd.setCursor(1, 3);  
+}
+
 
 void setup() {
   Serial.begin(9600);
+
+  lcd.init();
+  lcd.backlight();
+  
+  render_menu(0);
 
   e.setup();
 
@@ -28,7 +49,7 @@ int current = 0;
 uint16_t code;
 void loop() {
 
-  if (Serial.available()) {
+   if (Serial.available()) {
     char value = Serial.read();
 
     if(state == 'W') {
