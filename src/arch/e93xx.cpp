@@ -8,10 +8,6 @@ E93xx::E93xx(int s) {
 }
 
 void E93xx::setup() {
-    SPI.begin();
-    pinMode(CS, OUTPUT);
-    digitalWrite(CS, LOW);
-
     pinMode(CS, OUTPUT);
     pinMode(SCK, OUTPUT);
     pinMode(DI, OUTPUT);
@@ -47,33 +43,10 @@ void E93xx::send_opcode(uint8_t op)
 }
 
 uint8_t E93xx::read(uint16_t address) {
-
-    // SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
-
-    // digitalWrite(CS, HIGH);
-
-    // // READ SB
-    // digitalWrite(DI, HIGH);
-
-    // // READ OPCODE
-    // digitalWrite(DI, HIGH);
-    // digitalWrite(DI, LOW);
-
-    // // 93xx USE 9 BITS FOR ADDRESS
-    // digitalWrite(DI, address > 255 ? HIGH : LOW);
-    // SPI.transfer(lowByte(address));
-
-    // // GET BYTE
-    // uint8_t result = SPI.transfer(0);
-    
-    // digitalWrite(CS, LOW); 
-    
-    // SPI.endTransaction();
-
     send_opcode(READ);
     transmit(address, 9);
 
-    uint8_t result = transmit(0, 8+1);
+    long result = transmit(0, 8+1);
 
     digitalWrite(CS, LOW); 
     
@@ -88,63 +61,21 @@ void E93xx::read_all() {
 }
 
 void E93xx::write(uint16_t address, uint8_t data) {
-    SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
-
-    digitalWrite(CS, HIGH);
-
-    // EWEN SB
-    digitalWrite(DI, HIGH);
-
-    // EWEN OPCODE
-    digitalWrite(DI, LOW);
-    digitalWrite(DI, LOW);
-
-    // EWEN INPUT
-    digitalWrite(DI, HIGH);
-    SPI.transfer(255);
-
-    digitalWrite(CS, LOW); 
-
-    delay(3);
-
-    digitalWrite(CS, HIGH);
     
-    // WRITE SB
-    digitalWrite(DI, HIGH);
+    send_opcode(0);
+    transmit(0xFF, 9);
+    digitalWrite(CS, LOW);
 
-    // WRITE OPCODE
-    digitalWrite(DI, LOW);
-    digitalWrite(DI, HIGH);
+    send_opcode(1);
+    transmit(address, 9);
+    transmit(data, 8);
+    digitalWrite(CS, LOW);
 
-    // 93xx USE 9 BITS FOR ADDRESS
-    digitalWrite(DI, address > 255 ? HIGH : LOW);
-    SPI.transfer(lowByte(address));
-
-    // DATA
-    SPI.transfer(data);
-
-    digitalWrite(CS, LOW); 
+    send_opcode(0);
+    transmit(0x00, 9);
+    digitalWrite(CS, LOW);
 
     delay(10);
-
-    digitalWrite(CS, HIGH);
-
-    // EWDS SB
-    digitalWrite(DI, HIGH);
-
-    // EWDS OPCODE
-    digitalWrite(DI, LOW);
-    digitalWrite(DI, LOW);
-
-    // EWDS INPUT
-    digitalWrite(DI, LOW);
-    SPI.transfer(0);
-
-    digitalWrite(CS, LOW); 
-
-    delay(3);
-    
-    SPI.endTransaction();
 }
 
 void E93xx::print() {
