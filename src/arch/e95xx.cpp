@@ -3,8 +3,8 @@
 
 #include "e95xx.h"
 
-E95xx::E95xx(int s) {
-    size = s;
+E95xx::E95xx(int size) {
+    this->size = size;
 }
 
 void E95xx::setup() {

@@ -23,8 +23,10 @@ class E93xx
 {  
     private:
         int size;
+        int address_size;
+        int page_size;
     public:
-        E93xx(int size);
+        E93xx(int size, int address_size, int page_size);
         void setup();
         uint8_t read(uint16_t address);
         uint16_t transmit(uint16_t data, uint8_t bits);

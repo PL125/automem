@@ -3,8 +3,10 @@
 
 #include "e93xx.h"
 
-E93xx::E93xx(int s) {
-    size = s;
+E93xx::E93xx(int size, int address_size, int page_size) {
+    this->size = size;
+    this->address_size = address_size;
+    this->page_size = page_size;
 }
 
 void E93xx::setup() {

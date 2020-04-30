@@ -2,7 +2,7 @@
 
 #include "arch/e93xx.h"
 
-E93xx e(512);
+E93xx e(512, 9, 8);
 
 
 void debug_eeprom(int address) {
