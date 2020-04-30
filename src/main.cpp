@@ -2,11 +2,19 @@
 
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <Bounce2.h>
 
 #include "arch/e93xx.h"
 
+#define UP 7
+#define DOWN 8
+
 E93xx e(512, 9, 8);
 LiquidCrystal_I2C lcd(0x27, 20, 4);
+Bounce bouncerUp = Bounce();
+Bounce bouncerDown = Bounce();
+
+uint8_t currentCursor = 0;
 
 void debug_eeprom(int address) {
   uint8_t data = e.read(address);
@@ -32,10 +40,17 @@ void render_menu(uint8_t cursor) {
 void setup() {
   Serial.begin(9600);
 
+  pinMode(UP, INPUT);
+  pinMode(DOWN, INPUT);
+
+  bouncerUp.attach(UP);
+  bouncerUp.interval(20);
+
+  bouncerDown.attach(DOWN);
+  bouncerDown.interval(20);
+
   lcd.init();
   lcd.backlight();
-  
-  render_menu(0);
 
   e.setup();
 
@@ -48,6 +63,21 @@ char data[8];
 int current = 0;
 uint16_t code;
 void loop() {
+
+
+  render_menu(currentCursor);
+
+   if(bouncerUp.update() && bouncerUp.rose()) {
+     lcd.setCursor(0, currentCursor);
+    lcd.print(" ");
+     currentCursor = (currentCursor + 1) % 4;
+   }
+
+   if(bouncerDown.update() && bouncerDown.rose()) {
+     lcd.setCursor(0, currentCursor);
+    lcd.print(" ");
+     currentCursor = (currentCursor - 1) % 4;
+   }
 
    if (Serial.available()) {
     char value = Serial.read();
