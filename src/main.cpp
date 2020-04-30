@@ -44,6 +44,7 @@ void loop() {
       if(value == '#') {
         switch(option) {
           case 'R':
+            // e.read_all();
             debug_eeprom((int)strtol(address, NULL, 16));
             break;
           case 'P':
