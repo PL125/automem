@@ -6,6 +6,7 @@
 
 #include "menu.h"
 #include "../utils/stack.h"
+#include "../utils/circular_list.h"
 
 #define ENTER 6
 #define BACK 5
@@ -15,7 +16,7 @@
 class Ui
 {  
     private:
-        Stack <Menu[]> menus;
+        Stack<CircularList<Menu>> menus;
         Bounce bouncer_up;
         Bounce bouncer_down;
         Bounce bouncer_enter;

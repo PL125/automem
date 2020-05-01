@@ -1,8 +1,8 @@
-#ifndef STACK_H
-#define STACK_H 
+#ifndef CIRCULARLIST_H
+#define CIRCULARLIST_H 
 
 template <typename T> 
-class Stack
+class CircularList
 {
 
     struct Item
@@ -16,14 +16,13 @@ class Stack
     };
 
     public:
-        Stack();
-        void push(T value);
-        void pop();
-        bool empty();
-        T top();
+        CircularList();
+        // CircularList(T values[]);
+        void add(T value);
+        Item* head;
         
     private:
-        Item* head;
+        int size;
 };
 
 #endif

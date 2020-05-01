@@ -1,11 +1,6 @@
 #include "menu.h"
 
-Menu::Menu(char *title, Menu *submenus) {
+Menu::Menu(char *title) {
     this->title = title;
-    this->submenus = submenus;
-}
-
-
-void render(LiquidCrystal_I2C *lcd) {
-
+    // this->submenus = submenus;
 }

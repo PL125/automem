@@ -1,6 +1,7 @@
 #include "ui.h"
 
-Ui::Ui() {
+Ui::Ui()
+{
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
     pinMode(ENTER, INPUT);
@@ -22,23 +23,48 @@ Ui::Ui() {
     bouncer_back.attach(BACK);
     bouncer_back.interval(20);
 
-    Menu m[] = {
-        Menu("Imobilizador", nullptr),
-        Menu("Airbag", nullptr),
-        Menu("Odometro", nullptr),
-        Menu("Configurações", nullptr)
-    };
+    cursor = 0;
 
-    menus = Stack<Menu[]>();
-    menus.push(m);
+
+    CircularList<Menu> circular_list = CircularList<Menu>();
+    circular_list.add(Menu("Imobilizador"));
+    circular_list.add(Menu("Airbag"));
+    circular_list.add(Menu("Odometro"));
+
+    
+    menus = Stack<CircularList<Menu>>();
+    menus.push(circular_list);
+    
 };
 
-void Ui::render(LiquidCrystal_I2C *lcd) {
+void Ui::render(LiquidCrystal_I2C *lcd)
+{
     lcd->setCursor(0, cursor);
     lcd->print(">");
 
-    for(int i=0; i<4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         lcd->setCursor(1, i);
-        lcd->print(menus.top()[i].title);
+        lcd->print(menus.top().head->value.title);
     }
+
+    if (bouncer_up.update() && bouncer_up.rose())
+    {
+        lcd->setCursor(0, cursor);
+        lcd->print(" ");
+        cursor = (cursor + 1) % 7;
+    }
+
+    if (bouncer_down.update() && bouncer_down.rose())
+    {
+        lcd->setCursor(0, cursor);
+        lcd->print(" ");
+        cursor = (cursor - 1) % 7;
+    }
+
+    //    if(bouncer_enter.update() && bouncer_enter.rose()) {
+    //      lcd->clear();
+    //      cursor = 0;
+    //      current_menu = main_menu->submenus;
+    //    }
 }

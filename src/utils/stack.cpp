@@ -7,8 +7,8 @@ Stack<T>::Stack() {
 };
 
 template <typename T> 
-bool Stack<T>::push(T value) {
-    top = Item(value, head);
+void Stack<T>::push(T value) {
+    head = Item(value, head);
 };
 
 template <typename T> 

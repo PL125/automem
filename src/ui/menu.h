@@ -15,7 +15,7 @@ class Menu
         char *title;
         Menu *submenus;
         int cursor;
-        Menu(char *title, Menu *submenus);
+        Menu(char *title);
         void render(LiquidCrystal_I2C *lcd);
 };
 
