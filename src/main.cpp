@@ -7,6 +7,8 @@
 #include "arch/e93xx.h"
 #include <string.h>
 
+#define ENTER 6
+#define BACK 5
 #define UP 7
 #define DOWN 8
 
@@ -14,18 +16,30 @@ E93xx e(512, 9, 8);
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 Bounce bouncerUp = Bounce();
 Bounce bouncerDown = Bounce();
+Bounce bouncerEnter = Bounce();
+Bounce bouncerBack = Bounce();
 
 uint8_t currentCursor = 0;
 uint8_t offset = 0;
 
 struct menu {
   char *title;
-  menu *submenus[];
+  menu *submenus;
+};
+
+menu sub_menu[] = {
+  menu {
+    .title = "Chevrolet"
+  },
+  menu {
+    .title = "Volkswagem"
+  }
 };
 
 menu main_menu[] = {
   menu {
-    .title = "Imobilizador"
+    .title = "Imobilizador",
+    .submenus = sub_menu
   },
   menu {
     .title = "Airbag"
@@ -47,6 +61,8 @@ menu main_menu[] = {
   },
 };
 
+menu *current_menu = main_menu;
+
 void debug_eeprom(int address) {
   uint8_t data = e.read(address);
   char buf[128];
@@ -55,18 +71,20 @@ void debug_eeprom(int address) {
 }
 
 void render_menu(uint8_t cursor) {
+  uint8_t block = (int)(cursor/4)-1;
+
   int n_offset = cursor > 4 ? cursor - 4 : 0;
   if(n_offset != offset) {
     lcd.clear();
   }
-  offset = n_offset;
+  offset = n_offset % 7;
 
   lcd.setCursor(0, cursor-offset);
   lcd.print(">");
 
-  for(int i=0+offset; i<4+offset; i++) {
-    lcd.setCursor(1, i-offset);
-    lcd.print(main_menu[i].title);
+  for(int i=0; i<4; i++) {
+    lcd.setCursor(1, i);
+    lcd.print(current_menu[i+offset].title);
   }
 }
 
@@ -76,12 +94,20 @@ void setup() {
 
   pinMode(UP, INPUT);
   pinMode(DOWN, INPUT);
+  pinMode(ENTER, INPUT);
+  pinMode(BACK, INPUT);
 
   bouncerUp.attach(UP);
   bouncerUp.interval(20);
 
   bouncerDown.attach(DOWN);
   bouncerDown.interval(20);
+
+  bouncerEnter.attach(ENTER);
+  bouncerEnter.interval(20);
+
+  bouncerBack.attach(BACK);
+  bouncerBack.interval(20);
 
   lcd.init();
   lcd.backlight();
@@ -111,6 +137,12 @@ void loop() {
      lcd.setCursor(0, currentCursor);
     lcd.print(" ");
      currentCursor = (currentCursor - 1) % 7;
+   }
+
+   if(bouncerEnter.update() && bouncerEnter.rose()) {
+     lcd.clear();
+     currentCursor = 0;
+     current_menu = main_menu->submenus;
    }
 
    if (Serial.available()) {
