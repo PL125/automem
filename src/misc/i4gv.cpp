@@ -8,3 +8,4 @@ uint16_t I4gv::getImmoCode(E95xx *e) {
 
     return code;
 }
+

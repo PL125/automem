@@ -1,5 +1,5 @@
-#ifndef CIRCULARLIST_H
-#define CIRCULARLIST_H
+#ifndef LIST_H
+#define LIST_H
 
 template <typename T>
 class List
@@ -9,7 +9,7 @@ class List
     {
         T *value;
         Item *next;
-        Item(T value, Item *next)
+        Item(T *value, Item *next)
         {
             this->value = value;
             this->next = next;
@@ -18,12 +18,11 @@ class List
 
 public:
     List();
-    // CircularList(T values[]);
     void add(T *value);
-    Item *head;
+    T* get(int position);
 
 private:
-    int size;
+    Item *head;
 };
 
 template <typename T>
@@ -32,26 +31,31 @@ List<T>::List()
     this->head = nullptr;
 };
 
-template <typename T>
+template <typename T> 
 void List<T>::add(T *value)
 {
     struct Item *n = (struct Item *)malloc(sizeof(struct Item));
     n->value = value;
-    n->next = head;
+    n->next = nullptr;
 
-    if (head->next == nullptr)
+    Item *current = this->head;
+    while (current->next != nullptr)
     {
-        head->next = n;
+        current = current->next;
     }
-    else
-    {
-        Item *current = head;
-        while (current->next != nullptr)
-        {
-            current = current->next;
-        }
-        current->next = n;
-    }
+    current->next = n;
 };
+
+template <typename T>
+T* List<T>::get(int position)
+{
+    Item *current = this->head; 
+    for(int i=0; i<position+1; i++) {
+        current = current->next;
+    }
+
+    return current->value;
+};
+
 
 #endif

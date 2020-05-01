@@ -7,9 +7,9 @@ class Stack
 
     struct Item
     {
-        T value;
+        T *value;
         Item *next;
-        Item(T value, Item *next)
+        Item(T *value, Item *next)
         {
             this->value = value;
             this->next = next;

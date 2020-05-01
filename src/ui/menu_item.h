@@ -7,9 +7,9 @@
 class MenuItem
 {
     public:
-        char *title;
+        char title;
         // List<Menu> *submenus;
-        MenuItem(char *title);
+        MenuItem(char title);
 };
 
 #endif
