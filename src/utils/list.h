@@ -39,14 +39,14 @@ void List<T>::add(T *value)
     n->value = value;
     n->next = head;
 
-    if (head->next == NULL)
+    if (head->next == nullptr)
     {
         head->next = n;
     }
     else
     {
-        node *current = head;
-        while (current->next != NULL)
+        Item *current = head;
+        while (current->next != nullptr)
         {
             current = current->next;
         }

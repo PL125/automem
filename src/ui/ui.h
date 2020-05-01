@@ -6,7 +6,7 @@
 
 #include "menu.h"
 // #include "../utils/stack.h"
-#include "../utils/circular_list.h"
+#include "../utils/list.h"
 
 #define ENTER 6
 #define BACK 5

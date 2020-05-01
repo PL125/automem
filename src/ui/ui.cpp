@@ -1,21 +1,7 @@
 #include "ui.h"
 
-#include "menu.h"
-
 Ui::Ui()
 {
-
-    struct MenuItem
-    {
-        char *title;
-        List<Menu> *submenus;
-        MenuItem(char *title, List<Menu> *submenus)
-        {
-            this->title = title;
-            this->submenus = submenus;
-        }
-    };
-
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
     pinMode(ENTER, INPUT);
@@ -40,11 +26,13 @@ Ui::Ui()
     cursor = 0;
 
     List<MenuItem> items = List<MenuItem>();
-    items.add(&MenuItem("Teste", nullptr));
-    items.add(&MenuItem("Teste 2", nullptr));
-    items.add(&MenuItem("Teste 3", nullptr));
+    items.add(&MenuItem("Teste"));
+    items.add(&MenuItem("Teste 2"));
+    items.add(&MenuItem("Teste 3"));
 
-    menu = Menu(items);
+    this->menu = &Menu(&items);
+
+    //menu = Menu(items);
     // menus = Menu(
 
     // )
@@ -67,7 +55,8 @@ void Ui::render(LiquidCrystal_I2C *lcd)
     {
         
         lcd->setCursor(1, i);
-        lcd->print(menus->title);
+        lcd->print(this->menu->items->head->value->title);
+        //lcd->print("BBBBB");
     }
 
     if (bouncer_up.update() && bouncer_up.rose())
