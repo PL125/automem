@@ -26,14 +26,14 @@ Ui::Ui()
     cursor = 0;
 
 
-    CircularList<Menu> circular_list = CircularList<Menu>();
-    circular_list.add(Menu("Imobilizador"));
-    circular_list.add(Menu("Airbag"));
-    circular_list.add(Menu("Odometro"));
+    menus = CircularList<Menu>();
+    menus.add(&Menu("Imobilizador"));
+    menus.add(&Menu("Airbag"));
+    menus.add(&Menu("Odometro"));
 
     
-    menus = Stack<CircularList<Menu>>();
-    menus.push(circular_list);
+    // menus = Stack<CircularList<Menu>>();
+    // menus.push(circular_list);
     
 };
 
@@ -45,7 +45,7 @@ void Ui::render(LiquidCrystal_I2C *lcd)
     for (int i = 0; i < 4; i++)
     {
         lcd->setCursor(1, i);
-        lcd->print(menus.top().head->value.title);
+        lcd->print(menus.head->value->title);
     }
 
     if (bouncer_up.update() && bouncer_up.rose())

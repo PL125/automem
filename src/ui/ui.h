@@ -16,7 +16,7 @@
 class Ui
 {  
     private:
-        Stack<CircularList<Menu>> menus;
+        CircularList<Menu> menus;
         Bounce bouncer_up;
         Bounce bouncer_down;
         Bounce bouncer_enter;
