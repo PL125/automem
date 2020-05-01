@@ -2,7 +2,7 @@
 #define CIRCULARLIST_H
 
 template <typename T>
-class CircularList
+class List
 {
 
     struct Item
@@ -17,7 +17,7 @@ class CircularList
     };
 
 public:
-    CircularList();
+    List();
     // CircularList(T values[]);
     void add(T *value);
     Item *head;
@@ -27,29 +27,30 @@ private:
 };
 
 template <typename T>
-CircularList<T>::CircularList()
+List<T>::List()
 {
     this->head = nullptr;
 };
 
 template <typename T>
-void CircularList<T>::add(T *value)
+void List<T>::add(T *value)
 {
     struct Item *n = (struct Item *)malloc(sizeof(struct Item));
-    struct Item *ptr = head;
-
     n->value = value;
     n->next = head;
-    if (head != nullptr)
+
+    if (head->next == NULL)
     {
-        while (ptr->next != head)
-            ptr = ptr->next;
-        ptr->next = n;
+        head->next = n;
     }
     else
     {
-        n->next = n;
-        head = n;
+        node *current = head;
+        while (current->next != NULL)
+        {
+            current = current->next;
+        }
+        current->next = n;
     }
 };
 

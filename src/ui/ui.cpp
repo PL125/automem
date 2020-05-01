@@ -1,7 +1,21 @@
 #include "ui.h"
 
+#include "menu.h"
+
 Ui::Ui()
 {
+
+    struct MenuItem
+    {
+        char *title;
+        List<Menu> *submenus;
+        MenuItem(char *title, List<Menu> *submenus)
+        {
+            this->title = title;
+            this->submenus = submenus;
+        }
+    };
+
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
     pinMode(ENTER, INPUT);
@@ -25,11 +39,18 @@ Ui::Ui()
 
     cursor = 0;
 
+    List<MenuItem> items = List<MenuItem>();
+    items.add(&MenuItem("Teste", nullptr));
+    items.add(&MenuItem("Teste 2", nullptr));
+    items.add(&MenuItem("Teste 3", nullptr));
 
-    menus = CircularList<Menu>();
-    menus.add(&Menu("Imobilizador"));
-    menus.add(&Menu("Airbag"));
-    menus.add(&Menu("Odometro"));
+    menu = Menu(items);
+    // menus = Menu(
+
+    // )
+    // menus.add(&Menu("Imobilizador"));
+    // menus.add(&Menu("Airbag"));
+    // menus.add(&Menu("Odometro"));
 
     
     // menus = Stack<CircularList<Menu>>();
@@ -42,10 +63,11 @@ void Ui::render(LiquidCrystal_I2C *lcd)
     lcd->setCursor(0, cursor);
     lcd->print(">");
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 3; i++)
     {
+        
         lcd->setCursor(1, i);
-        lcd->print(menus.head->value->title);
+        lcd->print(menus->title);
     }
 
     if (bouncer_up.update() && bouncer_up.rose())

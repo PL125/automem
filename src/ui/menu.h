@@ -3,6 +3,7 @@
 
 #include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
+#include "../utils/list.h"
 
 #define ENTER 6
 #define BACK 5
@@ -11,11 +12,22 @@
 
 class Menu
 {  
-    public:
+
+    struct MenuItem
+    {
         char *title;
-        Menu *submenus;
+        List<Menu> *submenus;
+        MenuItem(char *title, List<Menu> *submenus)
+        {
+            this->title = title;
+            this->submenus = submenus;
+        }
+    };
+
+    public:
         int cursor;
-        Menu(char *title);
+        List<MenuItem> *items;
+        Menu(List<MenuItem> *items);
         void render(LiquidCrystal_I2C *lcd);
 };
 

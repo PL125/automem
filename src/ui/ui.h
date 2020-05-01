@@ -5,7 +5,7 @@
 #include <LiquidCrystal_I2C.h>
 
 #include "menu.h"
-#include "../utils/stack.h"
+// #include "../utils/stack.h"
 #include "../utils/circular_list.h"
 
 #define ENTER 6
@@ -14,14 +14,14 @@
 #define DOWN 8
 
 class Ui
-{  
+{
     private:
-        CircularList<Menu> menus;
         Bounce bouncer_up;
         Bounce bouncer_down;
         Bounce bouncer_enter;
         Bounce bouncer_back;
     public:
+        Menu *menu;
         int cursor;
         Ui();
         void render(LiquidCrystal_I2C *lcd);
