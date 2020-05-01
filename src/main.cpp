@@ -3,65 +3,17 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Bounce2.h>
+#include "ui/menu.h"
 
 #include "arch/e93xx.h"
 #include <string.h>
 
-#define ENTER 6
-#define BACK 5
-#define UP 7
-#define DOWN 8
 
 E93xx e(512, 9, 8);
 LiquidCrystal_I2C lcd(0x27, 20, 4);
-Bounce bouncerUp = Bounce();
-Bounce bouncerDown = Bounce();
-Bounce bouncerEnter = Bounce();
-Bounce bouncerBack = Bounce();
 
 uint8_t currentCursor = 0;
 uint8_t offset = 0;
-
-struct menu {
-  char *title;
-  menu *submenus;
-};
-
-menu sub_menu[] = {
-  menu {
-    .title = "Chevrolet"
-  },
-  menu {
-    .title = "Volkswagem"
-  }
-};
-
-menu main_menu[] = {
-  menu {
-    .title = "Imobilizador",
-    .submenus = sub_menu
-  },
-  menu {
-    .title = "Airbag"
-  },
-  menu {
-    .title = "Odometro"
-  },
-  menu {
-    .title = "Odometro"
-  },
-  menu {
-    .title = "Odometro"
-  },
-  menu {
-    .title = "Odometro"
-  },
-  menu {
-    .title = "Configuracoes"
-  },
-};
-
-menu *current_menu = main_menu;
 
 void debug_eeprom(int address) {
   uint8_t data = e.read(address);
@@ -92,22 +44,9 @@ void render_menu(uint8_t cursor) {
 void setup() {
   Serial.begin(9600);
 
-  pinMode(UP, INPUT);
-  pinMode(DOWN, INPUT);
-  pinMode(ENTER, INPUT);
-  pinMode(BACK, INPUT);
+  
 
-  bouncerUp.attach(UP);
-  bouncerUp.interval(20);
-
-  bouncerDown.attach(DOWN);
-  bouncerDown.interval(20);
-
-  bouncerEnter.attach(ENTER);
-  bouncerEnter.interval(20);
-
-  bouncerBack.attach(BACK);
-  bouncerBack.interval(20);
+  
 
   lcd.init();
   lcd.backlight();
@@ -123,27 +62,6 @@ char data[8];
 int current = 0;
 uint16_t code;
 void loop() {
-
-
-  render_menu(currentCursor);
-
-   if(bouncerUp.update() && bouncerUp.rose()) {
-     lcd.setCursor(0, currentCursor);
-    lcd.print(" ");
-     currentCursor = (currentCursor + 1) % 7;
-   }
-
-   if(bouncerDown.update() && bouncerDown.rose()) {
-     lcd.setCursor(0, currentCursor);
-    lcd.print(" ");
-     currentCursor = (currentCursor - 1) % 7;
-   }
-
-   if(bouncerEnter.update() && bouncerEnter.rose()) {
-     lcd.clear();
-     currentCursor = 0;
-     current_menu = main_menu->submenus;
-   }
 
    if (Serial.available()) {
     char value = Serial.read();

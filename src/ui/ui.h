@@ -15,7 +15,7 @@
 class Ui
 {  
     private:
-        Stack <Menu> menus;
+        Stack <Menu[]> menus;
         Bounce bouncer_up;
         Bounce bouncer_down;
         Bounce bouncer_enter;

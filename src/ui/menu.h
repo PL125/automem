@@ -11,21 +11,12 @@
 
 class Menu
 {  
-    private:
-        Bounce bouncer_up;
-        Bounce bouncer_down;
-        Bounce bouncer_enter;
-        Bounce bouncer_back;
     public:
         char *title;
         Menu *submenus;
         int cursor;
         Menu(char *title, Menu *submenus);
         void render(LiquidCrystal_I2C *lcd);
-        void up();
-        void down();
-        void enter();
-        void back();
 };
 
 #endif
