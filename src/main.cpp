@@ -5,6 +5,7 @@
 #include <Bounce2.h>
 
 #include "arch/e93xx.h"
+#include <string.h>
 
 #define UP 7
 #define DOWN 8
@@ -15,6 +16,36 @@ Bounce bouncerUp = Bounce();
 Bounce bouncerDown = Bounce();
 
 uint8_t currentCursor = 0;
+uint8_t offset = 0;
+
+struct menu {
+  char *title;
+  menu *submenus[];
+};
+
+menu main_menu[] = {
+  menu {
+    .title = "Imobilizador"
+  },
+  menu {
+    .title = "Airbag"
+  },
+  menu {
+    .title = "Odometro"
+  },
+  menu {
+    .title = "Odometro"
+  },
+  menu {
+    .title = "Odometro"
+  },
+  menu {
+    .title = "Odometro"
+  },
+  menu {
+    .title = "Configuracoes"
+  },
+};
 
 void debug_eeprom(int address) {
   uint8_t data = e.read(address);
@@ -24,16 +55,19 @@ void debug_eeprom(int address) {
 }
 
 void render_menu(uint8_t cursor) {
-  lcd.setCursor(0, cursor);
+  int n_offset = cursor > 4 ? cursor - 4 : 0;
+  if(n_offset != offset) {
+    lcd.clear();
+  }
+  offset = n_offset;
+
+  lcd.setCursor(0, cursor-offset);
   lcd.print(">");
 
-  lcd.setCursor(1, 0);
-  lcd.print("D");
-  lcd.setCursor(1, 1);
-  lcd.print("Configuracoes");
-  lcd.setCursor(1, 2);
-  lcd.print("Informacoes");
-  lcd.setCursor(1, 3);  
+  for(int i=0+offset; i<4+offset; i++) {
+    lcd.setCursor(1, i-offset);
+    lcd.print(main_menu[i].title);
+  }
 }
 
 
@@ -70,13 +104,13 @@ void loop() {
    if(bouncerUp.update() && bouncerUp.rose()) {
      lcd.setCursor(0, currentCursor);
     lcd.print(" ");
-     currentCursor = (currentCursor + 1) % 4;
+     currentCursor = (currentCursor + 1) % 7;
    }
 
    if(bouncerDown.update() && bouncerDown.rose()) {
      lcd.setCursor(0, currentCursor);
     lcd.print(" ");
-     currentCursor = (currentCursor - 1) % 4;
+     currentCursor = (currentCursor - 1) % 7;
    }
 
    if (Serial.available()) {
