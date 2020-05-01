@@ -1,9 +1,6 @@
-#include "menu.h"
+#include "ui.h"
 
-Menu::Menu(char *title, Menu *submenus) {
-    this->title = title;
-    this->submenus = submenus;
-
+Ui::Ui() {
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
     pinMode(ENTER, INPUT);
@@ -24,25 +21,4 @@ Menu::Menu(char *title, Menu *submenus) {
     bouncer_back = Bounce();
     bouncer_back.attach(BACK);
     bouncer_back.interval(20);
-}
-
-
-void render(LiquidCrystal_I2C *lcd) {
-
-}
-
-void up() {
-
-}
-
-void down() {
-
-}
-
-void enter() {
-
-}
-
-void back() {
-
 }
