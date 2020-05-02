@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <stdint.h>
+
 template <typename T>
 class List
 {
@@ -20,16 +22,19 @@ class List
 public:
     List();
     void add(T *value);
-    T get(int position);
+    T get(uint8_t position);
+    uint8_t length();
 
 private:
     Item *head;
+    uint8_t size;
 };
 
 template <typename T>
 List<T>::List()
 {
     this->head = nullptr;
+    this->size = 0;
 };
 
 template <typename T>
@@ -50,10 +55,12 @@ void List<T>::add(T *value)
         }
         current->next = n;
     }
-};
+
+    this->size++;
+}
 
 template <typename T>
-T List<T>::get(int position)
+T List<T>::get(uint8_t position)
 {
     Item *current = this->head;
 
@@ -65,6 +72,12 @@ T List<T>::get(int position)
         count++;
         current = current->next;
     }
+};
+
+template <typename T>
+uint8_t List<T>::length()
+{
+    return this->size;
 };
 
 #endif
