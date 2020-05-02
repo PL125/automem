@@ -1,6 +1,15 @@
 #include "ui.h"
 
-
+uint8_t arrow[8] = {
+    0b00000,
+	0b00100,
+	0b00010,
+	0b11111,
+	0b00010,
+	0b00100,
+	0b00000,
+	0b00000
+};
 
 Ui::Ui(Menu *main_menu)
 {
@@ -24,16 +33,17 @@ Ui::Ui(Menu *main_menu)
     bouncer_back = Bounce();
     bouncer_back.attach(BACK);
     bouncer_back.interval(20);
-    
-    this->menus = new Stack<Menu>();   
+
+    this->menus = new Stack<Menu>();
     this->menus->push(main_menu);
     this->cursor = 0;
 };
 
 void Ui::render(LiquidCrystal_I2C *lcd)
 {
+    lcd->createChar(0, arrow);
     lcd->setCursor(0, cursor);
-    lcd->print(">");
+    lcd->write(0);
 
     for (int i = 0; i < 4; i++)
     {
@@ -55,16 +65,19 @@ void Ui::render(LiquidCrystal_I2C *lcd)
         cursor = (cursor - 1) % 7;
     }
 
-    if(bouncer_enter.update() && bouncer_enter.rose()) {
+    if (bouncer_enter.update() && bouncer_enter.rose())
+    {
         MenuItem current_menu_item = this->menus->top().items->get(cursor);
-        if(current_menu_item.menu != nullptr) {    
+        if (current_menu_item.menu != nullptr)
+        {
             lcd->clear();
 
             this->menus->push(current_menu_item.menu);
         }
     }
 
-    if(bouncer_back.update() && bouncer_back.rose()) {
+    if (bouncer_back.update() && bouncer_back.rose())
+    {
         lcd->clear();
         this->menus->pop();
     }
