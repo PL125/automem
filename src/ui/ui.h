@@ -21,7 +21,6 @@ class Ui
         Bounce bouncer_back;
     public:
         Stack<Menu> *menus;
-        Menu *current_menu;
         int cursor;
         Ui(Menu *main_menu);
         void render(LiquidCrystal_I2C *lcd);
