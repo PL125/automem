@@ -1,7 +1,7 @@
 #include "menu_item.h"
 
-MenuItem::MenuItem(char *title)//, List<Menu> *submenus)
+MenuItem::MenuItem(char *title, Menu *menu)
 {
     this->title = title;
-    // this->submenus = submenus;
+    this->menu = menu;
 }

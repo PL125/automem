@@ -3,6 +3,7 @@
 
 #include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
+
 #include "menu_item.h"
 #include "../utils/list.h"
 
@@ -11,6 +12,7 @@
 #define UP 7
 #define DOWN 8
 
+class MenuItem;
 class Menu
 {
 public:

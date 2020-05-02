@@ -31,13 +31,17 @@ void setup()
   lcd.init();
   lcd.backlight();
 
-  List<MenuItem> items = List<MenuItem>();
+  List<MenuItem> items2 = List<MenuItem>();
+  items2.add(new MenuItem("Imobilizador 1", nullptr));
+  items2.add(new MenuItem("Imobilizador 2", nullptr));
+  items2.add(new MenuItem("Imobilizador 3", nullptr));
+  items2.add(new MenuItem("Imobilizador 4", nullptr));
 
-  MenuItem item = MenuItem("BBBB");
-  items.add(&item);
-  items.add(&item);
-  items.add(&item);
-  items.add(&item);
+  List<MenuItem> items = List<MenuItem>();
+  items.add(new MenuItem("Imobilizador", new Menu(&items2)));
+  items.add(new MenuItem("Airbag", nullptr));
+  items.add(new MenuItem("Odometro", nullptr));
+  items.add(new MenuItem("Configuracoes", nullptr));
   
   Menu m = Menu(&items);
   ui = new Ui(&m);

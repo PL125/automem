@@ -58,9 +58,12 @@ void Ui::render(LiquidCrystal_I2C *lcd)
         cursor = (cursor - 1) % 7;
     }
 
-    //    if(bouncer_enter.update() && bouncer_enter.rose()) {
-    //      lcd->clear();
-    //      cursor = 0;
-    //      current_menu = main_menu->submenus;
-    //    }
+    if(bouncer_enter.update() && bouncer_enter.rose()) {
+        lcd->clear();
+
+        MenuItem current_menu_item = this->menu->items->get(cursor);
+        
+        if(current_menu_item.menu != nullptr)    
+            this->menu = current_menu_item.menu;
+    }
 }
