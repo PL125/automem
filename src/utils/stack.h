@@ -18,10 +18,10 @@ class Stack
 
 public:
     Stack();
-    void push(T value);
-    void pop();
-    bool empty();
+    void push(T *value);
+    T pop();
     T top();
+    bool empty();
 
 private:
     Item *head;
@@ -31,33 +31,27 @@ template <typename T>
 Stack<T>::Stack()
 {
     this->head = nullptr;
-    this->size = 0;
 };
 
 template <typename T>
-void Stack<T>::push(T value)
+void Stack<T>::push(T *value)
 {
-    head = Item(value, head);
+    head = new Item(value, head);
 };
 
 template <typename T>
-void Stack<T>::pop()
+T Stack<T>::pop()
 {
     Item *old = head;
     head = old->next;
-    delete old;
-};
 
-template <typename T>
-bool Stack<T>::empty()
-{
-    return head == nullptr;
+    return *old->value;
 };
 
 template <typename T>
 T Stack<T>::top()
 {
-    return head->value;
+    return *head->value;
 };
 
 #endif

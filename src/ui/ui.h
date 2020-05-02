@@ -5,8 +5,7 @@
 #include <LiquidCrystal_I2C.h>
 
 #include "menu.h"
-// #include "../utils/stack.h"
-#include "../utils/list.h"
+#include "../utils/stack.h"
 
 #define ENTER 6
 #define BACK 5
@@ -21,10 +20,10 @@ class Ui
         Bounce bouncer_enter;
         Bounce bouncer_back;
     public:
-        Menu *menu;
+        Stack<Menu> *menus;
+        Menu *current_menu;
         int cursor;
-        Ui(Menu *menu);
-        Ui();
+        Ui(Menu *main_menu);
         void render(LiquidCrystal_I2C *lcd);
         void up();
         void down();
