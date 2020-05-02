@@ -6,7 +6,7 @@
 class View {
     public:
         virtual void render();
-        virtual void actions(Stack<View> *views);
+        virtual void action(Stack<View> *views);
 };
 
 #endif

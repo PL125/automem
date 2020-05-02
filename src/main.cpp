@@ -38,18 +38,18 @@ void setup()
   items3.add(new MenuItem("Carro 4", nullptr));
 
   List<MenuItem> items2 = List<MenuItem>();
-  items2.add(new MenuItem("Chevrolet", new Menu(&items3)));
+  items2.add(new MenuItem("Chevrolet", new Menu(&lcd, &items3)));
   items2.add(new MenuItem("Volkswagen", nullptr));
   items2.add(new MenuItem("Test", nullptr));
   items2.add(new MenuItem("Test", nullptr));
 
   List<MenuItem> items = List<MenuItem>();
-  items.add(new MenuItem("Imobilizador", new Menu(&items2)));
+  items.add(new MenuItem("Imobilizador", new Menu(&lcd, &items2)));
   items.add(new MenuItem("Airbag", nullptr));
   items.add(new MenuItem("Odometro", nullptr));
   items.add(new MenuItem("Configuracoes", nullptr));
   
-  Menu m = Menu(&items);
+  Menu m = Menu(&lcd, &items);
   ui = new Ui(&m);
   e.setup();
 }

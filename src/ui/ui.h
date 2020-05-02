@@ -14,10 +14,6 @@ class Ui
         int cursor;
         Ui(Menu *main_menu);
         void render(LiquidCrystal_I2C *lcd);
-        void up();
-        void down();
-        void enter();
-        void back();
 };
 
 #endif

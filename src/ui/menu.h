@@ -29,8 +29,8 @@ class Menu : public View
         LiquidCrystal_I2C *lcd;
         List<MenuItem> *items;
         Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
-        void render();
-        void action(Stack<View> *views);
+        virtual void render();
+        virtual void action(Stack<View> *views);
 };
 
 #endif
