@@ -8,9 +8,6 @@
 #include "menu_item.h"
 #include "../utils/list.h"
 
-uint8_t arrow[8] = {0x00, 0x04, 0x02, 0x1F, 0x02, 0x04, 0x00, 0x00};
-
-
 #define ENTER 6
 #define BACK 5
 #define UP 7
@@ -29,8 +26,9 @@ class Menu : public View
         LiquidCrystal_I2C *lcd;
         List<MenuItem> *items;
         Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
-        virtual void render();
-        virtual void action(Stack<View> *views);
+        ~Menu();
+        void render() const;
+        void action(Stack<View*> views) const;
 };
 
 #endif
