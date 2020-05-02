@@ -25,14 +25,20 @@ Ui::Ui()
 
     cursor = 0;
 
-    List<MenuItem> items = List<MenuItem>();
-    MenuItem item = MenuItem('A');
-    items.add(&item);
-    items.add(&item);
-    items.add(&item);
-    items.add(&item);
+    
+    MenuItem item = MenuItem("BBBB");
 
-    menu = &Menu(&items);   
+    List<MenuItem> items;
+    items.add(&item);
+    items.add(&item);
+    items.add(&item);
+    items.add(&item);
+    // items.insert(&item);
+    // items.insert(&item);
+    // items.insert(&item);
+
+    Menu m = Menu(&items);
+    menu = &m;   
 };
 
 void Ui::render(LiquidCrystal_I2C *lcd)
@@ -42,10 +48,8 @@ void Ui::render(LiquidCrystal_I2C *lcd)
 
     for (int i = 0; i < 4; i++)
     {
-        
         lcd->setCursor(1, i);
-        // lcd->print(menu->items->get(i)->title);
-        lcd->print("EEEE");
+        lcd->print(menu->items->get(i).title);
     }
 
     if (bouncer_up.update() && bouncer_up.rose())

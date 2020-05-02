@@ -5,21 +5,22 @@ template <typename T>
 class List
 {
 
-    struct Item
+    class Item
     {
+    public:
         T *value;
         Item *next;
-        Item(T *value, Item *next)
+        Item(T *value)
         {
             this->value = value;
-            this->next = next;
+            this->next = nullptr;
         }
     };
 
 public:
     List();
     void add(T *value);
-    T* get(int position);
+    T get(int position);
 
 private:
     Item *head;
@@ -31,31 +32,39 @@ List<T>::List()
     this->head = nullptr;
 };
 
-template <typename T> 
+template <typename T>
 void List<T>::add(T *value)
 {
-    struct Item *n = (struct Item *)malloc(sizeof(struct Item));
-    n->value = value;
-    n->next = nullptr;
-
+    Item *n = new Item(value);
     Item *current = this->head;
-    while (current->next != nullptr)
+
+    if (this->head == nullptr)
     {
-        current = current->next;
+        this->head = n;
     }
-    current->next = n;
+    else
+    {
+        while (current->next != nullptr)
+        {
+            current = current->next;
+        }
+        current->next = n;
+    }
 };
 
 template <typename T>
-T* List<T>::get(int position)
+T List<T>::get(int position)
 {
-    Item *current = this->head; 
-    for(int i=0; i<position+1; i++) {
+    Item *current = this->head;
+
+    int count = 0;
+    while (current != nullptr)  
+    {
+        if (count == position)  
+            return *current->value;
+        count++;
         current = current->next;
     }
-
-    return current->value;
 };
-
 
 #endif
