@@ -42,7 +42,7 @@ void Menu::render() const {
     }
 }
 
-void Menu::action(Stack<View*> views) const {
+void Menu::action(Stack<View> *views) const {
     // if (bouncer_up.update() && bouncer_up.rose())
     // {
     //     lcd->setCursor(0, cursor);

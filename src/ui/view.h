@@ -8,7 +8,7 @@ class View {
         virtual ~View() {}
 
         virtual void render() const = 0;
-        virtual void action(Stack<View*> views) const = 0;
+        virtual void action(Stack<View> *views) const = 0;
 };
 
 #endif
