@@ -11,7 +11,7 @@
 
 E93xx e(512, 9, 8);
 LiquidCrystal_I2C lcd(0x27, 20, 4);
-Ui ui = Ui();
+Ui *ui;
 
 uint8_t currentCursor = 0;
 uint8_t offset = 0;
@@ -30,6 +30,17 @@ void setup()
 
   lcd.init();
   lcd.backlight();
+
+  List<MenuItem> items = List<MenuItem>();
+
+  MenuItem item = MenuItem("BBBB");
+  items.add(&item);
+  items.add(&item);
+  items.add(&item);
+  items.add(&item);
+  
+  Menu m = Menu(&items);
+  ui = new Ui(&m);
   e.setup();
 }
 
@@ -42,7 +53,7 @@ uint16_t code;
 void loop()
 {
 
-  ui.render(&lcd);
+  ui->render(&lcd);
 
   if (Serial.available())
   {

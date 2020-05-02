@@ -1,6 +1,12 @@
 #include "ui.h"
 
-Ui::Ui()
+
+Ui::Ui() {
+    this->menu = nullptr;
+    this->cursor = 0;
+}
+
+Ui::Ui(Menu *menu)
 {
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
@@ -22,23 +28,9 @@ Ui::Ui()
     bouncer_back = Bounce();
     bouncer_back.attach(BACK);
     bouncer_back.interval(20);
-
-    cursor = 0;
-
     
-    MenuItem item = MenuItem("BBBB");
-
-    List<MenuItem> items;
-    items.add(&item);
-    items.add(&item);
-    items.add(&item);
-    items.add(&item);
-    // items.insert(&item);
-    // items.insert(&item);
-    // items.insert(&item);
-
-    Menu m = Menu(&items);
-    menu = &m;   
+    this->menu = menu;   
+    this->cursor = 0;
 };
 
 void Ui::render(LiquidCrystal_I2C *lcd)
@@ -49,7 +41,7 @@ void Ui::render(LiquidCrystal_I2C *lcd)
     for (int i = 0; i < 4; i++)
     {
         lcd->setCursor(1, i);
-        lcd->print(menu->items->get(i).title);
+        lcd->print(this->menu->items->get(i).title);
     }
 
     if (bouncer_up.update() && bouncer_up.rose())

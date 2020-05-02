@@ -23,6 +23,7 @@ class Ui
     public:
         Menu *menu;
         int cursor;
+        Ui(Menu *menu);
         Ui();
         void render(LiquidCrystal_I2C *lcd);
         void up();
