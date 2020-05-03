@@ -46,10 +46,18 @@ void setup()
   items2.add(new MenuItem("Test", nullptr));
 
   List<MenuItem> items = List<MenuItem>();
-  items.add(new MenuItem("Imobilizador", new Loading(&lcd)));
-  items.add(new MenuItem("Airbag", new Menu(&lcd, &items2)));
-  items.add(new MenuItem("Odometro", nullptr));
-  items.add(new MenuItem("Configuracoes", nullptr));
+  items.add(new MenuItem("Teste 1", new Loading(&lcd)));
+  items.add(new MenuItem("Teste 2", new Menu(&lcd, &items2)));
+  items.add(new MenuItem("Teste 3", nullptr));
+  items.add(new MenuItem("Teste 4", nullptr));
+  items.add(new MenuItem("Teste 5", nullptr));
+  items.add(new MenuItem("Teste 6", nullptr));
+  items.add(new MenuItem("Teste 7", nullptr));
+  items.add(new MenuItem("Teste 8", nullptr));
+  items.add(new MenuItem("Teste 9", nullptr));
+  items.add(new MenuItem("Teste 10", nullptr));
+  items.add(new MenuItem("Teste 11", nullptr));
+  items.add(new MenuItem("Teste 12", nullptr));
   
   Menu m = Menu(&lcd, &items);
   ui = new Ui(&m);

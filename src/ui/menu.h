@@ -4,6 +4,7 @@
 #include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
 
+#include "math.h"
 #include "view.h"
 #include "symbols.h"
 #include "../utils/list.h"
@@ -29,7 +30,7 @@ class Menu : public View
         Bounce *bouncer_enter;
         Bounce *bouncer_back;
     public:
-        
+        int *top;
         int *cursor;
         LiquidCrystal_I2C *lcd;
         List<MenuItem> *items;

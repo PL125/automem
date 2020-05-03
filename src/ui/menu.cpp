@@ -29,6 +29,7 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
     bouncer_back->interval(20);
 
     this->lcd = lcd;
+    this->top = new int(0);
     this->cursor = new int(0);
     this->items = items;
 }
@@ -40,10 +41,10 @@ void Menu::render() const {
     lcd->setCursor(0, *cursor);
     lcd->write(0);
 
-    for (int i = 0; i < 4; i++)
+    for (int i=0; i < 4; i++)
     {
-        lcd->setCursor(1, i);
-        lcd->print(items->get(i).title);
+        lcd->setCursor(1, i );
+        lcd->print(items->get(i+*top).title);
     }
 }
 
@@ -53,13 +54,21 @@ void Menu::action(Stack<View> *views) const {
         lcd->setCursor(0, *cursor);
         lcd->print(" ");
         *cursor = (*cursor + 1) % items->length();
+        if(*cursor > *top+4) {
+            lcd->clear();
+            *top = min(*top+1, items->length());
+        }
     }
 
     if (bouncer_down->update() && bouncer_down->rose())
     {
         lcd->setCursor(0, *cursor);
         lcd->print(" ");
-        *cursor = (*cursor - 1) % items->length();
+        *cursor = *cursor - 1, 0 % items->length();
+        if(*cursor < *top-4) {
+            lcd->clear();
+            *top = max(*top-1, 0);
+        }
     }
 
     if (bouncer_enter->update() && bouncer_enter->rose())
