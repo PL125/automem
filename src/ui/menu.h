@@ -5,7 +5,6 @@
 #include <LiquidCrystal_I2C.h>
 
 #include "view.h"
-#include "menu_item.h"
 #include "symbols.h"
 #include "../utils/list.h"
 
@@ -14,7 +13,14 @@
 #define UP 7
 #define DOWN 8
 
-class MenuItem;
+class MenuItem
+{
+    public:
+        char *title;
+        View *view;
+        MenuItem(char *title, View *view);
+};
+
 class Menu : public View
 {
     private:

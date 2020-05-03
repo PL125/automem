@@ -4,10 +4,9 @@
 #include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
 #include "math.h"
+#include "symbols.h"
 
 #include "view.h"
-#include "menu_item.h"
-#include "../utils/list.h"
 
 #define ENTER 6
 #define BACK 5

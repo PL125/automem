@@ -1,5 +1,11 @@
 #include "menu.h"
 
+MenuItem::MenuItem(char *title, View *view)
+{
+    this->title = title;
+    this->view = view;
+}
+
 Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
