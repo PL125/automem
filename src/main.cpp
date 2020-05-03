@@ -3,6 +3,8 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Bounce2.h>
+
+#include "ui/loading.h"
 #include "ui/menu.h"
 #include "ui/ui.h"
 
@@ -32,7 +34,7 @@ void setup()
   lcd.backlight();
 
   List<MenuItem> items3 = List<MenuItem>();
-  items3.add(new MenuItem("Carro 1", nullptr));
+  items3.add(new MenuItem("Carro 1", new Loading(&lcd)));
   items3.add(new MenuItem("Carro 2", nullptr));
   items3.add(new MenuItem("Carro 3", nullptr));
   items3.add(new MenuItem("Carro 4", nullptr));

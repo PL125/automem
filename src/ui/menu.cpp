@@ -60,11 +60,11 @@ void Menu::action(Stack<View> *views) const {
     if (bouncer_enter->update() && bouncer_enter->rose())
     {
         MenuItem current_menu_item = items->get(*cursor);
-        if (current_menu_item.menu != nullptr)
+        if (current_menu_item.view != nullptr)
         {
             lcd->clear();
 
-            views->push(current_menu_item.menu);
+            views->push(current_menu_item.view);
         }
     }
 

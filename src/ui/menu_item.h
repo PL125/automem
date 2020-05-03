@@ -4,13 +4,12 @@
 #include "../utils/list.h"
 #include "menu.h"
 
-class Menu;
 class MenuItem
 {
     public:
         char *title;
-        Menu *menu;
-        MenuItem(char *title, Menu *menu);
+        View *view;
+        MenuItem(char *title, View *view);
 };
 
 #endif

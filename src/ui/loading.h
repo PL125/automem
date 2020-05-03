@@ -3,6 +3,7 @@
 
 #include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
+#include "math.h"
 
 #include "view.h"
 #include "menu_item.h"
