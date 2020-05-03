@@ -63,7 +63,6 @@ void Menu::action(Stack<View> *views) const {
         if (current_menu_item.view != nullptr)
         {
             lcd->clear();
-
             views->push(current_menu_item.view);
         }
     }
