@@ -9,6 +9,7 @@
 #include "ui/ui.h"
 
 #include "arch/e24cxx.h"
+#include "misc/radio.h"
 #include <string.h>
 
 E24cxx e(512);
@@ -100,7 +101,8 @@ void loop()
         {
         case 'R':
           // e.read_all();
-          debug_eeprom((int)strtol(address, NULL, 16));
+          //debug_eeprom((int)strtol(address, NULL, 16));
+          Serial.print(Radio::getCode(&e));
           break;
         case 'P':
           e.print();

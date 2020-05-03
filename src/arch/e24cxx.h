@@ -1,17 +1,7 @@
 #ifndef E24cxx_H
 #define E24cxx_H 
 
-#define SDA_PORT PORTC
-#define SDA_PIN 4
-#define SCL_PORT PORTC
-#define SCL_PIN 5
-
-#include <SoftI2CMaster.h>
-#include <stdint.h>
-
-#define EEPROMADDR 0xA6
-#define MAXADDR 0x1FFFF
-#define MAXTESTADDR 0x007FF
+#include <Wire.h>
 
 class E24cxx
 {  

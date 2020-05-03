@@ -2,6 +2,8 @@
 #define VIEW_H
 
 #include "../utils/stack.h"
+#include "symbols.h"
+#include "math.h"
 
 class View {
     public:
