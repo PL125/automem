@@ -46,7 +46,7 @@ void setup()
   items2.add(new MenuItem("Test", nullptr));
 
   List<MenuItem> items = List<MenuItem>();
-  items.add(new MenuItem("Imobilizador", nullptr));
+  items.add(new MenuItem("Imobilizador", new Loading(&lcd)));
   items.add(new MenuItem("Airbag", new Menu(&lcd, &items2)));
   items.add(new MenuItem("Odometro", nullptr));
   items.add(new MenuItem("Configuracoes", nullptr));

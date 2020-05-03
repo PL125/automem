@@ -30,8 +30,7 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
 Menu::~Menu() {}
 
 void Menu::render() const {
-    uint8_t arrow[8] = {0x00, 0x04, 0x02, 0x1F, 0x02, 0x04, 0x00, 0x00};
-    lcd->createChar(0, arrow);
+    lcd->createChar(0, Symbols::arrow);
     lcd->setCursor(0, *cursor);
     lcd->write(0);
 

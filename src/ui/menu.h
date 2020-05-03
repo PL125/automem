@@ -6,6 +6,7 @@
 
 #include "view.h"
 #include "menu_item.h"
+#include "symbols.h"
 #include "../utils/list.h"
 
 #define ENTER 6
