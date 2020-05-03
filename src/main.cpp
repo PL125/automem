@@ -8,10 +8,10 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 
-#include "arch/e93xx.h"
+#include "arch/e24cxx.h"
 #include <string.h>
 
-E93xx e(512, 9, 8);
+E24cxx e(512);
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 Ui *ui;
 
