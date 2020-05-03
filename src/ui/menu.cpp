@@ -6,24 +6,24 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
     pinMode(ENTER, INPUT);
     pinMode(BACK, INPUT);
 
-    bouncer_up = Bounce();
-    bouncer_up.attach(UP);
-    bouncer_up.interval(20);
+    bouncer_up = new Bounce();
+    bouncer_up->attach(UP);
+    bouncer_up->interval(20);
 
-    bouncer_down = Bounce();
-    bouncer_down.attach(DOWN);
-    bouncer_down.interval(20);
+    bouncer_down = new Bounce();
+    bouncer_down->attach(DOWN);
+    bouncer_down->interval(20);
 
-    bouncer_enter = Bounce();
-    bouncer_enter.attach(ENTER);
-    bouncer_enter.interval(20);
+    bouncer_enter = new Bounce();
+    bouncer_enter->attach(ENTER);
+    bouncer_enter->interval(20);
 
-    bouncer_back = Bounce();
-    bouncer_back.attach(BACK);
-    bouncer_back.interval(20);
+    bouncer_back = new Bounce();
+    bouncer_back->attach(BACK);
+    bouncer_back->interval(20);
 
     this->lcd = lcd;
-    this->cursor = 0;
+    this->cursor = new int(0);
     this->items = items;
 }
 
@@ -32,7 +32,7 @@ Menu::~Menu() {}
 void Menu::render() const {
     uint8_t arrow[8] = {0x00, 0x04, 0x02, 0x1F, 0x02, 0x04, 0x00, 0x00};
     lcd->createChar(0, arrow);
-    lcd->setCursor(0, cursor);
+    lcd->setCursor(0, *cursor);
     lcd->write(0);
 
     for (int i = 0; i < 4; i++)
@@ -43,34 +43,34 @@ void Menu::render() const {
 }
 
 void Menu::action(Stack<View> *views) const {
-    // if (bouncer_up.update() && bouncer_up.rose())
-    // {
-    //     lcd->setCursor(0, cursor);
-    //     lcd->print(" ");
-    //     cursor = (cursor + 1) % items->length();
-    // }
+    if (bouncer_up->update() && bouncer_up->rose())
+    {
+        lcd->setCursor(0, *cursor);
+        lcd->print(" ");
+        *cursor = (*cursor + 1) % items->length();
+    }
 
-    // if (bouncer_down.update() && bouncer_down.rose())
-    // {
-    //     lcd->setCursor(0, cursor);
-    //     lcd->print(" ");
-    //     cursor = (cursor - 1) % items->length();
-    // }
+    if (bouncer_down->update() && bouncer_down->rose())
+    {
+        lcd->setCursor(0, *cursor);
+        lcd->print(" ");
+        *cursor = (*cursor - 1) % items->length();
+    }
 
-    // if (bouncer_enter.update() && bouncer_enter.rose())
-    // {
-    //     MenuItem current_menu_item = items->get(cursor);
-    //     if (current_menu_item.menu != nullptr)
-    //     {
-    //         lcd->clear();
+    if (bouncer_enter->update() && bouncer_enter->rose())
+    {
+        MenuItem current_menu_item = items->get(*cursor);
+        if (current_menu_item.menu != nullptr)
+        {
+            lcd->clear();
 
-    //         views->push(current_menu_item.menu);
-    //     }
-    // }
+            views->push(current_menu_item.menu);
+        }
+    }
 
-    // if (bouncer_back.update() && bouncer_back.rose())
-    // {
-    //     lcd->clear();
-    //     views->pop();
-    // }
+    if (bouncer_back->update() && bouncer_back->rose())
+    {
+        lcd->clear();
+        views->pop();
+    }
 }

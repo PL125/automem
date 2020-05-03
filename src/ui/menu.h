@@ -17,12 +17,13 @@ class MenuItem;
 class Menu : public View
 {
     private:
-        Bounce bouncer_up;
-        Bounce bouncer_down;
-        Bounce bouncer_enter;
-        Bounce bouncer_back;
+        Bounce *bouncer_up;
+        Bounce *bouncer_down;
+        Bounce *bouncer_enter;
+        Bounce *bouncer_back;
     public:
-        int cursor;
+        
+        int *cursor;
         LiquidCrystal_I2C *lcd;
         List<MenuItem> *items;
         Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);

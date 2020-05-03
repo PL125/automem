@@ -19,8 +19,8 @@ class Stack
 public:
     Stack();
     void push(T *value);
-    T pop();
-    T top();
+    T* pop();
+    T* top();
     bool empty();
 
 private:
@@ -40,18 +40,18 @@ void Stack<T>::push(T *value)
 };
 
 template <typename T>
-T Stack<T>::pop()
+T* Stack<T>::pop()
 {
     Item *old = head;
     head = old->next;
 
-    return *old->value;
+    return old->value;
 };
 
 template <typename T>
-T Stack<T>::top()
+T* Stack<T>::top()
 {
-    return *head->value;
+    return head->value;
 };
 
 #endif

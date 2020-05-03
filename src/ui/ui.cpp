@@ -9,6 +9,6 @@ Ui::Ui(Menu *main_menu)
 
 void Ui::render(LiquidCrystal_I2C *lcd)
 {
-    views->top().render();
-    views->top().action(views);
+    views->top()->render();
+    views->top()->action(views);
 }
