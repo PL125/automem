@@ -1,15 +1,16 @@
 #include <Arduino.h>
 
-#include <Wire.h>
+//#include <Wire.h>
+#include "arch/e24cxx.h"
+
 #include <LiquidCrystal_I2C.h>
 #include <Bounce2.h>
 
 #include "ui/loading.h"
 #include "ui/menu.h"
+#include "ui/result.h"
 #include "ui/ui.h"
 
-#include "arch/e24cxx.h"
-#include "misc/radio.h"
 #include <string.h>
 
 E24cxx e(512);
@@ -46,11 +47,17 @@ void setup()
   items2.add(new MenuItem("Test", nullptr));
   items2.add(new MenuItem("Test", nullptr));
 
+  List<MenuItem> itemsRR = List<MenuItem>();
+  itemsRR.add(new MenuItem("CD5404 (24c32)", nullptr));
+
+  List<MenuItem> itemsR = List<MenuItem>();
+  itemsR.add(new MenuItem("Fiat", new Menu(&lcd, &itemsRR)));
+
   List<MenuItem> items = List<MenuItem>();
-  items.add(new MenuItem("Teste 1", new Loading(&lcd)));
-  items.add(new MenuItem("Teste 2", new Menu(&lcd, &items2)));
-  items.add(new MenuItem("Teste 3", nullptr));
-  items.add(new MenuItem("Teste 4", nullptr));
+  items.add(new MenuItem("Imobilizador", new Loading(&lcd)));
+  items.add(new MenuItem("Airbag", new Menu(&lcd, &items2)));
+  items.add(new MenuItem("Odometro", nullptr));
+  items.add(new MenuItem("Radio", new Menu(&lcd, &itemsR)));
   items.add(new MenuItem("Teste 5", nullptr));
   items.add(new MenuItem("Teste 6", nullptr));
   items.add(new MenuItem("Teste 7", nullptr));
@@ -59,9 +66,11 @@ void setup()
   items.add(new MenuItem("Teste 10", nullptr));
   items.add(new MenuItem("Teste 11", nullptr));
   items.add(new MenuItem("Teste 12", nullptr));
-  
+
   Menu m = Menu(&lcd, &items);
   ui = new Ui(&m);
+  ui->render(&lcd);
+
   e.setup();
 }
 
@@ -73,9 +82,7 @@ int current = 0;
 uint16_t code;
 void loop()
 {
-
   ui->render(&lcd);
-
   if (Serial.available())
   {
     char value = Serial.read();
@@ -101,8 +108,8 @@ void loop()
         {
         case 'R':
           // e.read_all();
-          //debug_eeprom((int)strtol(address, NULL, 16));
-          Serial.print(Radio::getCode(&e));
+          debug_eeprom((int)strtol(address, NULL, 16));
+          //Serial.println(Radio::getCode(&e));
           break;
         case 'P':
           e.print();

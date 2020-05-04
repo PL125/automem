@@ -3,7 +3,7 @@
 class Radio
 {
     public:
-        static uint16_t getCode(E24cxx *e);
+        static char* getCode(E24cxx *e);
 
     private:
         Radio() {}

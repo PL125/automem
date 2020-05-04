@@ -6,7 +6,7 @@ E24cxx::E24cxx(int size) {
 }
 
 void E24cxx::setup() {
-    
+    Wire.begin(0x50);
 }
 
 uint8_t E24cxx::read(uint16_t address) {

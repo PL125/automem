@@ -22,11 +22,11 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
 
     bouncer_enter = new Bounce();
     bouncer_enter->attach(ENTER);
-    bouncer_enter->interval(20);
+    bouncer_enter->interval(50);
 
     bouncer_back = new Bounce();
     bouncer_back->attach(BACK);
-    bouncer_back->interval(20);
+    bouncer_back->interval(50);
 
     this->lcd = lcd;
     this->top = new int(0);
@@ -37,14 +37,16 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
 Menu::~Menu() {}
 
 void Menu::render() const {
-    lcd->createChar(0, Symbols::arrow);
-    lcd->setCursor(0, *cursor);
-    lcd->write(0);
+    if(*should_render) {
+        lcd->createChar(0, Symbols::arrow);
+        lcd->setCursor(0, *cursor);
+        lcd->write(0);
 
-    for (int i=0; i < 4; i++)
-    {
-        lcd->setCursor(1, i );
-        lcd->print(items->get(i+*top).title);
+        for (int i=0; i < min(items->length(), 4); i++)
+        {
+            lcd->setCursor(1, i );
+            lcd->print(items->get(i+*top).title);
+        }
     }
 }
 

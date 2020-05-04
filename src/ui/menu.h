@@ -29,6 +29,7 @@ class Menu : public View
         Bounce *bouncer_down;
         Bounce *bouncer_enter;
         Bounce *bouncer_back;
+        bool *should_render;
     public:
         int *top;
         int *cursor;
