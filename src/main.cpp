@@ -34,68 +34,66 @@ void setup()
 
   E24cxx *e = new E24cxx(512);
   uint16_t *v = new uint16_t(0);
-  char result[10];
-  char a18[2];
-  char a19[2];
-  char a1a[2];
-  char a1b[2];
+  char result[5] = "";
+  char a18[2] = "";
+  char a19[2] = "";
+  char a1a[2] = "";
+  char a1b[2] = "";
 
-  Serial.print(e->read(0x18));
-  Serial.print(e->read(0x19));
-  Serial.print(e->read(0x1a));
-  Serial.print(e->read(0x1b));
+  sprintf(a18, "%02x", e->read(0x18));
+  result[0] = a18[1];
+  sprintf(a19, "%02x", e->read(0x19));
+  result[1] = a19[0];
+  sprintf(a1a, "%02x", e->read(0x1a));
+  result[2] = a1a[1];
+  sprintf(a1b, "%02x", e->read(0x1b));
+  result[3] = a1b[0];
 
-  sprintf(a18, "%02X", e->read(0x18));
-  sprintf(a19, "%02X", e->read(0x19));
-  sprintf(a1a, "%02X", e->read(0x1a));
-  sprintf(a1b, "%02X", e->read(0x1b));
-  sprintf(result, "%c%c%c%c", a18[1], a19[0], a1a[1], a1b[0]);
-  
-  Serial.print(result);
+  Serial.println(result);
 
   delay(10);
 
-  // lcd = new LiquidCrystal_I2C(0x27, 20, 4);
-  // lcd->init();
-  // lcd->backlight();
+  lcd = new LiquidCrystal_I2C(0x27, 20, 4);
+  lcd->init();
+  lcd->backlight();
   
-  // List<MenuItem> items3 = List<MenuItem>();
-  // items3.add(new MenuItem("Carro 1", new Loading(lcd)));
-  // items3.add(new MenuItem("Carro 2", nullptr));
-  // items3.add(new MenuItem("Carro 3", nullptr));
-  // items3.add(new MenuItem("Carro 4", nullptr));
+  List<MenuItem> items3 = List<MenuItem>();
+  items3.add(new MenuItem("Carro 1", new Loading(lcd)));
+  items3.add(new MenuItem("Carro 2", nullptr));
+  items3.add(new MenuItem("Carro 3", nullptr));
+  items3.add(new MenuItem("Carro 4", nullptr));
 
-  // List<MenuItem> items2 = List<MenuItem>();
-  // items2.add(new MenuItem("Chevrolet", new Menu(lcd, &items3)));
-  // items2.add(new MenuItem("Volkswagen", nullptr));
-  // items2.add(new MenuItem("Test", nullptr));
-  // items2.add(new MenuItem("Test", nullptr));
+  List<MenuItem> items2 = List<MenuItem>();
+  items2.add(new MenuItem("Chevrolet", new Menu(lcd, &items3)));
+  items2.add(new MenuItem("Volkswagen", nullptr));
+  items2.add(new MenuItem("Test", nullptr));
+  items2.add(new MenuItem("Test", nullptr));
 
-  // List<MenuItem> itemsRR = List<MenuItem>();
-  // itemsRR.add(new MenuItem("CD5404 (24c32)", new Result(lcd, result)));
+  List<MenuItem> itemsRR = List<MenuItem>();
+  itemsRR.add(new MenuItem("CD5404 (24c32)", new Result(lcd, result)));
 
-  // List<MenuItem> itemsR = List<MenuItem>();
-  // itemsR.add(new MenuItem("Fiat", new Menu(lcd, &itemsRR)));
+  List<MenuItem> itemsR = List<MenuItem>();
+  itemsR.add(new MenuItem("Fiat", new Menu(lcd, &itemsRR)));
 
-  // List<MenuItem> items = List<MenuItem>();
-  // items.add(new MenuItem("Imobilizador", new Loading(lcd)));
-  // items.add(new MenuItem("Airbag", new Menu(lcd, &items2)));
-  // items.add(new MenuItem("Odometro", nullptr));
-  // items.add(new MenuItem("Radio", new Menu(lcd, &itemsR)));
-  // items.add(new MenuItem("Teste 5", nullptr));
-  // items.add(new MenuItem("Teste 6", nullptr));
-  // items.add(new MenuItem("Teste 7", nullptr));
-  // items.add(new MenuItem("Teste 8", nullptr));
-  // items.add(new MenuItem("Teste 9", nullptr));
-  // items.add(new MenuItem("Teste 10", nullptr));
-  // items.add(new MenuItem("Teste 11", nullptr));
-  // items.add(new MenuItem("Teste 12", nullptr));
+  List<MenuItem> items = List<MenuItem>();
+  items.add(new MenuItem("Imobilizador", new Loading(lcd)));
+  items.add(new MenuItem("Airbag", new Menu(lcd, &items2)));
+  items.add(new MenuItem("Odometro", nullptr));
+  items.add(new MenuItem("Radio", new Menu(lcd, &itemsR)));
+  items.add(new MenuItem("Teste 5", nullptr));
+  items.add(new MenuItem("Teste 6", nullptr));
+  items.add(new MenuItem("Teste 7", nullptr));
+  items.add(new MenuItem("Teste 8", nullptr));
+  items.add(new MenuItem("Teste 9", nullptr));
+  items.add(new MenuItem("Teste 10", nullptr));
+  items.add(new MenuItem("Teste 11", nullptr));
+  items.add(new MenuItem("Teste 12", nullptr));
   
-  // Menu m = Menu(lcd, &items);
-  // ui = new Ui(&m);
-  // ui->render(lcd);
+  Menu m = Menu(lcd, &items);
+  ui = new Ui(&m);
+  ui->render(lcd);
   
-  //e->setup();
+  e->setup();
 }
 
 char state = 'W';

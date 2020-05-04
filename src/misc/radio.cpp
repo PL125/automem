@@ -1,18 +1,21 @@
 #include "misc/radio.h"
 
-uint16_t Radio::getCode(E24cxx *e) {
-    char result[10];
-    char a18[2];
-    char a19[2];
-    char a1a[2];
-    char a1b[2];
+char* Radio::getCode(E24cxx *e) {
+    char result[5] = "";
+    char a18[2] = "";
+    char a19[2] = "";
+    char a1a[2] = "";
+    char a1b[2] = "";
 
-    sprintf(a18, "%02X", e->read(0x18));
-    sprintf(a19, "%02X", e->read(0x19));
-    sprintf(a1a, "%02X", e->read(0x1a));
-    sprintf(a1b, "%02X", e->read(0x1b));
-    sprintf(result, "%c%c%c%c", a18[1], a19[0], a1a[1], a1b[0]);
+    sprintf(a18, "%02x", e->read(0x18));
+    result[0] = a18[1];
+    sprintf(a19, "%02x", e->read(0x19));
+    result[1] = a19[0];
+    sprintf(a1a, "%02x", e->read(0x1a));
+    result[2] = a1a[1];
+    sprintf(a1b, "%02x", e->read(0x1b));
+    result[3] = a1b[0];
 
-    return atoi(result);
+    return result;
 }
 
