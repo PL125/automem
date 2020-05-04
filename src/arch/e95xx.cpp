@@ -57,11 +57,11 @@ void E95xx::print() {
     for(int i=0; i<size;i++) {
         if((i&15)==0) {
         sprintf(buf, "\n0x%03X: ", i);
-        Serial.print(buf);
+        // Serial.print(buf);
         }
 
         sprintf(buf, " 0x%02X: ", read(i));
-        Serial.print(buf);
+        // Serial.print(buf);
     }
 
     delay(5000);

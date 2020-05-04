@@ -6,7 +6,6 @@
 #include "symbols.h"
 
 #include "view.h"
-#include "../misc/radio.h"
 
 #define ENTER 6
 #define BACK 5

@@ -37,17 +37,17 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
 Menu::~Menu() {}
 
 void Menu::render() const {
-    if(*should_render) {
-        lcd->createChar(0, Symbols::arrow);
-        lcd->setCursor(0, *cursor);
-        lcd->write(0);
+    
+    lcd->createChar(0, Symbols::arrow);
+    lcd->setCursor(0, *cursor);
+    lcd->write(0);
 
-        for (int i=0; i < min(items->length(), 4); i++)
-        {
-            lcd->setCursor(1, i );
-            lcd->print(items->get(i+*top).title);
-        }
+    for (int i=0; i < min(items->length(), 4); i++)
+    {
+        lcd->setCursor(1, i );
+        lcd->print(items->get(i+*top).title);
     }
+
 }
 
 void Menu::action(Stack<View> *views) const {

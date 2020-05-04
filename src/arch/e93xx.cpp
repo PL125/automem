@@ -58,7 +58,7 @@ uint8_t E93xx::read(uint16_t address) {
 
 void E93xx::read_all() {
     for(int i=0; i<size;i++) { 
-        Serial.write(read(i)); 
+        // Serial.write(read(i)); 
     }
 }
 
@@ -91,11 +91,11 @@ void E93xx::print() {
 
         //sprintf(buf, "0x%02X: ", read(i));
         sprintf(buf, "0x%02X ", read(i));
-        Serial.print(buf);
+        // Serial.print(buf);
         delay(10);
     }
 
-    Serial.print("\n\t");
+    // Serial.print("\n\t");
 
     delay(5000);
 }

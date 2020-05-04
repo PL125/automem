@@ -1,6 +1,6 @@
 #include "misc/radio.h"
 
-char* Radio::getCode(E24cxx *e) {
+uint16_t Radio::getCode(E24cxx *e) {
     char result[10];
     char a18[2];
     char a19[2];
@@ -13,6 +13,6 @@ char* Radio::getCode(E24cxx *e) {
     sprintf(a1b, "%02X", e->read(0x1b));
     sprintf(result, "%c%c%c%c", a18[1], a19[0], a1a[1], a1b[0]);
 
-    return result;
+    return atoi(result);
 }
 

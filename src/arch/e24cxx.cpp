@@ -6,7 +6,7 @@ E24cxx::E24cxx(int size) {
 }
 
 void E24cxx::setup() {
-    Wire.begin(0x50);
+    //Wire.begin(0x50);
 }
 
 uint8_t E24cxx::read(uint16_t address) {
@@ -17,8 +17,10 @@ uint8_t E24cxx::read(uint16_t address) {
 
     Wire.requestFrom(0x50, 1);
     uint8_t result = 0;
-    if (Wire.available())
+    if (Wire.available()) 
+    {
         result = Wire.read();
+    }
 
     return result;
 
@@ -38,11 +40,11 @@ void E24cxx::print() {
     for(int i=0; i<size;i++) {
         if((i&15)==0) {
             sprintf(buf, "\n0x%03X: ", i);
-            Serial.print(buf);
+            // Serial.print(buf);
         }
 
         sprintf(buf, " 0x%02X: ", read(i));
-        Serial.print(buf);
+        // Serial.print(buf);
     }
 
     delay(5000);
