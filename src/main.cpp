@@ -56,7 +56,7 @@ void setup()
 
   delay(10);
 
-  char *result = Parser::run("(merge (read 24) (read 25) (read 26) (read 27))");
+  char *result = Parser::run("(merge (read 24) (read 25) (read 26) (read 27) (read 24) (read 25) (read 26) (read 27) ))");
   Serial.println(result);
   free(&result);
 

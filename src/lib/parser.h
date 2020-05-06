@@ -75,9 +75,9 @@ Token read(List<Token> &args)
     long address = atol(args.pop_front().value);
     
     E24cxx e(512);
-    char buf[8];
 
-    sprintf(buf, "%02x", e.read(address));
+    char buf[8];
+    sprintf(buf, "%02x", address);
 
     return Token(TNumber, buf);
 }
@@ -123,7 +123,7 @@ private:
     static Token atom(char *token);
     static Token eval(Token token);
     static List<char *> tokenize(char *s);
-    static Token read_from_tokens(List<char *> &tokens);
+    static Token parse(List<char *> &tokens);
 };
 
 bool Parser::isdig(char c) { return isdigit(static_cast<unsigned char>(c)) != 0; }
@@ -168,7 +168,7 @@ Token Parser::atom(char *token)
   return Token(TSymbol, token);
 }
 
-Token Parser::read_from_tokens(List<char *> &tokens)
+Token Parser::parse(List<char *> &tokens)
 {
   char *token = tokens.pop_front();
   if (*token == '(')
@@ -176,7 +176,7 @@ Token Parser::read_from_tokens(List<char *> &tokens)
     Token t(TList);
     while (*tokens.get(0) != ')')
     {
-      t.list.add(read_from_tokens(tokens));
+      t.list.add(parse(tokens));
     }
     tokens.pop_front();
     return t;
@@ -232,7 +232,7 @@ Token Parser::eval(Token token)
 char* Parser::run(char* s)
 {
   List<char *> t = Parser::tokenize(s);
-  Token x = Parser::read_from_tokens(t);
+  Token x = Parser::parse(t);
   
   return Parser::eval(x).value;
 }
