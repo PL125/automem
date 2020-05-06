@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include "list.h"
 
+#include "../arch/e24cxx.h"
+
 enum TokenType
 {
     TSymbol,
@@ -66,6 +68,48 @@ Token sub(List<Token> &args)
     sprintf(buf,"%d", initial);
 
     return Token(TNumber, buf);
+}
+
+Token read(List<Token> &args)
+{
+    long address = atol(args.pop_front().value);
+    
+    E24cxx e(512);
+    char buf[8];
+
+    sprintf(buf, "%02x", e.read(address));
+
+    return Token(TNumber, buf);
+}
+
+Token merge(List<Token> &args)
+{
+  char buf[32];
+
+  strcpy(buf, args.pop_front().value);
+  for(int i=0; i<args.length(); i++) {
+    strcat(buf, args.get(i).value);
+  }
+
+  return Token(TNumber, buf);
+}
+
+Token first(List<Token> &args)
+{
+  char buf[2];
+  buf[0] = args.pop_front().value[0];
+  buf[1] = '\0';
+
+  return Token(TNumber, buf);
+}
+
+Token last(List<Token> &args)
+{
+  char buf[2];
+  buf[0] = args.pop_front().value[1];
+  buf[1] = '\0';
+
+  return Token(TNumber, buf);
 }
 
 class Parser
@@ -150,7 +194,10 @@ Token Parser::eval(Token token)
     if(!strcmp(token.value, "+")) return Token(TProc, &add);
     if(!strcmp(token.value, "-")) return Token(TProc, &sub);
     if(!strcmp(token.value, "*")) return Token(TProc, &mult);
-    
+    if(!strcmp(token.value, "read")) return Token(TProc, &read);
+    if(!strcmp(token.value, "merge")) return Token(TProc, &merge);
+    if(!strcmp(token.value, "first")) return Token(TProc, &first);
+    if(!strcmp(token.value, "last")) return Token(TProc, &last);
   } 
   
   if(token.type == TNumber) 

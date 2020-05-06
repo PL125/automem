@@ -9,7 +9,7 @@
 // #include "ui/result.h"
 // #include "ui/menu.h"
 // #include "ui/ui.h"
-// #include "misc/radio.h"
+#include "misc/radio.h"
 #include "lib/parser.h"
 
 #include <string.h>
@@ -31,11 +31,11 @@ uint8_t offset = 0;
 void setup()
 {
   Serial.begin(9600);
-  // Wire.begin(0x50);
+  Wire.begin(0x50);
 
-  // E24cxx *e = new E24cxx(512);
+  E24cxx *e = new E24cxx(512);
   // uint16_t *v = new uint16_t(0);
-  // char* result = Radio::getCode(e);
+  char* result2 = Radio::getCode(e);
   // char result[5] = "";
   // char a18[2] = "";
   // char a19[2] = "";
@@ -51,17 +51,15 @@ void setup()
   // sprintf(a1b, "%02x", e->read(0x1b));
   // result[3] = a1b[0];
 
-  // Serial.println(result);
+  Serial.println(result2);
   
 
   delay(10);
 
-  while(true) {
-    char *result = Parser::run("(+ 10 (+ 50 (+ 8 (+ 12 (+ 4 (+ 4 4))))))");
-    Serial.println(result);
-    free(&result);
-    delay(10);
-  }    
+  char *result = Parser::run("(merge (read 24) (read 25) (read 26) (read 27))");
+  Serial.println(result);
+  free(&result);
+
 
   // lcd = new LiquidCrystal_I2C(0x27, 20, 4);
   // lcd->init();
