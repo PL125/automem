@@ -58,41 +58,41 @@ void setup()
   lcd->init();
   lcd->backlight();
   
-  List<MenuItem> items3 = List<MenuItem>();
-  items3.add(new MenuItem("Carro 1", new Loading(lcd)));
-  items3.add(new MenuItem("Carro 2", nullptr));
-  items3.add(new MenuItem("Carro 3", nullptr));
-  items3.add(new MenuItem("Carro 4", nullptr));
+  // List<MenuItem> items3 = List<MenuItem>();
+  // items3.add(MenuItem("Carro 1", new Loading(lcd)));
+  // items3.add(MenuItem("Carro 2", nullptr));
+  // items3.add(MenuItem("Carro 3", nullptr));
+  // items3.add(MenuItem("Carro 4", nullptr));
 
-  List<MenuItem> items2 = List<MenuItem>();
-  items2.add(new MenuItem("Chevrolet", new Menu(lcd, &items3)));
-  items2.add(new MenuItem("Volkswagen", nullptr));
-  items2.add(new MenuItem("Test", nullptr));
-  items2.add(new MenuItem("Test", nullptr));
+  // List<MenuItem> items2 = List<MenuItem>();
+  // items2.add(MenuItem("Chevrolet", new Menu(lcd, &items3)));
+  // items2.add(MenuItem("Volkswagen", nullptr));
+  // items2.add(MenuItem("Test", nullptr));
+  // items2.add(MenuItem("Test", nullptr));
 
-  List<MenuItem> itemsRR = List<MenuItem>();
-  itemsRR.add(new MenuItem("CD5404 (24c32)", new Result(lcd, result)));
+  // List<MenuItem> itemsRR = List<MenuItem>();
+  // itemsRR.add(MenuItem("CD5404 (24c32)", new Result(lcd, result)));
 
-  List<MenuItem> itemsR = List<MenuItem>();
-  itemsR.add(new MenuItem("Fiat", new Menu(lcd, &itemsRR)));
+  // List<MenuItem> itemsR = List<MenuItem>();
+  // itemsR.add(MenuItem("Fiat", new Menu(lcd, &itemsRR)));
 
-  List<MenuItem> items = List<MenuItem>();
-  items.add(new MenuItem("Imobilizador", new Loading(lcd)));
-  items.add(new MenuItem("Airbag", new Menu(lcd, &items2)));
-  items.add(new MenuItem("Odometro", nullptr));
-  items.add(new MenuItem("Radio", new Menu(lcd, &itemsR)));
-  items.add(new MenuItem("Teste 5", nullptr));
-  items.add(new MenuItem("Teste 6", nullptr));
-  items.add(new MenuItem("Teste 7", nullptr));
-  items.add(new MenuItem("Teste 8", nullptr));
-  items.add(new MenuItem("Teste 9", nullptr));
-  items.add(new MenuItem("Teste 10", nullptr));
-  items.add(new MenuItem("Teste 11", nullptr));
-  items.add(new MenuItem("Teste 12", nullptr));
+  // List<MenuItem> items = List<MenuItem>();
+  // items.add(MenuItem("Imobilizador", new Loading(lcd)));
+  // items.add(MenuItem("Airbag", new Menu(lcd, &items2)));
+  // items.add(MenuItem("Odometro", nullptr));
+  // items.add(MenuItem("Radio", new Menu(lcd, &itemsR)));
+  // items.add(MenuItem("Teste 5", nullptr));
+  // items.add(MenuItem("Teste 6", nullptr));
+  // items.add(MenuItem("Teste 7", nullptr));
+  // items.add(MenuItem("Teste 8", nullptr));
+  // items.add(MenuItem("Teste 9", nullptr));
+  // items.add(MenuItem("Teste 10", nullptr));
+  // items.add(MenuItem("Teste 11", nullptr));
+  // items.add(MenuItem("Teste 12", nullptr));
   
-  Menu m = Menu(lcd, &items);
-  ui = new Ui(&m);
-  ui->render(lcd);
+  // Menu m = Menu(lcd, &items);
+  // ui = new Ui(&m);
+  // ui->render(lcd);
   
   e->setup();
 }
@@ -108,7 +108,7 @@ void loop()
   // if (Serial.available())
   // {
 
-    if(lcd != nullptr) ui->render(lcd);
+    // if(lcd != nullptr) ui->render(lcd);
 
     // char value = Serial.read();
 

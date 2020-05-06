@@ -12,7 +12,7 @@ char* Radio::getCode(E24cxx *e) {
     result[2] = temp[1];
     sprintf(temp, "%02x", e->read(0x1b));
     result[3] = temp[0];
-
+    
     return result;
 }   
 

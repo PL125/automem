@@ -10,9 +10,9 @@ class List
     class Item
     {
     public:
-        T *value;
+        T value;
         Item *next;
-        Item(T *value)
+        Item(T value)
         {
             this->value = value;
             this->next = nullptr;
@@ -21,9 +21,10 @@ class List
 
 public:
     List();
-    void add(T *value);
+    void add(T value);
+    T pop_front();
     T get(uint8_t position);
-    uint8_t length();
+    int length();
 
 private:
     Item *head;
@@ -38,7 +39,7 @@ List<T>::List()
 };
 
 template <typename T>
-void List<T>::add(T *value)
+void List<T>::add(T value)
 {
     Item *n = new Item(value);
     Item *current = this->head;
@@ -60,6 +61,17 @@ void List<T>::add(T *value)
 }
 
 template <typename T>
+T List<T>::pop_front()
+{
+    Item *current = this->head;
+    
+    this->head = current->next;
+    this->size--;
+
+    return current->value;
+}
+
+template <typename T>
 T List<T>::get(uint8_t position)
 {
     Item *current = this->head;
@@ -68,14 +80,14 @@ T List<T>::get(uint8_t position)
     while (current != nullptr)  
     {
         if (count == position)  
-            return *current->value;
+            return current->value;
         count++;
         current = current->next;
     }
 };
 
 template <typename T>
-uint8_t List<T>::length()
+int List<T>::length()
 {
     return this->size;
 };
