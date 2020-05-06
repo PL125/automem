@@ -21,6 +21,7 @@ class List
 
 public:
     List();
+    // ~List();
     void add(T value);
     T pop_front();
     T get(uint8_t position);
@@ -38,6 +39,18 @@ List<T>::List()
     this->size = 0;
 };
 
+// template <typename T>
+// List<T>::~List()
+// {
+//     Item *current = this->head;
+//     while (current)
+//     {
+//         Item *next = current->next;
+//         delete current;
+//         current = next;
+//     }
+// }
+
 template <typename T>
 void List<T>::add(T value)
 {
@@ -50,7 +63,7 @@ void List<T>::add(T value)
     }
     else
     {
-        while (current->next != nullptr)
+        while (current->next)
         {
             current = current->next;
         }
@@ -64,11 +77,14 @@ template <typename T>
 T List<T>::pop_front()
 {
     Item *current = this->head;
-    
+
     this->head = current->next;
     this->size--;
 
-    return current->value;
+    T value = current->value;
+    delete current;
+
+    return value;
 }
 
 template <typename T>
@@ -77,9 +93,9 @@ T List<T>::get(uint8_t position)
     Item *current = this->head;
 
     int count = 0;
-    while (current != nullptr)  
+    while (current)
     {
-        if (count == position)  
+        if (count == position)
             return current->value;
         count++;
         current = current->next;

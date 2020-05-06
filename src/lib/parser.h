@@ -33,14 +33,12 @@ const Token nil(TSymbol, "nil");
 
 Token add(List<Token> &args)
 {
-    long initial = atol(args.pop_front().value);
-    for(int i=0; i<args.length(); i++) {
-      initial += atol(args.get(i).value);
-    }
-    
+    int initial = atoi(args.pop_front().value);
+    while(args.length() != 0) initial += atoi(args.pop_front().value);
+
     char buf[8];
     sprintf(buf,"%d", initial);
-  
+
     return Token(TNumber, buf);
 }
 
@@ -72,12 +70,12 @@ Token sub(List<Token> &args)
 
 Token read(List<Token> &args)
 {
-    long address = atol(args.pop_front().value);
+    int address = atoi(args.pop_front().value);
     
     E24cxx e(512);
 
-    char buf[8];
-    sprintf(buf, "%02x", address);
+    char* buf = new char[3];
+    sprintf(buf, "%02x", e.read(address));
 
     return Token(TNumber, buf);
 }
@@ -87,16 +85,14 @@ Token merge(List<Token> &args)
   char buf[32];
 
   strcpy(buf, args.pop_front().value);
-  for(int i=0; i<args.length(); i++) {
-    strcat(buf, args.get(i).value);
-  }
+  while(args.length() != 0) strcat(buf, args.pop_front().value);
 
   return Token(TNumber, buf);
 }
 
 Token first(List<Token> &args)
 {
-  char buf[2];
+  char* buf = new char[2];
   buf[0] = args.pop_front().value[0];
   buf[1] = '\0';
 
@@ -105,7 +101,7 @@ Token first(List<Token> &args)
 
 Token last(List<Token> &args)
 {
-  char buf[2];
+  char* buf = new char[3];
   buf[0] = args.pop_front().value[1];
   buf[1] = '\0';
 
@@ -217,24 +213,24 @@ Token Parser::eval(Token token)
 
   Token proc = eval(token.list.pop_front());
   
-  List<Token> args = List<Token>();
-  for(int j=0; j<token.list.length(); j++) {
-    eval(token.list.get(j));
-    args.add(eval(token.list.get(j)));
-  }
-  
   if(proc.type == TProc)
   {
+    List<Token> args = List<Token>();
+    
+    while(token.list.length() != 0) {
+      args.add(eval(token.list.pop_front()));
+    }
+    
     return proc.proc(args);
   }
 }
 
 char* Parser::run(char* s)
 {
-  List<char *> t = Parser::tokenize(s);
-  Token x = Parser::parse(t);
+  List<char *> t = tokenize(s);
+  Token x = parse(t);
   
-  return Parser::eval(x).value;
+  return eval(x).value;
 }
 
 #endif
