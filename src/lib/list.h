@@ -21,8 +21,8 @@ class List
 
 public:
     List();
-    // ~List();
-    void add(T value);
+    ~List();
+    void add(const T& value);
     T pop_front();
     T get(uint8_t position);
     int length();
@@ -39,27 +39,26 @@ List<T>::List()
     this->size = 0;
 };
 
-// template <typename T>
-// List<T>::~List()
-// {
-//     Item *current = this->head;
-//     while (current)
-//     {
-//         Item *next = current->next;
-//         delete current;
-//         current = next;
-//     }
-// }
+template <typename T>
+List<T>::~List()
+{
+    // while (head)
+    // {
+    //     Item *temp = head;
+    //     head = head->next;
+    //     delete temp;
+    // }
+}
 
 template <typename T>
-void List<T>::add(T value)
+void List<T>::add(const T& value)
 {
     Item *n = new Item(value);
-    Item *current = this->head;
+    Item *current = head;
 
-    if (this->head == nullptr)
+    if (head == nullptr)
     {
-        this->head = n;
+        head = n;
     }
     else
     {
@@ -76,10 +75,10 @@ void List<T>::add(T value)
 template <typename T>
 T List<T>::pop_front()
 {
-    Item *current = this->head;
+    Item *current = head;
 
-    this->head = current->next;
-    this->size--;
+    head = current->next;
+    size--;
 
     T value = current->value;
     delete current;
@@ -90,7 +89,7 @@ T List<T>::pop_front()
 template <typename T>
 T List<T>::get(uint8_t position)
 {
-    Item *current = this->head;
+    Item *current = head;
 
     int count = 0;
     while (current)
@@ -105,7 +104,7 @@ T List<T>::get(uint8_t position)
 template <typename T>
 int List<T>::length()
 {
-    return this->size;
+    return size;
 };
 
 #endif
