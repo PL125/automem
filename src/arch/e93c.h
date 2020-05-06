@@ -27,13 +27,15 @@ class E93c : public E
         int page_size;
     public:
         E93c(int size, int address_size, int page_size);
-        void setup();
-        uint8_t read(uint16_t address);
-        uint16_t transmit(uint16_t data, uint8_t bits);
-        void send_opcode(uint8_t op);
-        void read_all();
-        void write(uint16_t address, uint8_t data);
-        void print();
+        // ~E93c();
+
+        void setup() const;
+        uint8_t read(uint16_t address) const;
+        uint16_t transmit(uint16_t data, uint8_t bits) const;
+        void send_opcode(uint8_t op) const;
+        void read_all() const;
+        void write(uint16_t address, uint8_t data) const;
+        void print() const;
 };
 
 const E93c E93c66 = E93c(512, 9, 8);

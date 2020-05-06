@@ -5,13 +5,13 @@
 
 class E
 {  
-    private:
-        int size;
     public:
-        void setup();
-        uint8_t read(uint16_t address);
-        void write(uint16_t address, uint8_t data);
-        void print();
+        virtual ~E() {}
+
+        virtual void setup() const = 0;
+        virtual uint8_t read(uint16_t address) const = 0;
+        virtual void write(uint16_t address, uint8_t data) const = 0;
+        virtual void print() const = 0;
 };
 
 #endif

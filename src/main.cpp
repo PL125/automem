@@ -28,7 +28,8 @@ void setup()
   // char *result = Parser::run("(+ 1000 (+ 2000 (+ 50 (+ 4000 (+ 50 (+ 3000 (+ 40 (+ 500 1))))))))");
   // char *result = Parser::run("(+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 1))))))))))");
   // char *result = Parser::run("(+ 1 1 1 1 1 1 1 1 1 1 (+ 1 1 1 1 1 1 1 1 1 1 (+ 1 1 1 1 1 1 1 1 1 1 (+ 1 1 1 1 1 1 1 1 1 1))))");
-  char *result = Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))", E24c32(4096, 0x50));
+  E24c e = E24c(4096, 0x50);
+  char *result = Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))", e);
   Serial.println(result);
 
 
@@ -54,37 +55,7 @@ void setup()
   
 }
 
-// char buffer[512];
-// int current = 0;
-// uint16_t code;
 void loop()
 {
   ui->render(*lcd);
-  // if (Serial.available()) 
-  // {
-  //   List<char *> t = Parser::tokenize("(+ 1 2))");
-  //   Token x = Parser::read_from_tokens(t);
-  //   Serial.println(Parser::eval(x).value);
-  //   delay(1000);
-  //   // free(&t);
-  //   // free(&x);
-  // }
-
-  // if (Serial.available())
-  // {    
-
-  //   char value = Serial.read();
-
-  //   if (value == '#') {      
-  //     Serial.println(buffer);
-  //     List<char *> t = Parser::tokenize(buffer);
-  //     Token x = Parser::read_from_tokens(t);
-  //     Serial.println(Parser::eval(x).value);
-  //     for(int i=0; i<512; i++) buffer[i] = 0;
-  //     current = 0;
-  //   } else {
-  //     buffer[current] = value;
-  //     current++;
-  //   }
-  // }
 }

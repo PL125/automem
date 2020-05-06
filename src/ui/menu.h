@@ -32,10 +32,13 @@ class Menu : public View
     public:
         int *top;
         int *cursor;
-        Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
+
         LiquidCrystal_I2C *lcd;
         List<MenuItem> *items;
+
+        Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
         ~Menu();
+            
         void render() const;
         void action(Stack<View> *views) const;
 };

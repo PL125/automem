@@ -4,13 +4,13 @@ E95c::E95c(int size) {
     this->size = size;
 }
 
-void E95c::setup() {
+void E95c::setup() const {
     SPI.begin();
     pinMode(CS, OUTPUT);
     digitalWrite(CS, HIGH);
 }
 
-uint8_t E95c::read(int address) {
+uint8_t E95c::read(uint16_t address) const {
     SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
 
     digitalWrite(CS, LOW);
@@ -28,7 +28,7 @@ uint8_t E95c::read(int address) {
     return result;
 }
 
-void E95c::write(int address, uint8_t data) {
+void E95c::write(uint16_t address, uint8_t data) const {
     SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
 
     digitalWrite(CS, LOW);
@@ -48,7 +48,7 @@ void E95c::write(int address, uint8_t data) {
     SPI.endTransaction();
 }
 
-void E95c::print() {
+void E95c::print() const {
     char buf[128];
 
     for(int i=0; i<size;i++) {

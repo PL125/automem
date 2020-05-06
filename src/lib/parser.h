@@ -21,17 +21,17 @@ struct Token
 {
     TokenType type;
     char *value;
-    Token (*proc)(List<Token> &, E);
+    Token (*proc)(List<Token> &, E &);
 
     List<Token> list = List<Token>();
     Token(TokenType type = TSymbol) : type(type) {}
     Token(TokenType type, char *value) : type(type), value(value) {}
-    Token(TokenType type, Token (*proc)(List<Token> &proc, E)) : type(type), proc(proc) {}
+    Token(TokenType type, Token (*proc)(List<Token> &proc, E &e)) : type(type), proc(proc) {}
 };
 
 const Token nil(TSymbol, "nil");
 
-Token add(List<Token> &args, E e)
+Token add(List<Token> &args, E &e)
 {
     int initial = atoi(args.pop_front().value);
     while(args.length() != 0) initial += atoi(args.pop_front().value);
@@ -42,7 +42,7 @@ Token add(List<Token> &args, E e)
     return Token(TNumber, buf);
 }
 
-Token mult(List<Token> &args, E e)
+Token mult(List<Token> &args, E &e)
 {
     long initial = atol(args.pop_front().value);
     for(int i=0; i<args.length(); i++) {
@@ -55,7 +55,7 @@ Token mult(List<Token> &args, E e)
     return Token(TNumber, buf);
 }
 
-Token sub(List<Token> &args, E e)
+Token sub(List<Token> &args, E &e)
 {
     long initial = atol(args.pop_front().value);
     for(int i=0; i<args.length(); i++) {
@@ -68,7 +68,7 @@ Token sub(List<Token> &args, E e)
     return Token(TNumber, buf);
 }
 
-Token read(List<Token> &args, E e)
+Token read(List<Token> &args, E &e)
 {
     int address = atoi(args.pop_front().value);
     
@@ -78,7 +78,7 @@ Token read(List<Token> &args, E e)
     return Token(TNumber, buf);
 }
 
-Token merge(List<Token> &args, E e)
+Token merge(List<Token> &args, E &e)
 {
   char buf[32];
 
@@ -88,7 +88,7 @@ Token merge(List<Token> &args, E e)
   return Token(TNumber, buf);
 }
 
-Token first(List<Token> &args, E e)
+Token first(List<Token> &args, E &e)
 {
   char* buf = new char[2];
   buf[0] = args.pop_front().value[0];
@@ -97,7 +97,7 @@ Token first(List<Token> &args, E e)
   return Token(TNumber, buf);
 }
 
-Token last(List<Token> &args, E e)
+Token last(List<Token> &args, E &e)
 {
   char* buf = new char[3];
   buf[0] = args.pop_front().value[1];
@@ -110,7 +110,7 @@ class Parser
 {
 public:
     Parser();
-    static char* run(char *s, E e);
+    static char* run(char *s, E &e);
 
 private:
 
@@ -224,7 +224,7 @@ Token Parser::eval(Token token, E &e)
   }
 }
 
-char* Parser::run(char* s, E e)
+char* Parser::run(char* s, E &e)
 {
   List<char *> t = tokenize(s);
   Token x = parse(t);

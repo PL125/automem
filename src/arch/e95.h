@@ -23,10 +23,12 @@ class E95c : public E
         int size;
     public:
         E95c(int size);
-        void setup();
-        uint8_t read(int address);
-        void write(int address, uint8_t data);
-        void print();
+        // ~E95c();
+
+        void setup() const;
+        uint8_t read(uint16_t address) const;
+        void write(uint16_t address, uint8_t data) const;
+        void print() const;
 };
 
 const E95c E95640 = E95c(4096);
