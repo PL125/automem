@@ -72,13 +72,14 @@ class Parser
 {
 public:
     Parser();
-    static Token eval(Token token);
-    static List<char *> tokenize(char *s);
-    static Token read_from_tokens(List<char *> &tokens);
+    static char* run(char *s);
 
 private:
     static bool isdig(char c);
     static Token atom(char *token);
+    static Token eval(Token token);
+    static List<char *> tokenize(char *s);
+    static Token read_from_tokens(List<char *> &tokens);
 };
 
 bool Parser::isdig(char c) { return isdigit(static_cast<unsigned char>(c)) != 0; }
@@ -179,6 +180,14 @@ Token Parser::eval(Token token)
   {
     return proc.proc(args);
   }
+}
+
+char* Parser::run(char* s)
+{
+  List<char *> t = Parser::tokenize(s);
+  Token x = Parser::read_from_tokens(t);
+  
+  return Parser::eval(x).value;
 }
 
 #endif

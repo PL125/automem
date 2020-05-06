@@ -2,20 +2,20 @@
 
 //#include <Wire.h>
 
-#include <LiquidCrystal_I2C.h>
-#include <Bounce2.h>
+// #include <LiquidCrystal_I2C.h>
+// #include <Bounce2.h>
 
-#include "ui/loading.h"
-#include "ui/result.h"
-#include "ui/menu.h"
-#include "ui/ui.h"
-#include "misc/radio.h"
+// #include "ui/loading.h"
+// #include "ui/result.h"
+// #include "ui/menu.h"
+// #include "ui/ui.h"
+// #include "misc/radio.h"
 #include "lib/parser.h"
 
 #include <string.h>
 
-LiquidCrystal_I2C *lcd;
-Ui *ui;
+// LiquidCrystal_I2C *lcd;
+// Ui *ui;
 
 uint8_t currentCursor = 0;
 uint8_t offset = 0;
@@ -31,11 +31,11 @@ uint8_t offset = 0;
 void setup()
 {
   Serial.begin(9600);
-  Wire.begin(0x50);
+  // Wire.begin(0x50);
 
-  E24cxx *e = new E24cxx(512);
-  uint16_t *v = new uint16_t(0);
-  char* result = Radio::getCode(e);
+  // E24cxx *e = new E24cxx(512);
+  // uint16_t *v = new uint16_t(0);
+  // char* result = Radio::getCode(e);
   // char result[5] = "";
   // char a18[2] = "";
   // char a19[2] = "";
@@ -51,19 +51,21 @@ void setup()
   // sprintf(a1b, "%02x", e->read(0x1b));
   // result[3] = a1b[0];
 
-  Serial.println(result);
-
-  List<char *> t = Parser::tokenize("(- 128 (+ 5 (* 2 3)))");
-  Token x = Parser::read_from_tokens(t);
-  Serial.println("aaa");
-  Serial.println(Parser::eval(x).value);
-  Serial.println("bbb");
+  // Serial.println(result);
+  
 
   delay(10);
 
-  lcd = new LiquidCrystal_I2C(0x27, 20, 4);
-  lcd->init();
-  lcd->backlight();
+  while(true) {
+    char *result = Parser::run("(+ 10 (+ 50 (+ 8 (+ 12 (+ 4 (+ 4 4))))))");
+    Serial.println(result);
+    free(&result);
+    delay(10);
+  }    
+
+  // lcd = new LiquidCrystal_I2C(0x27, 20, 4);
+  // lcd->init();
+  // lcd->backlight();
   
   // List<MenuItem> items3 = List<MenuItem>();
   // items3.add(MenuItem("Carro 1", new Loading(lcd)));
@@ -101,85 +103,40 @@ void setup()
   // ui = new Ui(&m);
   // ui->render(lcd);
   
-  e->setup();
+  // e->setup();
 }
 
-char state = 'W';
-char option;
-char address[8];
-char data[8];
+char buffer[512];
 int current = 0;
 uint16_t code;
 void loop()
 {
-  // if (Serial.available())
+  
+  // if (Serial.available()) 
   // {
+  //   List<char *> t = Parser::tokenize("(+ 1 2))");
+  //   Token x = Parser::read_from_tokens(t);
+  //   Serial.println(Parser::eval(x).value);
+  //   delay(1000);
+  //   // free(&t);
+  //   // free(&x);
+  // }
 
-    // if(lcd != nullptr) ui->render(lcd);
+  // if (Serial.available())
+  // {    
 
-    // char value = Serial.read();
+  //   char value = Serial.read();
 
-    // if (state == 'W')
-    // {
-
-    //   for (int i = 0; i < 8; i++)
-    //     address[i] = 0;
-    //   for (int i = 0; i < 8; i++)
-    //     data[i] = 0;
-    //   current = 0;
-
-    //   option = value;
-    //   state = 'A';
-    // }
-    // else
-    // {
-
-    //   if (value == '#')
-    //   {
-    //     switch (option)
-    //     {
-    //     case 'R':
-    //       // e.read_all();
-    //       debug_eeprom((int)strtol(address, NULL, 16));
-    //       //Serial.println(Radio::getCode(&e));
-    //       break;
-    //     case 'P':
-    //       e.print();
-    //       break;
-    //     case 'W':
-    //       e.write((int)strtol(address, NULL, 16), (int)strtol(data, NULL, 16));
-    //       break;
-    //     default:
-    //       Serial.println("Opção inválida");
-    //     }
-
-    //     state = 'W';
-    //   }
-    //   else if (value == '$')
-    //   {
-    //     current = 0;
-    //     state = 'D';
-    //   }
-    //   else
-    //   {
-    //     switch (state)
-    //     {
-    //     case 'A':
-    //       if (current < 7)
-    //       {
-    //         address[current] = value;
-    //         current++;
-    //       }
-    //       break;
-    //     case 'D':
-    //       if (current < 7)
-    //       {
-    //         data[current] = value;
-    //         current++;
-    //       }
-    //       break;
-    //     }
-    //   }
-    // }
+  //   if (value == '#') {      
+  //     Serial.println(buffer);
+  //     List<char *> t = Parser::tokenize(buffer);
+  //     Token x = Parser::read_from_tokens(t);
+  //     Serial.println(Parser::eval(x).value);
+  //     for(int i=0; i<512; i++) buffer[i] = 0;
+  //     current = 0;
+  //   } else {
+  //     buffer[current] = value;
+  //     current++;
+  //   }
   // }
 }
