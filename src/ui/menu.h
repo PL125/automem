@@ -19,7 +19,7 @@ class MenuItem
     public:
         char *title;
         View *view;
-        MenuItem(char *title, View *view);
+        MenuItem();
 };
 
 class Menu : public View
@@ -29,13 +29,12 @@ class Menu : public View
         Bounce *bouncer_down;
         Bounce *bouncer_enter;
         Bounce *bouncer_back;
-        bool *should_render;
     public:
         int *top;
         int *cursor;
+        Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
         LiquidCrystal_I2C *lcd;
         List<MenuItem> *items;
-        Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
         ~Menu();
         void render() const;
         void action(Stack<View> *views) const;

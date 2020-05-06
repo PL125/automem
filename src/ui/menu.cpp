@@ -1,9 +1,9 @@
 #include "menu.h"
 
-MenuItem::MenuItem(char *title, View *view)
+MenuItem::MenuItem()
 {
-    this->title = title;
-    this->view = view;
+    this->title = "aaaa";
+    this->view = nullptr;
 }
 
 Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
@@ -29,9 +29,9 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
     bouncer_back->interval(50);
 
     this->lcd = lcd;
+    this->items = items;
     this->top = new int(0);
     this->cursor = new int(0);
-    this->items = items;
 }
 
 Menu::~Menu() {}
