@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include "list.h"
 
-#include "../arch/e24c.h"
+#include "../arch/e.h"
 
 enum TokenType
 {
@@ -21,17 +21,17 @@ struct Token
 {
     TokenType type;
     char *value;
-    Token (*proc)(List<Token> &);
+    Token (*proc)(List<Token> &, E);
 
     List<Token> list = List<Token>();
     Token(TokenType type = TSymbol) : type(type) {}
     Token(TokenType type, char *value) : type(type), value(value) {}
-    Token(TokenType type, Token (*proc)(List<Token> &proc)) : type(type), proc(proc) {}
+    Token(TokenType type, Token (*proc)(List<Token> &proc, E)) : type(type), proc(proc) {}
 };
 
 const Token nil(TSymbol, "nil");
 
-Token add(List<Token> &args)
+Token add(List<Token> &args, E e)
 {
     int initial = atoi(args.pop_front().value);
     while(args.length() != 0) initial += atoi(args.pop_front().value);
@@ -42,7 +42,7 @@ Token add(List<Token> &args)
     return Token(TNumber, buf);
 }
 
-Token mult(List<Token> &args)
+Token mult(List<Token> &args, E e)
 {
     long initial = atol(args.pop_front().value);
     for(int i=0; i<args.length(); i++) {
@@ -55,7 +55,7 @@ Token mult(List<Token> &args)
     return Token(TNumber, buf);
 }
 
-Token sub(List<Token> &args)
+Token sub(List<Token> &args, E e)
 {
     long initial = atol(args.pop_front().value);
     for(int i=0; i<args.length(); i++) {
@@ -68,17 +68,17 @@ Token sub(List<Token> &args)
     return Token(TNumber, buf);
 }
 
-Token read(List<Token> &args)
+Token read(List<Token> &args, E e)
 {
     int address = atoi(args.pop_front().value);
     
       char* buf = new char[3];
-    sprintf(buf, "%02x", E24c32.read(address));
+    sprintf(buf, "%02x", e.read(address));
 
     return Token(TNumber, buf);
 }
 
-Token merge(List<Token> &args)
+Token merge(List<Token> &args, E e)
 {
   char buf[32];
 
@@ -88,7 +88,7 @@ Token merge(List<Token> &args)
   return Token(TNumber, buf);
 }
 
-Token first(List<Token> &args)
+Token first(List<Token> &args, E e)
 {
   char* buf = new char[2];
   buf[0] = args.pop_front().value[0];
@@ -97,7 +97,7 @@ Token first(List<Token> &args)
   return Token(TNumber, buf);
 }
 
-Token last(List<Token> &args)
+Token last(List<Token> &args, E e)
 {
   char* buf = new char[3];
   buf[0] = args.pop_front().value[1];
@@ -110,12 +110,13 @@ class Parser
 {
 public:
     Parser();
-    static char* run(char *s);
+    static char* run(char *s, E e);
 
 private:
+
     static bool isdig(char c);
     static Token atom(char *token);
-    static Token eval(Token token);
+    static Token eval(Token token, E &e);
     static List<char *> tokenize(char *s);
     static Token parse(List<char *> &tokens);
 };
@@ -181,7 +182,7 @@ Token Parser::parse(List<char *> &tokens)
   }
 }
 
-Token Parser::eval(Token token)
+Token Parser::eval(Token token, E &e)
 {
   if(token.type == TSymbol) 
   {
@@ -209,26 +210,26 @@ Token Parser::eval(Token token)
   }
 
 
-  Token proc = eval(token.list.pop_front());
+  Token proc = eval(token.list.pop_front(), e);
   
   if(proc.type == TProc)
   {
     List<Token> args = List<Token>();
     
     while(token.list.length() != 0) {
-      args.add(eval(token.list.pop_front()));
+      args.add(eval(token.list.pop_front(), e));
     }
     
-    return proc.proc(args);
+    return proc.proc(args, e);
   }
 }
 
-char* Parser::run(char* s)
+char* Parser::run(char* s, E e)
 {
   List<char *> t = tokenize(s);
   Token x = parse(t);
   
-  return eval(x).value;
+  return eval(x, e).value;
 }
 
 #endif

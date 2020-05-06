@@ -17,9 +17,9 @@
 #define CLOCK 2000000
 #define HALF_CLOCK_PERIOD 100 // Microseconds
 
-#include <stdint.h>
+#include "e.h"
 
-class E93c
+class E93c : public E
 {  
     private:
         int size;

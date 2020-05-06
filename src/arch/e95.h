@@ -13,11 +13,11 @@
 #define READ 3
 #define WRITE 2
 
-#include <stdint.h>
+#include "e.h"
 #include <Arduino.h>
 #include <SPI.h>
 
-class E95c
+class E95c : public E
 {  
     private:
         int size;

@@ -1,9 +1,10 @@
 #ifndef E24C_H
 #define E24C_H 
 
+#include "e.h"
 #include <Wire.h>
 
-class E24c
+class E24c : public E
 {  
     private:
         int size;
