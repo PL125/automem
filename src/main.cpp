@@ -10,6 +10,7 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 #include "misc/radio.h"
+#include "lib/parser.h"
 
 #include <string.h>
 
@@ -51,6 +52,12 @@ void setup()
   // result[3] = a1b[0];
 
   Serial.println(result);
+
+  List<char *> t = Parser::tokenize("(- 128 (+ 5 (* 2 3)))");
+  Token x = Parser::read_from_tokens(t);
+  Serial.println("aaa");
+  Serial.println(Parser::eval(x).value);
+  Serial.println("bbb");
 
   delay(10);
 
