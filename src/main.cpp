@@ -9,7 +9,6 @@
 // #include "ui/result.h"
 // #include "ui/menu.h"
 // #include "ui/ui.h"
-#include "misc/radio.h"
 #include "lib/parser.h"
 
 #include <string.h>
@@ -31,37 +30,15 @@ uint8_t offset = 0;
 void setup()
 {
   Serial.begin(9600);
-  Wire.begin(0x50);
 
-  E24cxx *e = new E24cxx(512);
-  // uint16_t *v = new uint16_t(0);
-  char* result2 = Radio::getCode(e);
-  // char result[5] = "";
-  // char a18[2] = "";
-  // char a19[2] = "";
-  // char a1a[2] = "";
-  // char a1b[2] = "";
-
-  // sprintf(a18, "%02x", e->read(0x18));
-  // result[0] = a18[1];
-  // sprintf(a19, "%02x", e->read(0x19));
-  // result[1] = a19[0];
-  // sprintf(a1a, "%02x", e->read(0x1a));
-  // result[2] = a1a[1];
-  // sprintf(a1b, "%02x", e->read(0x1b));
-  // result[3] = a1b[0];
-
-  Serial.println(result2);
-  
 
   delay(10);
 
-  // char *result = Parser::run("(merge (last (read 24)) (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)) (last (read 24)) (first (read 25)) (last (read 26)))");
-  char *result = Parser::run("(+ 1000 (+ 2000 (+ 50 (+ 4000 (+ 50 (+ 3000 (+ 40 (+ 500 1))))))))");
+  char *result = Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
+  // char *result = Parser::run("(+ 1000 (+ 2000 (+ 50 (+ 4000 (+ 50 (+ 3000 (+ 40 (+ 500 1))))))))");
   // char *result = Parser::run("(+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 1))))))))))");
   // char *result = Parser::run("(+ 1 1 1 1 1 1 1 1 1 1 (+ 1 1 1 1 1 1 1 1 1 1 (+ 1 1 1 1 1 1 1 1 1 1 (+ 1 1 1 1 1 1 1 1 1 1))))");
   Serial.println(result);
-  free(&result);
 
 
   // lcd = new LiquidCrystal_I2C(0x27, 20, 4);

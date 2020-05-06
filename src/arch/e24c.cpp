@@ -1,15 +1,17 @@
-#include "e24cxx.h"
-#include <Arduino.h>
+#include "e24c.h"
 
-E24cxx::E24cxx(int size) {
+E24c::E24c(int size, int id) {
     this->size = size;
+    this->id = id;
+
+    setup();
 }
 
-void E24cxx::setup() {
-    //Wire.begin(0x50);
+void E24c::setup() {
+    Wire.begin(id);
 }
 
-uint8_t E24cxx::read(uint16_t address) {
+uint8_t E24c::read(uint16_t address) {
     Wire.beginTransmission(0x50);
     Wire.write(address >> 8);
     Wire.write(address & 0xFF);
@@ -26,7 +28,7 @@ uint8_t E24cxx::read(uint16_t address) {
 
 }
 
-void E24cxx::write(int address, uint8_t data) {
+void E24c::write(int address, uint8_t data) {
     Wire.beginTransmission(0x50);
     Wire.write(address >> 8);
     Wire.write(address & 0xFF);
@@ -34,7 +36,7 @@ void E24cxx::write(int address, uint8_t data) {
     Wire.endTransmission();
 }
 
-void E24cxx::print() {
+void E24c::print() {
     char buf[128];
 
     for(int i=0; i<size;i++) {
@@ -46,6 +48,4 @@ void E24cxx::print() {
         sprintf(buf, " 0x%02X: ", read(i));
         // Serial.print(buf);
     }
-
-    delay(5000);
 }

@@ -1,19 +1,16 @@
-#include <Arduino.h>
-#include <SPI.h>
+#include "e95.h"
 
-#include "e95xx.h"
-
-E95xx::E95xx(int size) {
+E95c::E95c(int size) {
     this->size = size;
 }
 
-void E95xx::setup() {
+void E95c::setup() {
     SPI.begin();
     pinMode(CS, OUTPUT);
     digitalWrite(CS, HIGH);
 }
 
-uint8_t E95xx::read(int address) {
+uint8_t E95c::read(int address) {
     SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
 
     digitalWrite(CS, LOW);
@@ -31,7 +28,7 @@ uint8_t E95xx::read(int address) {
     return result;
 }
 
-void E95xx::write(int address, uint8_t data) {
+void E95c::write(int address, uint8_t data) {
     SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
 
     digitalWrite(CS, LOW);
@@ -51,7 +48,7 @@ void E95xx::write(int address, uint8_t data) {
     SPI.endTransaction();
 }
 
-void E95xx::print() {
+void E95c::print() {
     char buf[128];
 
     for(int i=0; i<size;i++) {

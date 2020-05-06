@@ -1,5 +1,5 @@
-#ifndef E95xx_H
-#define E95xx_H 
+#ifndef E95c_H
+#define E95c_H 
 
 //#define SCK 13
 #define CS 10
@@ -14,17 +14,21 @@
 #define WRITE 2
 
 #include <stdint.h>
+#include <Arduino.h>
+#include <SPI.h>
 
-class E95xx
+class E95c
 {  
     private:
         int size;
     public:
-        E95xx(int size);
+        E95c(int size);
         void setup();
         uint8_t read(int address);
         void write(int address, uint8_t data);
         void print();
 };
+
+const E95c E95640 = E95c(4096);
 
 #endif

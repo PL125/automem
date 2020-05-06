@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include "list.h"
 
-#include "../arch/e24cxx.h"
+#include "../arch/e24c.h"
 
 enum TokenType
 {
@@ -72,10 +72,8 @@ Token read(List<Token> &args)
 {
     int address = atoi(args.pop_front().value);
     
-    E24cxx e(512);
-
-    char* buf = new char[3];
-    sprintf(buf, "%02x", e.read(address));
+      char* buf = new char[3];
+    sprintf(buf, "%02x", E24c32.read(address));
 
     return Token(TNumber, buf);
 }

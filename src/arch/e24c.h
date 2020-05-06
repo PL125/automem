@@ -1,18 +1,21 @@
-#ifndef E24cxx_H
-#define E24cxx_H 
+#ifndef E24C_H
+#define E24C_H 
 
 #include <Wire.h>
 
-class E24cxx
+class E24c
 {  
     private:
         int size;
+        int id;
     public:
-        E24cxx(int size);
+        E24c(int size, int id);
         void setup();
         uint8_t read(uint16_t address);
         void write(int address, uint8_t data);
         void print();
 };
+
+#define E24c32 E24c(4096, 0x50)
 
 #endif

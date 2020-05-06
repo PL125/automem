@@ -1,7 +1,7 @@
-#ifndef E93xx_H
-#define E93xx_H 
+#ifndef E93c_H
+#define E93c_H 
 
-#define SCK 13
+#define CLK 13
 #define CS 10
 //#define OUT 11
 #define DI 11
@@ -19,14 +19,14 @@
 
 #include <stdint.h>
 
-class E93xx
+class E93c
 {  
     private:
         int size;
         int address_size;
         int page_size;
     public:
-        E93xx(int size, int address_size, int page_size);
+        E93c(int size, int address_size, int page_size);
         void setup();
         uint8_t read(uint16_t address);
         uint16_t transmit(uint16_t data, uint8_t bits);
@@ -35,5 +35,7 @@ class E93xx
         void write(uint16_t address, uint8_t data);
         void print();
 };
+
+const E93c E93c66 = E93c(512, 9, 8);
 
 #endif

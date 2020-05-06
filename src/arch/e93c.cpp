@@ -1,23 +1,22 @@
-#include <Arduino.h>
+#include "e93c.h"
 #include <SPI.h>
+#include <Arduino.h>
 
-#include "e93xx.h"
-
-E93xx::E93xx(int size, int address_size, int page_size) {
+E93c::E93c(int size, int address_size, int page_size) {
     this->size = size;
     this->address_size = address_size;
     this->page_size = page_size;
 }
 
-void E93xx::setup() {
+void E93c::setup() {
     pinMode(CS, OUTPUT);
-    pinMode(SCK, OUTPUT);
+    pinMode(CLK, OUTPUT);
     pinMode(DI, OUTPUT);
     pinMode(DO, INPUT);
 }
 
 //https://github.com/tim0s/MicrowireEEPROM
-uint16_t E93xx::transmit(uint16_t data, uint8_t bits)
+uint16_t E93c::transmit(uint16_t data, uint8_t bits)
 {
         int dout = 0;
         for (int i=(bits-1); i>=0; i--) {
@@ -25,26 +24,26 @@ uint16_t E93xx::transmit(uint16_t data, uint8_t bits)
                 if ((1 << i) & data) digitalWrite(DI, HIGH);
                 else digitalWrite(DI, LOW);
                 delayMicroseconds(HALF_CLOCK_PERIOD);
-                digitalWrite(SCK, HIGH);
+                digitalWrite(CLK, HIGH);
                 delayMicroseconds(HALF_CLOCK_PERIOD);
-                digitalWrite(SCK, LOW);
+                digitalWrite(CLK, LOW);
         }
         digitalWrite(DI, LOW);
         return dout;
 }
 
-void E93xx::send_opcode(uint8_t op)
+void E93c::send_opcode(uint8_t op)
 {
-        digitalWrite(SCK, HIGH);
+        digitalWrite(CLK, HIGH);
         delayMicroseconds(HALF_CLOCK_PERIOD);
-        digitalWrite(SCK, LOW);
+        digitalWrite(CLK, LOW);
         digitalWrite(CS, HIGH);
         digitalWrite(DI, HIGH);
 
         transmit((1 << 2) | op, 3);
 }
 
-uint8_t E93xx::read(uint16_t address) {
+uint8_t E93c::read(uint16_t address) {
     send_opcode(READ);
     transmit(address, 9);
 
@@ -56,13 +55,13 @@ uint8_t E93xx::read(uint16_t address) {
 }
 
 
-void E93xx::read_all() {
+void E93c::read_all() {
     for(int i=0; i<size;i++) { 
         // Serial.write(read(i)); 
     }
 }
 
-void E93xx::write(uint16_t address, uint8_t data) {
+void E93c::write(uint16_t address, uint8_t data) {
     
     send_opcode(0);
     transmit(0xFF, 9);
@@ -80,7 +79,7 @@ void E93xx::write(uint16_t address, uint8_t data) {
     delay(10);
 }
 
-void E93xx::print() {
+void E93c::print() {
     char buf[128];
 
     for(int i=0; i<size;i++) {
