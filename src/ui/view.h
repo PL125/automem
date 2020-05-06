@@ -1,7 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "../utils/stack.h"
+#include "../lib/stack.h"
 #include "symbols.h"
 #include "math.h"
 

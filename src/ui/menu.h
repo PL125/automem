@@ -7,7 +7,7 @@
 #include "math.h"
 #include "view.h"
 #include "symbols.h"
-#include "../utils/list.h"
+#include "../lib/list.h"
 
 #define ENTER 6
 #define BACK 5

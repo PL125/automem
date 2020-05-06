@@ -5,7 +5,7 @@
 #include <LiquidCrystal_I2C.h>
 
 #include "menu.h"
-#include "../utils/stack.h"
+#include "../lib/stack.h"
 
 class Ui
 {
