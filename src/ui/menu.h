@@ -7,19 +7,20 @@
 #include "math.h"
 #include "view.h"
 #include "symbols.h"
-#include "../lib/list.h"
+#include "arch/e.h"
+
+#include "lib/list.h"
 
 #define ENTER 6
 #define BACK 5
 #define UP 7
 #define DOWN 8
 
-class MenuItem
+
+struct MenuItem
 {
-    public:
-        char *title;
-        View *view;
-        MenuItem();
+    char *title;
+    View *view;
 };
 
 class Menu : public View

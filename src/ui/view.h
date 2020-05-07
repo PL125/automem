@@ -1,9 +1,10 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "../lib/stack.h"
 #include "symbols.h"
 #include "math.h"
+
+#include "lib/stack.h"
 
 class View {
     public:

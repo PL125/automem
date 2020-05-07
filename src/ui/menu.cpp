@@ -1,12 +1,7 @@
 #include "menu.h"
 
-MenuItem::MenuItem()
+Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items)
 {
-    this->title = "aaaa";
-    this->view = nullptr;
-}
-
-Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
     pinMode(ENTER, INPUT);
@@ -36,29 +31,31 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items) {
 
 Menu::~Menu() {}
 
-void Menu::render() const {
-    
+void Menu::render() const
+{
+
     lcd->createChar(0, Symbols::arrow);
     lcd->setCursor(0, *cursor);
     lcd->write(0);
 
-    for (int i=0; i < min(items->length(), 4); i++)
+    for (int i = 0; i < min(items->length(), 4); i++)
     {
-        lcd->setCursor(1, i );
-        lcd->print(items->get(i+*top).title);
+        lcd->setCursor(1, i);
+        lcd->print(items->get(i + *top).title);
     }
-
 }
 
-void Menu::action(Stack<View> *views) const {
+void Menu::action(Stack<View> *views) const
+{
     if (bouncer_up->update() && bouncer_up->rose())
     {
         lcd->setCursor(0, *cursor);
         lcd->print(" ");
         *cursor = (*cursor + 1) % items->length();
-        if(*cursor > *top+4) {
+        if (*cursor > *top + 4)
+        {
             lcd->clear();
-            *top = min(*top+1, items->length());
+            *top = min(*top + 1, items->length());
         }
     }
 
@@ -67,9 +64,10 @@ void Menu::action(Stack<View> *views) const {
         lcd->setCursor(0, *cursor);
         lcd->print(" ");
         *cursor = *cursor - 1, 0 % items->length();
-        if(*cursor < *top-4) {
+        if (*cursor < *top - 4)
+        {
             lcd->clear();
-            *top = max(*top-1, 0);
+            *top = max(*top - 1, 0);
         }
     }
 

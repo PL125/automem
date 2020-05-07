@@ -1,6 +1,6 @@
 #include "result.h"
 
-Result::Result(LiquidCrystal_I2C *lcd, char *value)
+Result::Result(LiquidCrystal_I2C *lcd, Query *query)
 {
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
@@ -24,7 +24,7 @@ Result::Result(LiquidCrystal_I2C *lcd, char *value)
     bouncer_back->interval(20);
 
     this->lcd = lcd;
-    this->value = value;
+    this->value = query->run();
     this->cursor = new int(1);
 }
 
