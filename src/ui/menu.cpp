@@ -31,6 +31,11 @@ Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items)
 
 Menu::~Menu() {}
 
+void Menu::setup() const
+{
+    
+}
+
 void Menu::render() const
 {
 

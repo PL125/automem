@@ -8,10 +8,8 @@ List<MenuItem>* radio_fiat(LiquidCrystal_I2C *lcd) {
         .title = "CD5404 (24c32)",
         .view = new Result(
             lcd,
-            new Query{
-                .e = &E24c32, 
-                .script = "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))"
-            }
+            &E24c32,
+            "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))"
         )
     });
 

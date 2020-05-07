@@ -1,6 +1,6 @@
 #include "result.h"
 
-Result::Result(LiquidCrystal_I2C *lcd, Query *query)
+Result::Result(LiquidCrystal_I2C *lcd, E *e, char* script)
 {
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
@@ -24,27 +24,36 @@ Result::Result(LiquidCrystal_I2C *lcd, Query *query)
     bouncer_back->interval(20);
 
     this->lcd = lcd;
-    this->value = query->run();
-    this->cursor = new int(1);
+    this->e = e;
+    this->script = script;
+    
+    this->cursor = new int(0);
 }
 
 Result::~Result() {}
+
+void Result::setup() const
+{
+    *result = new char(*Parser::run(*e, script));
+}
 
 void Result::render() const
 {
     lcd->createChar(0, Symbols::square);
     lcd->createChar(1, Symbols::enter);
+    lcd->createChar(2, Symbols::arrow_up);
 
     lcd->setCursor(1, 1);
     lcd->print("Codigo:");
     lcd->setCursor(1, 2);
-    lcd->print(value);
+    lcd->print("2222");
     lcd->setCursor(19, 3);
     lcd->write(1);
 
     // bool blinking = true;
     //lcd->setCursor(*cursor, 2);
-    //lcd->cursor_on();
+    lcd->setCursor(*cursor+1, 3);
+    lcd->write(2);
     // lcd->sho();
     
     // while(1) {
@@ -64,13 +73,21 @@ void Result::action(Stack<View> *views) const
 
     if (bouncer_up->update() && bouncer_up->rose())
     {
+        lcd->setCursor(*cursor+1, 3);
+        lcd->print(" ");
         *cursor += 1;
-        
+        *cursor %= 4;
     }
 
     if (bouncer_down->update() && bouncer_down->rose())
     {
+        lcd->setCursor(*cursor+1, 3);
+        lcd->print(" ");
         *cursor -= 1;
+        if(*cursor < 0)
+        {
+            *cursor %= 0;
+        }
     }
 
     if (bouncer_enter->update() && bouncer_enter->rose())

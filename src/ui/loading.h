@@ -21,6 +21,8 @@ class Loading : public View
         LiquidCrystal_I2C *lcd;
         Loading(LiquidCrystal_I2C *lcd);
         ~Loading();
+
+        void setup() const;
         void render() const;
         void action(Stack<View> *views) const;
 };

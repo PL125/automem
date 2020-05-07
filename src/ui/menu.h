@@ -39,7 +39,8 @@ class Menu : public View
 
         Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
         ~Menu();
-            
+
+        void setup() const;   
         void render() const;
         void action(Stack<View> *views) const;
 };

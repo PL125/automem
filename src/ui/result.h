@@ -14,20 +14,6 @@
 #define UP 7
 #define DOWN 8
 
-struct Query
-{
-    E *e;
-    char* script;
-
-    char* run() {
-        char *result = Parser::run(*e, script);
-
-        Serial.println(result);
-
-        return result;
-    };
-};
-
 class Result : public View
 {
     private:
@@ -36,12 +22,17 @@ class Result : public View
         Bounce *bouncer_enter;
         Bounce *bouncer_back;
         
-        char *value;
+        E *e;
+        char *script;
+        char **result;
+
     public:
         LiquidCrystal_I2C *lcd;
         int *cursor;
-        Result(LiquidCrystal_I2C *lcd, Query *query);
+        Result(LiquidCrystal_I2C *lcd, E *e, char* script);
         ~Result();
+
+        void setup() const;
         void render() const;
         void action(Stack<View> *views) const;
 };

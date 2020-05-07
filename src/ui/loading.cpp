@@ -19,6 +19,11 @@ Loading::Loading(LiquidCrystal_I2C *lcd)
 
 Loading::~Loading() {}
 
+void Loading::setup() const
+{
+    
+}
+
 void Loading::render() const
 {
     
