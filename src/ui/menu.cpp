@@ -34,9 +34,23 @@ Menu::~Menu() {}
 void Menu::render() const
 {
 
-    lcd->createChar(0, Symbols::arrow);
-    lcd->setCursor(0, *cursor);
+    lcd->createChar(0, Symbols::arrow_right);
+    lcd->setCursor(0, *cursor - *top);
     lcd->write(0);
+
+    if(*top > 0)
+    {
+        lcd->createChar(1, Symbols::arrow_up);
+        lcd->setCursor(19, 0);
+        lcd->write(1);
+    }
+
+    if(*top < items->length() - 4)
+    {
+        lcd->createChar(2, Symbols::arrow_down);
+        lcd->setCursor(19, 3);
+        lcd->write(2);
+    }
 
     for (int i = 0; i < min(items->length(), 4); i++)
     {
@@ -49,26 +63,57 @@ void Menu::action(Stack<View> *views) const
 {
     if (bouncer_up->update() && bouncer_up->rose())
     {
-        lcd->setCursor(0, *cursor);
+        lcd->setCursor(0, *cursor - *top);
         lcd->print(" ");
-        *cursor = (*cursor + 1) % items->length();
-        if (*cursor > *top + 4)
+
+        *cursor += 1;
+        *cursor %= items->length();
+        
+        if (*cursor >= *top + 4)
         {
+            *top += 1;
             lcd->clear();
-            *top = min(*top + 1, items->length());
         }
+        
+        
+        if(*cursor == 0) 
+        {
+            *top = 0;
+            lcd->clear();
+        }
+
+        
     }
 
     if (bouncer_down->update() && bouncer_down->rose())
     {
-        lcd->setCursor(0, *cursor);
+        lcd->setCursor(0, (*cursor - *top) % 4);
         lcd->print(" ");
-        *cursor = *cursor - 1, 0 % items->length();
-        if (*cursor < *top - 4)
+
+        *cursor -= 1;
+
+        if (*cursor < *top)
         {
+            if(*cursor < 0)
+            {
+                *top = items->length() - 4;
+                *cursor = items->length() - 1;
+            } 
+            else
+            {
+                *top -= 1;
+            }
+
             lcd->clear();
-            *top = max(*top - 1, 0);
         }
+
+        if(*cursor == items->length())
+        {
+            *top = items->length() - 4;
+            lcd->clear();
+        }
+
+        
     }
 
     if (bouncer_enter->update() && bouncer_enter->rose())

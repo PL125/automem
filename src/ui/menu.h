@@ -16,11 +16,11 @@
 #define UP 7
 #define DOWN 8
 
-
-struct MenuItem
+class MenuItem
 {
-    char *title;
-    View *view;
+    public:
+        char *title;
+        View *view;
 };
 
 class Menu : public View

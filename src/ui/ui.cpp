@@ -63,6 +63,18 @@ List<MenuItem>* main_menu(LiquidCrystal_I2C *lcd) {
         .title = "Configuracoes",
     });
 
+    items->add(MenuItem{
+        .title = "Teste 1",
+    });
+
+    items->add(MenuItem{
+        .title = "Teste 2",
+    });
+
+    items->add(MenuItem{
+        .title = "Teste 3",
+    });
+
     return items;
 }
 
@@ -73,7 +85,6 @@ Ui::Ui()
     this->lcd = new LiquidCrystal_I2C(0x27, 20, 4);
     this->lcd->init();
     this->lcd->backlight();
-
 
     this->views = new Stack<View>();
     this->views->push(new Menu(lcd, main_menu(lcd)));

@@ -20,7 +20,11 @@ struct Query
     char* script;
 
     char* run() {
-        return Parser::run(*e, script);
+        char *result = Parser::run(*e, script);
+
+        Serial.println(result);
+
+        return result;
     };
 };
 
