@@ -1,6 +1,7 @@
 #ifndef RESULT_H
 #define RESULT_H
 
+#include <Arduino.h>
 #include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
 #include "symbols.h"
