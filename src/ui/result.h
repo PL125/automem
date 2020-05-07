@@ -6,13 +6,22 @@
 #include "symbols.h"
 
 #include "view.h"
-#include "query.h"
+#include "lib/parser.h"
 
 #define ENTER 6
 #define BACK 5
 #define UP 7
 #define DOWN 8
 
+struct Query
+{
+    E *e;
+    char* script;
+
+    char* run() {
+        return Parser::run(*e, script);
+    };
+};
 
 class Result : public View
 {
