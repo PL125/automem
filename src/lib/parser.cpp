@@ -157,6 +157,7 @@ Token Parser::parse(List<char *> &tokens)
 
 Token Parser::eval(Token token, E *e)
 {
+
   if(token.type == TSymbol) 
   {
     if(!strcmp(token.value, "+")) return Token(TProc, &add);
@@ -168,42 +169,25 @@ Token Parser::eval(Token token, E *e)
     if(!strcmp(token.value, "first")) return Token(TProc, &first);
     if(!strcmp(token.value, "last")) return Token(TProc, &last);
   } 
-  
-  if(token.type == TNumber) 
-  {
-    return token;
-  }
-
-  if(token.list.length() == 0)
-  {
-    //
-  }
-
-  if(token.list.get(0).type == TSymbol) {
-    //
-  }
-
 
   Token proc = eval(token.list.pop_front(), e);
   
   if(proc.type == TProc)
   {
-    List<Token> args = List<Token>();
+    // List<Token> args = List<Token>();
     
-    while(token.list.length() != 0) {
-      args.add(eval(token.list.pop_front(), e));
-    }
-
-    delete &token.list;
+    // while(token.list.length() != 0) {
+    //   args.add(eval(token.list.pop_front(), e));
+    // }
     
-    return proc.proc(args, *e);
+    return proc.proc(token.list, *e);
   }
 }
 
 char* Parser::simplify(char *s)
 {
   //(+ 1 (+ 2 1))
-  if(strrchr(s, '(') != nullptr && strchr(s, ')') != nullptr)
+  while(strrchr(s, '(') != nullptr && strchr(s, ')') != nullptr)
   {
     int sz = strlen(s);
     int bb = (int)(strrchr(s, '(') - s);
@@ -222,7 +206,14 @@ char* Parser::simplify(char *s)
     memcpy(e, t, ee+1);
     e[ee+1] = '\0';
 
-    char *r = run(e);
+    int sum = atoi(&e[3])+atoi(&e[5]);
+
+    char r[8];
+    itoa(sum, r, 10);
+    
+    // Token tk = parse(tt);
+
+    // char *r = eval(tk, Parser::e).value;
     int rsz = strlen(r);
 
     char q[sz-ee+2];
@@ -232,14 +223,16 @@ char* Parser::simplify(char *s)
     char rr[bb+rsz+sz-ee+2];
     strcpy(rr, b);
     strcat(rr, r);
-    strcat(rr, q); 
+    strcat(rr, q);
 
-    Serial.println(rr);
+    s = rr;
 
-    delete s;
+    // delay(100);
 
-    s = simplify(rr);
+    // Serial.print(s);
   }
+
+  // Serial.println("-->");
 
   return s;
 }
@@ -247,7 +240,6 @@ char* Parser::simplify(char *s)
 char* Parser::run(char *s)
 {
   List<char *> t = tokenize(s);
-  Token x = parse(t);
 
-  return eval(x, Parser::e).value;
+  return eval(parse(t), Parser::e).value;
 }

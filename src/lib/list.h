@@ -22,7 +22,7 @@ class List
 public:
     List();
     ~List();
-    void add(const T& value);
+    void add(const T &value);
     T pop_front();
     T get(uint8_t position);
     int length();
@@ -42,16 +42,18 @@ List<T>::List()
 template <typename T>
 List<T>::~List()
 {
+    // struct Item *tmp;
+
     // while (head)
     // {
-    //     Item *temp = head;
+    //     tmp = head;
     //     head = head->next;
-    //     delete temp;
+    //     delete tmp;
     // }
 }
 
 template <typename T>
-void List<T>::add(const T& value)
+void List<T>::add(const T &value)
 {
     Item *n = new Item(value);
     Item *current = head;
@@ -69,7 +71,7 @@ void List<T>::add(const T& value)
         current->next = n;
     }
 
-    this->size++;
+    size++;
 }
 
 template <typename T>
