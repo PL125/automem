@@ -2,103 +2,60 @@
 
 const Token nil(TSymbol, "nil");
 
-Token add(List<Token> &args, E &e)
+void add(char* dest, LinkedList<char *> &args)
 {
-    int initial = atoi(args.pop_front().value);
-    while(args.length() != 0) initial += atoi(args.pop_front().value);
+    int initial = atoi(args.shift());
+    while(args.size() != 0) initial += atoi(args.shift());
 
-    char buf[8];
-    sprintf(buf,"%d", initial);
-
-    return Token(TNumber, buf);
+    sprintf(dest,"%d", initial);
 }
 
-Token mult(List<Token> &args, E &e)
+void mult(char* dest, LinkedList<char*> &args)
 {
-    long initial = atol(args.pop_front().value);
-    for(int i=0; i<args.length(); i++) {
-      initial *= atol(args.get(i).value);
-    }
+    int initial = atol(args.shift());
+    while(args.size() != 0) initial *= atoi(args.shift());
     
-    char buf[8];
-    sprintf(buf,"%d", initial);
-
-    return Token(TNumber, buf);
+    sprintf(dest,"%d", initial);
 }
 
-Token sub(List<Token> &args, E &e)
+void sub(char* dest, LinkedList<char*> &args)
 {
-    long initial = atol(args.pop_front().value);
-    for(int i=0; i<args.length(); i++) {
-      initial -= atol(args.get(i).value);
-    }
+    int initial = atol(args.shift());
+    while(args.size() != 0) initial -= atoi(args.shift());
     
-    char buf[8];
-    sprintf(buf,"%d", initial);
-
-    return Token(TNumber, buf);
+    sprintf(dest,"%d", initial);
 }
 
-Token read(List<Token> &args, E &e)
+void read(char* dest, LinkedList<char*> &args)
 {
-    int address = atoi(args.pop_front().value);
+    int address = atoi(args.shift());
     
-    char* buf = new char[3];
-    sprintf(buf, "%02x", e.read(address));
-
-    return Token(TNumber, buf);
+    sprintf(dest, "%02x", Parser::e->read(address));
 }
 
-Token write(List<Token> &args, E &e)
+void merge(char* dest, LinkedList<char*> &args)
 {
-    int address = atoi(args.pop_front().value);
-    int value = atoi(args.pop_front().value);
-    
-    e.write(address, value);
-
-    delay(10);
-
-    char* buf = new char[3];
-    sprintf(buf, "%02x", e.read(address));
-
-    return Token(TNumber, buf);
+  strcpy(dest, args.shift());
+  while(args.size() != 0) strcat(dest, args.shift());
 }
 
-Token merge(List<Token> &args, E &e)
+void first(char* dest, LinkedList<char*> &args)
 {
-  char buf[32];
-
-  strcpy(buf, args.pop_front().value);
-  while(args.length() != 0) strcat(buf, args.pop_front().value);
-
-  return Token(TNumber, buf);
+  dest[0] = args.shift()[0];
+  dest[1] = '\0';
 }
 
-Token first(List<Token> &args, E &e)
+void last(char* dest, LinkedList<char*> &args)
 {
-  char* buf = new char[2];
-  buf[0] = args.pop_front().value[0];
-  buf[1] = '\0';
-
-  return Token(TNumber, buf);
-}
-
-Token last(List<Token> &args, E &e)
-{
-  char* buf = new char[3];
-  buf[0] = args.pop_front().value[1];
-  buf[1] = '\0';
-
-  return Token(TNumber, buf);
+  dest[0] = args.shift()[1];
+  dest[1] = '\0';
 }
 
 E* Parser::e;
 
-bool Parser::isdig(char c) { return isdigit(static_cast<unsigned char>(c)) != 0; }
-
-List<char *> Parser::tokenize(char *s)
+LinkedList<char *> Parser::tokenize(char *s)
 {
-  List<char *> ss = List<char *>();
+  LinkedList<char *> ss;
 
   while (*s)
   {
@@ -136,55 +93,7 @@ Token Parser::atom(char *token)
   return Token(TSymbol, token);
 }
 
-Token Parser::parse(List<char *> &tokens)
-{
-  char *token = tokens.pop_front();
-  if (*token == '(')
-  {
-    Token t(TList);
-    while (*tokens.get(0) != ')')
-    {
-      t.list.add(parse(tokens));
-    }
-    tokens.pop_front();
-    return t;
-  }
-  else
-  {
-    return atom(token);
-  }
-}
-
-Token Parser::eval(Token token, E *e)
-{
-
-  if(token.type == TSymbol) 
-  {
-    if(!strcmp(token.value, "+")) return Token(TProc, &add);
-    if(!strcmp(token.value, "-")) return Token(TProc, &sub);
-    if(!strcmp(token.value, "*")) return Token(TProc, &mult);
-    if(!strcmp(token.value, "read")) return Token(TProc, &read);
-    if(!strcmp(token.value, "write")) return Token(TProc, &write);
-    if(!strcmp(token.value, "merge")) return Token(TProc, &merge);
-    if(!strcmp(token.value, "first")) return Token(TProc, &first);
-    if(!strcmp(token.value, "last")) return Token(TProc, &last);
-  } 
-
-  Token proc = eval(token.list.pop_front(), e);
-  
-  if(proc.type == TProc)
-  {
-    // List<Token> args = List<Token>();
-    
-    // while(token.list.length() != 0) {
-    //   args.add(eval(token.list.pop_front(), e));
-    // }
-    
-    return proc.proc(token.list, *e);
-  }
-}
-
-char* Parser::simplify(char *s)
+void Parser::run(char* dest, char *s)
 {
   //(+ 1 (+ 2 1))
   while(strrchr(s, '(') != nullptr && strchr(s, ')') != nullptr)
@@ -206,14 +115,36 @@ char* Parser::simplify(char *s)
     memcpy(e, t, ee+1);
     e[ee+1] = '\0';
 
-    int sum = atoi(&e[3])+atoi(&e[5]);
+    LinkedList<char *> tk = tokenize(e);
+    tk.shift();
+    char op = *tk.shift();
 
-    char r[8];
-    itoa(sum, r, 10);
-    
-    // Token tk = parse(tt);
+    char r[8];  
+    switch(op) 
+    {
+      case '+':
+        add(r, tk);
+        break;
+      case '-':
+        sub(r, tk);
+        break;
+      case '*':
+        mult(r, tk);
+        break;
+      case 'r':
+        read(r, tk);
+        break;
+      case 'm':
+        merge(r, tk);
+        break;
+      case 'f':
+        first(r, tk);
+        break;
+      case 'l':
+        last(r, tk);
+        break;
+    }
 
-    // char *r = eval(tk, Parser::e).value;
     int rsz = strlen(r);
 
     char q[sz-ee+2];
@@ -226,20 +157,10 @@ char* Parser::simplify(char *s)
     strcat(rr, q);
 
     s = rr;
-
-    // delay(100);
-
-    // Serial.print(s);
   }
 
-  // Serial.println("-->");
+  int sz = strlen(s);
 
-  return s;
-}
-
-char* Parser::run(char *s)
-{
-  List<char *> t = tokenize(s);
-
-  return eval(parse(t), Parser::e).value;
+  memcpy(dest, s, sz+1);
+  dest[sz+1] = '\0';
 }

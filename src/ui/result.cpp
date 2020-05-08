@@ -35,8 +35,8 @@ void Result::setup() const
 {
     Parser::e = e;
     Serial.println("called");
-    *result = Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
-    Serial.println(**result);
+    // *result = Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
+    // Serial.println(**result);
 }
 
 void Result::render() const

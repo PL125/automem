@@ -11,16 +11,20 @@ void setup()
 {
   Serial.begin(9600);
   while (!Serial);
-  // Parser::e = &E24c32;
-  // // Serial.print(Parser::run("(merge (last (write 24 2)) (first (write 25 16)) (last (write 26 0)) (first (write 27 144)))#"));
-  // //Serial.print(Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))"));
+    Parser::e = &E24c32;
+  // // Serial.print(Parser::run("(m (l (w 24 2)) (f (w 25 16)) (l (w 26 0)) (f (w 27 144)))#"));
+  // Serial.print(Parser::run("(m (l (r 24)) (f (r 25)) (l (r 26)) (f (r 27)))"));
   // delay(100);
   
-    char *result;
-    char *query = "(+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 (+ 1 1))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))";
+    // char *query = "(+ 1 1)";
+    char *query = "(r 0)";
+    // char *query = "(l AB)";
+
+    char buf[32];
     // char *query = "(+ 1 1)";
 
-    Serial.print(Parser::simplify(query));
+    Parser::run(buf, query);
+    Serial.print(buf);
 
     // free(&query);
 

@@ -2,12 +2,12 @@
 #define PARSER_H
 
 #include <Arduino.h>
+#include <LinkedList.h>
 
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-#include "list.h"
 
 #include "arch/e.h"
 
@@ -23,12 +23,12 @@ struct Token
 {
     TokenType type;
     char *value;
-    Token (*proc)(List<Token> &, E &);
+    Token (*proc)(LinkedList<Token> &, E &);
 
-    List<Token> list = List<Token>();
+    LinkedList<Token> list = LinkedList<Token>();
     Token(TokenType type = TSymbol) : type(type) {}
     Token(TokenType type, char *value) : type(type), value(value) {}
-    Token(TokenType type, Token (*proc)(List<Token> &proc, E &e)) : type(type), proc(proc) {}
+    Token(TokenType type, Token (*proc)(LinkedList<Token> &proc, E &e)) : type(type), proc(proc) {}
 };
 
 class Parser
@@ -37,15 +37,14 @@ public:
     Parser();
 
     static E* e;
-    static char* run(char *s);
-    static char* simplify(char *s);
+    static void run(char *dest, char *s);
 
 private:    
     static bool isdig(char c);
     static Token atom(char *token);
     static Token eval(Token token, E *e);
-    static List<char *> tokenize(char *s);
-    static Token parse(List<char *> &tokens);
+    static LinkedList<char *> tokenize(char *s);
+    static Token parse(LinkedList<char *> &tokens);
 };
 
 #endif
