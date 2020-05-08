@@ -78,8 +78,6 @@ List<MenuItem>* main_menu(LiquidCrystal_I2C *lcd) {
 
 Ui::Ui()
 {
-    this->cursor = 0;
-
     this->lcd = new LiquidCrystal_I2C(0x27, 20, 4);
     this->lcd->init();
     this->lcd->backlight();

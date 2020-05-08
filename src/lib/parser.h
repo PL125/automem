@@ -1,6 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <Arduino.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,13 +35,15 @@ class Parser
 {
 public:
     Parser();
-    static char* run(E &e, char *s);
 
-private:
+    static E* e;
+    static char* run(char *s);
+    static char* simplify(char *s);
 
+private:    
     static bool isdig(char c);
     static Token atom(char *token);
-    static Token eval(Token token, E &e);
+    static Token eval(Token token, E *e);
     static List<char *> tokenize(char *s);
     static Token parse(List<char *> &tokens);
 };

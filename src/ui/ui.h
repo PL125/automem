@@ -22,7 +22,6 @@ class Ui
 
     public:
         Stack<View> *views;
-        int cursor;
         Ui();
         void render();
 };

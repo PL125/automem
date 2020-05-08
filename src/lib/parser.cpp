@@ -43,7 +43,22 @@ Token read(List<Token> &args, E &e)
 {
     int address = atoi(args.pop_front().value);
     
-      char* buf = new char[3];
+    char* buf = new char[3];
+    sprintf(buf, "%02x", e.read(address));
+
+    return Token(TNumber, buf);
+}
+
+Token write(List<Token> &args, E &e)
+{
+    int address = atoi(args.pop_front().value);
+    int value = atoi(args.pop_front().value);
+    
+    e.write(address, value);
+
+    delay(10);
+
+    char* buf = new char[3];
     sprintf(buf, "%02x", e.read(address));
 
     return Token(TNumber, buf);
@@ -76,6 +91,8 @@ Token last(List<Token> &args, E &e)
 
   return Token(TNumber, buf);
 }
+
+E* Parser::e;
 
 bool Parser::isdig(char c) { return isdigit(static_cast<unsigned char>(c)) != 0; }
 
@@ -138,7 +155,7 @@ Token Parser::parse(List<char *> &tokens)
   }
 }
 
-Token Parser::eval(Token token, E &e)
+Token Parser::eval(Token token, E *e)
 {
   if(token.type == TSymbol) 
   {
@@ -146,6 +163,7 @@ Token Parser::eval(Token token, E &e)
     if(!strcmp(token.value, "-")) return Token(TProc, &sub);
     if(!strcmp(token.value, "*")) return Token(TProc, &mult);
     if(!strcmp(token.value, "read")) return Token(TProc, &read);
+    if(!strcmp(token.value, "write")) return Token(TProc, &write);
     if(!strcmp(token.value, "merge")) return Token(TProc, &merge);
     if(!strcmp(token.value, "first")) return Token(TProc, &first);
     if(!strcmp(token.value, "last")) return Token(TProc, &last);
@@ -175,15 +193,61 @@ Token Parser::eval(Token token, E &e)
     while(token.list.length() != 0) {
       args.add(eval(token.list.pop_front(), e));
     }
+
+    delete &token.list;
     
-    return proc.proc(args, e);
+    return proc.proc(args, *e);
   }
 }
 
-char* Parser::run(E &e, char* s)
+char* Parser::simplify(char *s)
+{
+  //(+ 1 (+ 2 1))
+  if(strrchr(s, '(') != nullptr && strchr(s, ')') != nullptr)
+  {
+    int sz = strlen(s);
+    int bb = (int)(strrchr(s, '(') - s);
+
+    char b[bb+1];
+    memcpy(b, s, bb);
+    b[bb] = '\0';
+
+    char t[sz-bb+1];
+    memcpy(t, &s[bb], sz-bb);
+    t[sz-bb] = '\0';
+
+    int ee = (int)(strchr(t, ')') - t);
+
+    char e[ee+2];
+    memcpy(e, t, ee+1);
+    e[ee+1] = '\0';
+
+    char *r = run(e);
+    int rsz = strlen(r);
+
+    char q[sz-ee+2];
+    memcpy(q, &t[ee+1], sz-ee+1);
+    q[sz-ee+1] = '\0';
+
+    char rr[bb+rsz+sz-ee+2];
+    strcpy(rr, b);
+    strcat(rr, r);
+    strcat(rr, q); 
+
+    Serial.println(rr);
+
+    delete s;
+
+    s = simplify(rr);
+  }
+
+  return s;
+}
+
+char* Parser::run(char *s)
 {
   List<char *> t = tokenize(s);
   Token x = parse(t);
-  
-  return eval(x, e).value;
+
+  return eval(x, Parser::e).value;
 }

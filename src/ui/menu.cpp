@@ -33,7 +33,7 @@ Menu::~Menu() {}
 
 void Menu::setup() const
 {
-    
+
 }
 
 void Menu::render() const
@@ -128,6 +128,7 @@ void Menu::action(Stack<View> *views) const
         {
             lcd->clear();
             views->push(current_menu_item.view);
+            views->top()->setup();
         }
     }
 

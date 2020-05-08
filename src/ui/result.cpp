@@ -24,9 +24,8 @@ Result::Result(LiquidCrystal_I2C *lcd, E *e, char* script)
     bouncer_back->interval(20);
 
     this->lcd = lcd;
-    this->e = e;
     this->script = script;
-    
+
     this->cursor = new int(0);
 }
 
@@ -34,38 +33,43 @@ Result::~Result() {}
 
 void Result::setup() const
 {
-    *result = new char(*Parser::run(*e, script));
+    Parser::e = e;
+    Serial.println("called");
+    *result = Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
+    Serial.println(**result);
 }
 
 void Result::render() const
 {
-    lcd->createChar(0, Symbols::square);
-    lcd->createChar(1, Symbols::enter);
-    lcd->createChar(2, Symbols::arrow_up);
+    // lcd->createChar(0, Symbols::square);
+    // lcd->createChar(1, Symbols::enter);
+    // lcd->createChar(2, Symbols::arrow_up);
 
-    lcd->setCursor(1, 1);
-    lcd->print("Codigo:");
-    lcd->setCursor(1, 2);
-    lcd->print("2222");
-    lcd->setCursor(19, 3);
-    lcd->write(1);
-
-    // bool blinking = true;
-    //lcd->setCursor(*cursor, 2);
-    lcd->setCursor(*cursor+1, 3);
-    lcd->write(2);
-    // lcd->sho();
-    
-    // while(1) {
-    //     if (blinking) {
-	// 		lcd->noBlink();
-	// 		blinking = false;
-	// 	} else {
-	// 		lcd->blink();
-	// 		blinking = true;
-	// 	}
-    //     delay(4000);
+    // lcd->setCursor(1, 1);
+    // lcd->print("Codigo:");
+    // lcd->setCursor(1, 2);
+    // if(result != nullptr) {
+    //     lcd->print(*result);
     // }
+    // lcd->setCursor(19, 3);
+    // lcd->write(1);
+
+    // // bool blinking = true;
+    // //lcd->setCursor(*cursor, 2);
+    // lcd->setCursor(*cursor+1, 3);
+    // lcd->write(2);
+    // // lcd->sho();
+    
+    // // while(1) {
+    // //     if (blinking) {
+	// // 		lcd->noBlink();
+	// // 		blinking = false;
+	// // 	} else {
+	// // 		lcd->blink();
+	// // 		blinking = true;
+	// // 	}
+    // //     delay(4000);
+    // // }
 }
 
 void Result::action(Stack<View> *views) const
