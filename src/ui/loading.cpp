@@ -55,17 +55,17 @@ void Loading::render() const
     }
 }
 
-void Loading::action(Stack<View> *views) const
+void Loading::action(LinkedList<View> &views) const
 {
     if (bouncer_enter->update() && bouncer_enter->rose())
     {
         lcd->clear();
-        views->pop();
+        views.pop();
     }
 
     if (bouncer_back->update() && bouncer_back->rose())
     {
         lcd->clear();
-        views->pop();
+        views.pop();
     }
 }

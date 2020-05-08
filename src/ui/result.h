@@ -34,7 +34,7 @@ class Result : public View
 
         void setup() const;
         void render() const;
-        void action(Stack<View> *views) const;
+        void action(LinkedList<View> &views) const;
 };
 
 #endif

@@ -64,7 +64,7 @@ void Menu::render() const
     }
 }
 
-void Menu::action(Stack<View> *views) const
+void Menu::action(LinkedList<View> &views) const
 {
     if (bouncer_up->update() && bouncer_up->rose())
     {
@@ -124,17 +124,17 @@ void Menu::action(Stack<View> *views) const
     if (bouncer_enter->update() && bouncer_enter->rose())
     {
         MenuItem current_menu_item = items->get(*cursor);
-        if (current_menu_item.view != nullptr)
+        if (&current_menu_item.view != nullptr)
         {
             lcd->clear();
-            views->push(current_menu_item.view);
-            views->top()->setup();
+            // views.add(current_menu_item.view);
+            views.get(views.size() - 1).setup();
         }
     }
 
     if (bouncer_back->update() && bouncer_back->rose())
     {
         lcd->clear();
-        views->pop();
+        views.pop();
     }
 }

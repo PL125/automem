@@ -3,6 +3,7 @@
 
 #include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
+#include <LinkedList.h>
 
 #include "ui/menu.h"
 #include "ui/loading.h"
@@ -10,7 +11,6 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 
-#include "lib/stack.h"
 #include "lib/parser.h"
 
 #include "arch/e24c.h"
@@ -21,7 +21,7 @@ class Ui
         LiquidCrystal_I2C *lcd;
 
     public:
-        Stack<View> *views;
+        LinkedList<View> &views;
         Ui();
         void render();
 };

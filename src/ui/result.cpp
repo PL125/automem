@@ -74,7 +74,7 @@ void Result::render() const
     // // }
 }
 
-void Result::action(Stack<View> *views) const
+void Result::action(LinkedList<View> *views) const
 {
 
     if (bouncer_up->update() && bouncer_up->rose())

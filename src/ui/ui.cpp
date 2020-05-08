@@ -1,31 +1,32 @@
 #include "ui.h"
 
-
-List<MenuItem>* radio_fiat(LiquidCrystal_I2C *lcd) {
+List<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
+{
     List<MenuItem> *items = new List<MenuItem>();
+
+    Result view = Result(
+        lcd,
+        &E24c32,
+        "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
 
     items->add(MenuItem{
         .title = "CD5404 (24c32)",
-        .view = new Result(
-            lcd,
-            &E24c32,
-            "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))"
-        )
-    });
+        .view = view});
 
     return items;
 }
 
-List<MenuItem>* radio(LiquidCrystal_I2C *lcd) {
+List<MenuItem> *radio(LiquidCrystal_I2C *lcd)
+{
     List<MenuItem> *items = new List<MenuItem>();
 
-    items->add(MenuItem{
-        .title = "Fiat",
-        .view = new Menu(
+    Menu view = Menu(
             lcd,
-            radio_fiat(lcd)
-        )
-    });
+            radio_fiat(lcd));
+
+    items->add(MenuItem{
+        .title = "Fiat",}
+        .view = view});
 
     items->add(MenuItem{
         .title = "Volkswagen",
@@ -34,7 +35,8 @@ List<MenuItem>* radio(LiquidCrystal_I2C *lcd) {
     return items;
 }
 
-List<MenuItem>* main_menu(LiquidCrystal_I2C *lcd) {
+List<MenuItem> *main_menu(LiquidCrystal_I2C *lcd)
+{
     List<MenuItem> *items = new List<MenuItem>();
 
     items->add(MenuItem{
@@ -53,9 +55,7 @@ List<MenuItem>* main_menu(LiquidCrystal_I2C *lcd) {
         .title = "Radio",
         .view = new Menu(
             lcd,
-            radio(lcd)
-        )
-    });
+            radio(lcd))});
 
     items->add(MenuItem{
         .title = "Configuracoes",
@@ -82,13 +82,12 @@ Ui::Ui()
     this->lcd->init();
     this->lcd->backlight();
 
-    this->views = new Stack<View>();
-    this->views->push(new Menu(lcd, main_menu(lcd)));
-    
+    this->views = LinkedList<View>();
+    this->views.add(new Menu(lcd, main_menu(lcd)));
 };
 
 void Ui::render()
 {
-    views->top()->render();
-    views->top()->action(views);
+    views.get(views.size() - 1)->render();
+    views.get(views.size() - 1)->action(views);
 }
