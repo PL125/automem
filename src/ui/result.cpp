@@ -33,10 +33,12 @@ Result::~Result() {}
 
 void Result::setup() const
 {
-    Parser::e = e;
-    Serial.println("called");
-    // *result = Parser::run("(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
-    // Serial.println(**result);
+    // Parser::e = e;
+    // Parser::e->read(0);
+
+    // char buf[8];
+    // Parser::run(buf, "(m (l (r 24)) (f (r 25)) (l (r 26)) (f (r 27)))");
+    // Serial.println(buf);
 }
 
 void Result::render() const
@@ -58,7 +60,7 @@ void Result::render() const
     // //lcd->setCursor(*cursor, 2);
     // lcd->setCursor(*cursor+1, 3);
     // lcd->write(2);
-    // // lcd->sho();
+    // lcd->sho();
     
     // // while(1) {
     // //     if (blinking) {
