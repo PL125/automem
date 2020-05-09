@@ -11,6 +11,7 @@
 #include "parser/parser.h"
 #include "arch/e95.h"
 #include "arch/e24c.h"
+#include "arch/e93c.h"
 
 void add(char* dest, LinkedList<char *> &args)
 {
@@ -38,7 +39,7 @@ void sub(char* dest, LinkedList<char*> &args)
 
 void read(char* dest, LinkedList<char*> &args)
 {
-    E24c e = E24c32;
+    E93c e = E93c66;
     e.setup();
     int address = atoi(args.shift());
     
@@ -47,7 +48,7 @@ void read(char* dest, LinkedList<char*> &args)
 
 void write(char* dest, LinkedList<char*> &args)
 {
-    E24c e = E24c32;
+    E93c e = E93c66;
     e.setup();
     int address = atoi(args.shift());
     int value = atoi(args.shift());
