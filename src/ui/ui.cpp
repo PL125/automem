@@ -28,7 +28,13 @@ Ui::Ui()
 
     this->views = new LinkedList<View*>();
 
-    Menu* m = new Menu(lcd, radio_fiat(lcd));
+    // Menu* m = new Menu(lcd, radio_fiat(lcd));
+    Result* m = new Result(
+        lcd,
+        &E24c32,
+        "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
+
+    m->setup();
 
     this->views->add(m);
 };

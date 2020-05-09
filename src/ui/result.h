@@ -10,22 +10,28 @@
 #include "view.h"
 #include "parser/parser.h"
 
+enum ResultType { Show, Edit };
+
 class Result : public View
 {
     private:        
         E *e;
+
         char *script;
         // char *value;
 
+        ResultType type;
+
     public:
-        LiquidCrystal_I2C *lcd;
-        int *cursor;
         Result(LiquidCrystal_I2C *lcd, E *e, char* script);
         ~Result();
 
-        void setup() const;
-        void render() const;
-        void action(LinkedList<View*> *views) const;
+        LiquidCrystal_I2C *lcd;
+        int *cursor;
+
+        void setup();
+        void render();
+        void action(LinkedList<View*> *views);
 };
 
 #endif

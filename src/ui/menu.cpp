@@ -10,11 +10,11 @@ Menu::Menu(LiquidCrystal_I2C *lcd, LinkedList<MenuItem> *items)
 
 Menu::~Menu() {}
 
-void Menu::setup() const
+void Menu::setup()
 {
 }
 
-void Menu::render() const
+void Menu::render()
 {
 
     lcd->createChar(0, Symbols::arrow_right);
@@ -42,7 +42,7 @@ void Menu::render() const
     }
 }
 
-void Menu::action(LinkedList<View *> *views) const
+void Menu::action(LinkedList<View *> *views)
 {
     Controls c = Controls::getInstance();
 

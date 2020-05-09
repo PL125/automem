@@ -10,9 +10,9 @@ class View {
     public:
         virtual ~View() {}
 
-        virtual void setup() const = 0;
-        virtual void render() const = 0;
-        virtual void action(LinkedList<View*> *views) const = 0;
+        virtual void setup();
+        virtual void render();
+        virtual void action(LinkedList<View*> *views);
 };
 
 #endif
