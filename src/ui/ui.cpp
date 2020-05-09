@@ -13,6 +13,10 @@ LinkedList<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
         .title = "CD5404 (24c32)",
         .view = view});
 
+    items->add(MenuItem{
+        .title = "CD5404 (24c32)",
+        .view = view});
+
     return items;
 }
 

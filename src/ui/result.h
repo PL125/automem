@@ -2,26 +2,17 @@
 #define RESULT_H
 
 #include <Arduino.h>
-#include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
+
 #include "symbols.h"
+#include "controls.h"
 
 #include "view.h"
 #include "parser/parser.h"
 
-#define ENTER 6
-#define BACK 5
-#define UP 7
-#define DOWN 8
-
 class Result : public View
 {
-    private:
-        Bounce *bouncer_up;
-        Bounce *bouncer_down;
-        Bounce *bouncer_enter;
-        Bounce *bouncer_back;
-        
+    private:        
         E *e;
         char *script;
         // char *value;

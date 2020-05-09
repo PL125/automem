@@ -2,27 +2,6 @@
 
 Menu::Menu(LiquidCrystal_I2C *lcd, LinkedList<MenuItem> *items)
 {
-    pinMode(UP, INPUT);
-    pinMode(DOWN, INPUT);
-    pinMode(ENTER, INPUT);
-    pinMode(BACK, INPUT);
-
-    bouncer_up = new Bounce();
-    bouncer_up->attach(UP);
-    bouncer_up->interval(20);
-
-    bouncer_down = new Bounce();
-    bouncer_down->attach(DOWN);
-    bouncer_down->interval(20);
-
-    bouncer_enter = new Bounce();
-    bouncer_enter->attach(ENTER);
-    bouncer_enter->interval(50);
-
-    bouncer_back = new Bounce();
-    bouncer_back->attach(BACK);
-    bouncer_back->interval(50);
-
     this->lcd = lcd;
     this->items = items;
     this->top = new int(0);
@@ -33,7 +12,6 @@ Menu::~Menu() {}
 
 void Menu::setup() const
 {
-
 }
 
 void Menu::render() const
@@ -43,14 +21,14 @@ void Menu::render() const
     lcd->setCursor(0, *cursor - *top);
     lcd->write(0);
 
-    if(*top > 0)
+    if (*top > 0)
     {
         lcd->createChar(1, Symbols::arrow_up);
         lcd->setCursor(19, 0);
         lcd->write(1);
     }
 
-    if(*top < items->size() - 4)
+    if (*top < items->size() - 4)
     {
         lcd->createChar(2, Symbols::arrow_down);
         lcd->setCursor(19, 3);
@@ -64,33 +42,32 @@ void Menu::render() const
     }
 }
 
-void Menu::action(LinkedList<View*> *views) const
+void Menu::action(LinkedList<View *> *views) const
 {
-    if (bouncer_up->update() && bouncer_up->rose())
+    Controls c = Controls::getInstance();
+
+    if (c.up->update() && c.up->rose())
     {
         lcd->setCursor(0, *cursor - *top);
         lcd->print(" ");
 
         *cursor += 1;
         *cursor %= items->size();
-        
+
         if (*cursor >= *top + 4)
         {
             *top += 1;
             lcd->clear();
         }
-        
-        
-        if(*cursor == 0) 
+
+        if (*cursor == 0)
         {
             *top = 0;
             lcd->clear();
         }
-
-        
     }
 
-    if (bouncer_down->update() && bouncer_down->rose())
+    if (c.down->update() && c.down->rose())
     {
         lcd->setCursor(0, (*cursor - *top) % 4);
         lcd->print(" ");
@@ -99,11 +76,11 @@ void Menu::action(LinkedList<View*> *views) const
 
         if (*cursor < *top)
         {
-            if(*cursor < 0)
+            if (*cursor < 0)
             {
                 *top = items->size() - 4;
                 *cursor = items->size() - 1;
-            } 
+            }
             else
             {
                 *top -= 1;
@@ -112,25 +89,25 @@ void Menu::action(LinkedList<View*> *views) const
             lcd->clear();
         }
 
-        if(*cursor == items->size())
+        if (*cursor == items->size())
         {
             *top = items->size() - 4;
             lcd->clear();
         }
     }
 
-    if (bouncer_enter->update() && bouncer_enter->rose())
+    if (c.enter->update() && c.enter->rose())
     {
         MenuItem current_menu_item = items->get(*cursor);
         if (&current_menu_item.view != nullptr)
         {
             lcd->clear();
             views->add(current_menu_item.view);
-            views->get(views->size()-1)->setup();
+            views->get(views->size() - 1)->setup();
         }
     }
 
-    if (bouncer_back->update() && bouncer_back->rose())
+    if (c.back->update() && c.back->rose())
     {
         lcd->clear();
         views->pop();

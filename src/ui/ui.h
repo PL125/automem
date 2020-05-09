@@ -1,7 +1,6 @@
 #ifndef UI_H
 #define UI_H 
 
-#include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
 #include <LinkedList.h>
 

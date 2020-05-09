@@ -1,12 +1,12 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <Bounce2.h>
 #include <LiquidCrystal_I2C.h>
 
 #include "math.h"
 #include "view.h"
 #include "symbols.h"
+#include "controls.h"
 #include "arch/e.h"
 
 #define ENTER 6
@@ -23,11 +23,6 @@ class MenuItem
 
 class Menu : public View
 {
-    private:
-        Bounce *bouncer_up;
-        Bounce *bouncer_down;
-        Bounce *bouncer_enter;
-        Bounce *bouncer_back;
     public:
         int *top;
         int *cursor;

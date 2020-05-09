@@ -4,27 +4,6 @@ char value[8];
 
 Result::Result(LiquidCrystal_I2C *lcd, E *e, char* script)
 {
-    pinMode(UP, INPUT);
-    pinMode(DOWN, INPUT);
-    pinMode(ENTER, INPUT);
-    pinMode(BACK, INPUT);
-
-    bouncer_up = new Bounce();
-    bouncer_up->attach(UP);
-    bouncer_up->interval(20);
-
-    bouncer_down = new Bounce();
-    bouncer_down->attach(DOWN);
-    bouncer_down->interval(20);
-
-    bouncer_enter = new Bounce();
-    bouncer_enter->attach(ENTER);
-    bouncer_enter->interval(20);
-
-    bouncer_back = new Bounce();
-    bouncer_back->attach(BACK);
-    bouncer_back->interval(20);
-
     this->lcd = lcd;
     this->script = script;
     // this->value = new char();
@@ -59,8 +38,9 @@ void Result::render() const
 
 void Result::action(LinkedList<View*> *views) const
 {
+    Controls c = Controls::getInstance();
 
-    if (bouncer_up->update() && bouncer_up->rose())
+    if (c.right->update() && c.right->rose())
     {
         lcd->setCursor(*cursor+1, 3);
         lcd->print(" ");
@@ -68,7 +48,7 @@ void Result::action(LinkedList<View*> *views) const
         *cursor %= 4;
     }
 
-    if (bouncer_down->update() && bouncer_down->rose())
+    if (c.left->update() && c.left->rose())
     {
         lcd->setCursor(*cursor+1, 3);
         lcd->print(" ");
@@ -79,13 +59,13 @@ void Result::action(LinkedList<View*> *views) const
         }
     }
 
-    if (bouncer_enter->update() && bouncer_enter->rose())
+    if (c.enter->update() && c.enter->rose())
     {
         lcd->clear();
         views->pop();
     }
 
-    if (bouncer_back->update() && bouncer_back->rose())
+    if (c.back->update() && c.back->rose())
     {
         lcd->clear();
         views->pop();
