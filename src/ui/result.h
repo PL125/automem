@@ -24,7 +24,7 @@ class Result : public View
         
         E *e;
         char *script;
-        char **result;
+        // char *value;
 
     public:
         LiquidCrystal_I2C *lcd;

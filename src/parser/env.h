@@ -9,6 +9,7 @@
 #include <ctype.h>
 
 #include "parser/parser.h"
+#include "arch/e95.h"
 #include "arch/e24c.h"
 
 void add(char* dest, LinkedList<char *> &args)
@@ -46,10 +47,12 @@ void read(char* dest, LinkedList<char*> &args)
 
 void write(char* dest, LinkedList<char*> &args)
 {
+    E24c e = E24c32;
+    e.setup();
     int address = atoi(args.shift());
     int value = atoi(args.shift());
 
-    Parser::e->write(address, value);
+    e.write(address, value);
 
     delay(10);
     

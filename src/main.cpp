@@ -15,9 +15,9 @@ void setup()
   Serial.begin(9600);
   while (!Serial);
 
-  char buf[8];
-  Parser::run(buf, "(r 24)");
-  Serial.print(buf);
+  // char buf[8];
+  // Parser::run(buf, "(r 24)");
+  // Serial.print(buf);
 
   ui = new Ui();
 }
