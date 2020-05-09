@@ -31,6 +31,6 @@ class E95c : public E
         void print() const;
 };
 
-const E95c E95640 = E95c(4096);
+#define E95640 E95c(4096)
 
 #endif

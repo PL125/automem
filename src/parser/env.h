@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#include "lib/parser.h"
+#include "parser/parser.h"
+#include "arch/e24c.h"
 
 void add(char* dest, LinkedList<char *> &args)
 {
@@ -36,9 +37,11 @@ void sub(char* dest, LinkedList<char*> &args)
 
 void read(char* dest, LinkedList<char*> &args)
 {
+    E24c e = E24c32;
+    e.setup();
     int address = atoi(args.shift());
     
-    sprintf(dest, "%02x", Parser::e->read(address));
+    sprintf(dest, "%02x", e.read(address));
 }
 
 void write(char* dest, LinkedList<char*> &args)

@@ -1,11 +1,10 @@
 #include "e24c.h"
+#include <Arduino.h>
 
 E24c::E24c(int size, int id)
 {
     this->size = size;
     this->id = id;
-
-    setup();
 }
 
 void E24c::setup() const
@@ -15,12 +14,12 @@ void E24c::setup() const
 
 uint8_t E24c::read(uint16_t address) const
 {
-    Wire.beginTransmission(0x50);
+    Wire.beginTransmission(id);
     Wire.write(address >> 8);
     Wire.write(address & 0xFF);
     Wire.endTransmission();
 
-    Wire.requestFrom(0x50, 1);
+    Wire.requestFrom(id, 1);
     uint8_t result = 0;
     if (Wire.available())
     {
@@ -32,7 +31,7 @@ uint8_t E24c::read(uint16_t address) const
 
 void E24c::write(uint16_t address, uint8_t data) const
 {
-    Wire.beginTransmission(0x50);
+    Wire.beginTransmission(id);
     Wire.write(address >> 8);
     Wire.write(address & 0xFF);
     Wire.write(data);

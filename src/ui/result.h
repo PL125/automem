@@ -7,7 +7,7 @@
 #include "symbols.h"
 
 #include "view.h"
-#include "lib/parser.h"
+#include "parser/parser.h"
 
 #define ENTER 6
 #define BACK 5
@@ -34,7 +34,7 @@ class Result : public View
 
         void setup() const;
         void render() const;
-        void action(LinkedList<View> &views) const;
+        void action(LinkedList<View*> *views) const;
 };
 
 #endif

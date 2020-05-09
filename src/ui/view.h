@@ -12,7 +12,7 @@ class View {
 
         virtual void setup() const = 0;
         virtual void render() const = 0;
-        virtual void action(LinkedList<View> &views) const = 0;
+        virtual void action(LinkedList<View*> *views) const = 0;
 };
 
 #endif

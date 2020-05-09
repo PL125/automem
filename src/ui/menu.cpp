@@ -1,6 +1,6 @@
 #include "menu.h"
 
-Menu::Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items)
+Menu::Menu(LiquidCrystal_I2C *lcd, LinkedList<MenuItem> *items)
 {
     pinMode(UP, INPUT);
     pinMode(DOWN, INPUT);
@@ -50,21 +50,21 @@ void Menu::render() const
         lcd->write(1);
     }
 
-    if(*top < items->length() - 4)
+    if(*top < items->size() - 4)
     {
         lcd->createChar(2, Symbols::arrow_down);
         lcd->setCursor(19, 3);
         lcd->write(2);
     }
 
-    for (int i = 0; i < min(items->length(), 4); i++)
+    for (int i = 0; i < min(items->size(), 4); i++)
     {
         lcd->setCursor(1, i);
         lcd->print(items->get(i + *top).title);
     }
 }
 
-void Menu::action(LinkedList<View> &views) const
+void Menu::action(LinkedList<View*> *views) const
 {
     if (bouncer_up->update() && bouncer_up->rose())
     {
@@ -72,7 +72,7 @@ void Menu::action(LinkedList<View> &views) const
         lcd->print(" ");
 
         *cursor += 1;
-        *cursor %= items->length();
+        *cursor %= items->size();
         
         if (*cursor >= *top + 4)
         {
@@ -101,8 +101,8 @@ void Menu::action(LinkedList<View> &views) const
         {
             if(*cursor < 0)
             {
-                *top = items->length() - 4;
-                *cursor = items->length() - 1;
+                *top = items->size() - 4;
+                *cursor = items->size() - 1;
             } 
             else
             {
@@ -112,13 +112,11 @@ void Menu::action(LinkedList<View> &views) const
             lcd->clear();
         }
 
-        if(*cursor == items->length())
+        if(*cursor == items->size())
         {
-            *top = items->length() - 4;
+            *top = items->size() - 4;
             lcd->clear();
         }
-
-        
     }
 
     if (bouncer_enter->update() && bouncer_enter->rose())
@@ -127,14 +125,14 @@ void Menu::action(LinkedList<View> &views) const
         if (&current_menu_item.view != nullptr)
         {
             lcd->clear();
-            // views.add(current_menu_item.view);
-            views.get(views.size() - 1).setup();
+            views->add(current_menu_item.view);
+            views->get(views->size()-1)->setup();
         }
     }
 
     if (bouncer_back->update() && bouncer_back->rose())
     {
         lcd->clear();
-        views.pop();
+        views->pop();
     }
 }

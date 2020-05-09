@@ -9,8 +9,6 @@
 #include "symbols.h"
 #include "arch/e.h"
 
-#include "lib/list.h"
-
 #define ENTER 6
 #define BACK 5
 #define UP 7
@@ -20,7 +18,7 @@ class MenuItem
 {
     public:
         char *title;
-        View &view;
+        View *view;
 };
 
 class Menu : public View
@@ -35,14 +33,14 @@ class Menu : public View
         int *cursor;
 
         LiquidCrystal_I2C *lcd;
-        List<MenuItem> *items;
+        LinkedList<MenuItem> *items;
 
-        Menu(LiquidCrystal_I2C *lcd, List<MenuItem> *items);
+        Menu(LiquidCrystal_I2C *lcd, LinkedList<MenuItem> *items);
         ~Menu();
 
         void setup() const;   
         void render() const;
-        void action(LinkedList<View> &views) const;
+        void action(LinkedList<View*> *views) const;
 };
 
 #endif
