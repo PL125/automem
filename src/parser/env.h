@@ -18,7 +18,7 @@ void add(char* dest, LinkedList<char *> &args)
     long initial = atol(args.shift());
     while(args.size() != 1) initial += atol(args.shift());
 
-    sprintf(dest,"%d", initial);
+    sprintf(dest,"%ld", initial);
 }
 
 void mult(char* dest, LinkedList<char*> &args)
@@ -26,7 +26,7 @@ void mult(char* dest, LinkedList<char*> &args)
     long initial = atol(args.shift());
     while(args.size() != 1) initial *= atol(args.shift());
     
-    sprintf(dest,"%d", initial);
+    sprintf(dest,"%ld", initial);
 }
 
 void div(char* dest, LinkedList<char*> &args)
@@ -34,7 +34,7 @@ void div(char* dest, LinkedList<char*> &args)
     long initial = atol(args.shift());
     while(args.size() != 1) initial /= atol(args.shift());
     
-    sprintf(dest,"%d", initial);
+    sprintf(dest,"%ld", initial);
 }
 
 void sub(char* dest, LinkedList<char*> &args)
@@ -42,7 +42,7 @@ void sub(char* dest, LinkedList<char*> &args)
     long initial = atol(args.shift());
     while(args.size() != 1) initial -= atol(args.shift());
     
-    sprintf(dest,"%d", initial);
+    sprintf(dest,"%ld", initial);
 }
 
 void read(char* dest, LinkedList<char*> &args)
@@ -58,7 +58,7 @@ void i(char* dest, LinkedList<char*> &args)
 {
     long value = strtol(args.shift(), NULL, 16);
     
-    sprintf(dest, "%d", value);
+    sprintf(dest, "%ld", value);
 }
 
 void removeLast(char* dest, LinkedList<char*> &args)
@@ -96,7 +96,7 @@ void merge(char* dest, LinkedList<char*> &args)
   strcpy(dest, args.shift());
 
   char* t;
-  while(t = args.shift(), *t != ')' && args.size() != 1) strcat(dest, t);
+  while(t = args.shift(), *t != ')' && args.size() != 0) strcat(dest, t);
 }
 
 void first(char* dest, LinkedList<char*> &args)
@@ -109,6 +109,14 @@ void last(char* dest, LinkedList<char*> &args)
 {
   dest[0] = args.shift()[1];
   dest[1] = '\0';
+}
+
+void format(char* dest, LinkedList<char*> &args)
+{
+    long initial = atol(args.shift());
+    char *format = args.shift();
+    
+    sprintf(dest, format, initial);
 }
 
 #endif

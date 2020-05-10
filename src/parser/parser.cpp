@@ -61,6 +61,9 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
   case 'i':
     i(dest, tk);
     break;
+  case 'z':
+    format(dest, tk);
+    break;
   case 'w':
     write(dest, tk);
     break;

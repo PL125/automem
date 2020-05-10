@@ -15,8 +15,8 @@ Result::~Result() {}
 
 void Result::setup()
 {
-    Parser::run(value, "(/ (i (m (r 3) (r 2) (r 1) (r 0))) 10)");
-    Parser::run(value2, "(/ (i (m (r 3) (r 2) (r 1) (r 0))) 10)");
+    Parser::run(value, "(z (/ (i (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
+    Parser::run(value2, "(z (/ (i (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
     Serial.println(value);
     Serial.println(value2);
     if(strcmp(value, value2) != 0)
