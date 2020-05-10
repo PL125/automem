@@ -15,24 +15,32 @@
 
 void add(char* dest, LinkedList<char *> &args)
 {
-    int initial = atoi(args.shift());
-    while(args.size() != 0) initial += atoi(args.shift());
+    long initial = atol(args.shift());
+    while(args.size() != 1) initial += atol(args.shift());
 
     sprintf(dest,"%d", initial);
 }
 
 void mult(char* dest, LinkedList<char*> &args)
 {
-    int initial = atol(args.shift());
-    while(args.size() != 0) initial *= atoi(args.shift());
+    long initial = atol(args.shift());
+    while(args.size() != 1) initial *= atol(args.shift());
+    
+    sprintf(dest,"%d", initial);
+}
+
+void div(char* dest, LinkedList<char*> &args)
+{
+    long initial = atol(args.shift());
+    while(args.size() != 1) initial /= atol(args.shift());
     
     sprintf(dest,"%d", initial);
 }
 
 void sub(char* dest, LinkedList<char*> &args)
 {
-    int initial = atol(args.shift());
-    while(args.size() != 0) initial -= atoi(args.shift());
+    long initial = atol(args.shift());
+    while(args.size() != 1) initial -= atol(args.shift());
     
     sprintf(dest,"%d", initial);
 }
@@ -44,6 +52,21 @@ void read(char* dest, LinkedList<char*> &args)
     int address = atoi(args.shift());
     
     sprintf(dest, "%02x", e.read(address));
+}
+
+void i(char* dest, LinkedList<char*> &args)
+{
+    long value = strtol(args.shift(), NULL, 16);
+    
+    sprintf(dest, "%d", value);
+}
+
+void removeLast(char* dest, LinkedList<char*> &args)
+{
+  char* initial = args.shift();
+  initial[strlen(initial)-1] = '\0';
+
+  strcpy(dest, initial);
 }
 
 void write(char* dest, LinkedList<char*> &args)
@@ -60,12 +83,20 @@ void write(char* dest, LinkedList<char*> &args)
     sprintf(dest, "%02x", Parser::e->read(address));
 }
 
+void position(char* dest, LinkedList<char*> &args)
+{
+  int position = atoi(args.shift());
+  
+  dest[0] = args.shift()[position];
+  dest[1] = '\0';
+}
+
 void merge(char* dest, LinkedList<char*> &args)
 {
   strcpy(dest, args.shift());
 
   char* t;
-  while(t = args.shift(), *t != ')' && args.size() != 0) strcat(dest, t);
+  while(t = args.shift(), *t != ')' && args.size() != 1) strcat(dest, t);
 }
 
 void first(char* dest, LinkedList<char*> &args)

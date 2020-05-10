@@ -1,6 +1,7 @@
 #include "result.h"
 
-char value[8];
+char value[32];
+char value2[32];
 
 Result::Result(LiquidCrystal_I2C *lcd, E *e, char *script)
 {
@@ -14,7 +15,15 @@ Result::~Result() {}
 
 void Result::setup()
 {
-    Parser::run(value, "(m (l (r 24)) (f (r 25)) (l (r 26)) (f (r 27)))");
+    Parser::run(value, "(/ (i (m (r 3) (r 2) (r 1) (r 0))) 10)");
+    Parser::run(value2, "(/ (i (m (r 3) (r 2) (r 1) (r 0))) 10)");
+    Serial.println(value);
+    Serial.println(value2);
+    if(strcmp(value, value2) != 0)
+    {
+        char* r = "Leia novamente";
+        strcpy(value, r);
+    }
 }
 
 void Result::render()
@@ -24,7 +33,10 @@ void Result::render()
     lcd->createChar(2, Symbols::arrow_up);
 
     lcd->setCursor(1, 1);
-    lcd->print("Codigo:");
+    if(strcmp(value, value2) == 0)
+    {
+        lcd->print("Km:");
+    }
     lcd->setCursor(1, 2);
     lcd->print(value);
     lcd->setCursor(19, 3);

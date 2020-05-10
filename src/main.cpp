@@ -37,7 +37,7 @@ void loop()
 
       char buf[8];
       Parser::run(buf, cmd);
-      Serial.print(buf);
+      Serial.println(buf);
 
       for (int i = 0; i < CMD_MAX_SIZE; i++)
         cmd[i] = 0;

@@ -7,6 +7,8 @@ E93c::E93c(int size, int address_size, int page_size)
     this->size = size;
     this->address_size = address_size;
     this->page_size = page_size;
+
+    setup();
 }
 
 void E93c::setup() const
@@ -50,6 +52,7 @@ void E93c::send_opcode(uint8_t op) const
 
 uint8_t E93c::read(uint16_t address) const
 {
+    setup();
     send_opcode(READ);
     transmit(address, 9);
 

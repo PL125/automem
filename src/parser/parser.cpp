@@ -49,8 +49,17 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
   case '*':
     mult(dest, tk);
     break;
+  case '/':
+    div(dest, tk);
+    break;
   case 'r':
     read(dest, tk);
+    break;
+  case 'p':
+    position(dest, tk);
+    break;
+  case 'i':
+    i(dest, tk);
     break;
   case 'w':
     write(dest, tk);
@@ -63,6 +72,9 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
     break;
   case 'l':
     last(dest, tk);
+    break;
+  case 'x':
+    removeLast(dest, tk);
     break;
   }
 }
@@ -88,7 +100,7 @@ void Parser::run(char *dest, char *s)
     memcpy(e, t, ee + 1);
     e[ee + 1] = '\0';
 
-    char r[8];
+    char r[32];
     LinkedList<char *> tk = tokenize(e);
     parse(r, tk);
 
