@@ -15,12 +15,16 @@
 
 void add(char* dest, LinkedList<char *> &args)
 {
-    Serial.println(args.get(0));
-    long initial = atol(args.shift());
+    char *a = args.shift();
+    long initial = atol(a);
+
+    delete [] a;
 
     while(args.size() > 0) {
-      Serial.println(args.get(0));
-      initial += atol(args.shift());
+      char *b = args.shift();
+      initial += atol(b);
+      
+      delete [] b;
     }
 
     sprintf(dest,"%ld", initial);
@@ -28,25 +32,52 @@ void add(char* dest, LinkedList<char *> &args)
 
 void mult(char* dest, LinkedList<char*> &args)
 {
-    long initial = atol(args.shift());
-    while(args.size() != 1) initial *= atol(args.shift());
-    
+    char *a = args.shift();
+    long initial = atol(a);
+
+    delete [] a;
+
+    while(args.size() > 0) {
+      char *b = args.shift();
+      initial *= atol(b);
+      
+      delete [] b;
+    }
+
     sprintf(dest,"%ld", initial);
 }
 
 void div(char* dest, LinkedList<char*> &args)
 {
-    long initial = atol(args.shift());
-    while(args.size() != 1) initial /= atol(args.shift());
-    
+    char *a = args.shift();
+    long initial = atol(a);
+
+    delete [] a;
+
+    while(args.size() > 0) {
+      char *b = args.shift();
+      initial /= atol(b);
+      
+      delete [] b;
+    }
+
     sprintf(dest,"%ld", initial);
 }
 
 void sub(char* dest, LinkedList<char*> &args)
 {
-    long initial = atol(args.shift());
-    while(args.size() != 1) initial -= atol(args.shift());
-    
+    char *a = args.shift();
+    long initial = atol(a);
+
+    delete [] a;
+
+    while(args.size() > 0) {
+      char *b = args.shift();
+      initial -= atol(b);
+      
+      delete [] b;
+    }
+
     sprintf(dest,"%ld", initial);
 }
 
@@ -55,24 +86,22 @@ void read(char* dest, LinkedList<char*> &args)
     E93c e(512, 9, 8);
     e.setup();
 
-    int address = atoi(args.shift());
+    char *a = args.shift();
+    int address = atoi(a);
     
+    delete [] a;
+
     sprintf(dest, "%02x", e.read(address));
 }
 
 void i(char* dest, LinkedList<char*> &args)
 {
-    long value = strtol(args.shift(), NULL, 16);
+    char *a = args.shift();
+    long value = strtol(a, NULL, 16);
+
+    delete [] a;
     
     sprintf(dest, "%ld", value);
-}
-
-void removeLast(char* dest, LinkedList<char*> &args)
-{
-  char* initial = args.shift();
-  initial[strlen(initial)-1] = '\0';
-
-  strcpy(dest, initial);
 }
 
 void write(char* dest, LinkedList<char*> &args)
@@ -80,50 +109,83 @@ void write(char* dest, LinkedList<char*> &args)
     E93c e(512, 9, 8);
     e.setup();
 
-    int address = atoi(args.shift());
-    int value = atoi(args.shift());
+    char *a = args.shift();
+    char *b = args.shift();
+
+    int address = atoi(a);
+    int value = atoi(b);
 
     e.write(address, value);
 
     delay(10);
+
+    delete [] a;
+    delete [] b;
 
     sprintf(dest, "%02x", e.read(address));
 }
 
 void position(char* dest, LinkedList<char*> &args)
 {
-  int position = atoi(args.shift());
+  char *a = args.shift();
+  char *b = args.shift();
   
-  dest[0] = args.shift()[position];
+  int position = atoi(a);
+  
+  dest[0] = b[position];
   dest[1] = '\0';
+
+  delete [] a;
+  delete [] b;
 }
 
 void merge(char* dest, LinkedList<char*> &args)
 {
-  strcpy(dest, args.shift());
+  char *a = args.shift();
+  strcpy(dest, a);
 
-  char* t;
-  while(t = args.shift(), *t != ')' && args.size() != 0) strcat(dest, t);
+  delete [] a;
+
+  while(args.size() != 0) 
+  {
+    char *b = args.shift();
+    strcat(dest, b);
+
+    delete [] b;
+  }
 }
 
 void first(char* dest, LinkedList<char*> &args)
 {
-  dest[0] = args.shift()[0];
+  char *a = args.shift();
+
+  dest[0] = a[0];
   dest[1] = '\0';
+
+  delete [] a;
 }
 
 void last(char* dest, LinkedList<char*> &args)
 {
-  dest[0] = args.shift()[1];
+  char *a = args.shift();
+
+  dest[0] = a[strlen(a)-1];
   dest[1] = '\0';
+
+  delete [] a;
 }
 
 void format(char* dest, LinkedList<char*> &args)
 {
-    long initial = atol(args.shift());
-    char *format = args.shift();
+    char *a = args.shift();
+    char *b = args.shift();
+
+    long initial = atol(a);
     
-    sprintf(dest, format, initial);
+    sprintf(dest, b, initial);
+
+    delete [] a;
+    delete [] b;
 }
 
 #endif

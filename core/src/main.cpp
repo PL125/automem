@@ -5,7 +5,7 @@
 #include "parser/parser.h"
 #include "arch/e93c.h"
 
-#define CMD_MAX_SIZE 128
+#define CMD_MAX_SIZE 512
 
 // Ui *ui;
 char cmd[CMD_MAX_SIZE];
@@ -23,9 +23,9 @@ void setup()
   Serial.println(e.read(0));
     
   char buf[32];
-  Parser::run(buf, "(z (/ (i (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
+  // Parser::run(buf, "(z (/ (i (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
+  Parser::run(buf, "(+ 1 2 (+ 3 4))");
   Serial.println(buf);
-
   // ui = new Ui();
 }
 

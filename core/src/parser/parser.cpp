@@ -13,7 +13,8 @@ LinkedList<char *> Parser::tokenize(char *s)
       ++s;
     if (*s == '(' || *s == ')')
     {
-      ss.add(new char(*s++ == '(' ? '(' : ')'));
+      // ss.add(new char(*s++ == '(' ? '(' : ')'));
+      s++;
     }
     else
     {
@@ -34,8 +35,6 @@ LinkedList<char *> Parser::tokenize(char *s)
 
 void Parser::parse(char *dest, LinkedList<char *> &tk)
 {
-  tk.shift();
-
   char *op = tk.shift();
 
   switch (*op)
@@ -76,12 +75,9 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
   case 'l':
     last(dest, tk);
     break;
-  case 'x':
-    removeLast(dest, tk);
-    break;
   }
 
-  delete op;
+  delete [] op;
 }
 
 void Parser::run(char *dest, char *s)
@@ -105,7 +101,11 @@ void Parser::run(char *dest, char *s)
     memcpy(e, t, ee + 1);
     e[ee + 1] = '\0';
 
-    char r[128];
+    Serial.print(">");
+    Serial.print(e);
+    Serial.println("<");
+
+    char r[16];
     LinkedList<char *> tk = tokenize(e);
     parse(r, tk);
 
@@ -127,6 +127,4 @@ void Parser::run(char *dest, char *s)
 
   memcpy(dest, s, sz + 1);
   dest[sz + 1] = '\0';
-
-  delete s;
 }
