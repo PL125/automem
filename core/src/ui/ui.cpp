@@ -4,6 +4,8 @@ LinkedList<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
 {
     LinkedList<MenuItem> *items = new LinkedList<MenuItem>();
 
+    E24c E24c32 = E24c(4096, 0x50);
+
     Result* view = new Result(
         lcd,
         &E24c32,
@@ -23,16 +25,18 @@ LinkedList<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
 Ui::Ui()
 {
     this->lcd = new LiquidCrystal_I2C(0x27, 20, 4);
-    this->lcd->init();
+    this->lcd->begin();
     this->lcd->backlight();
 
     this->views = new LinkedList<View*>();
 
-    // Menu* m = new Menu(lcd, radio_fiat(lcd));
-    Result* m = new Result(
-        lcd,
-        &E24c32,
-        "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
+    // E24c E24c32 = E24c(4096, 0x50);
+
+    Menu* m = new Menu(lcd, radio_fiat(lcd));
+    // Result* m = new Result(
+    //     lcd,
+    //     &E24c32,
+    //     "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
 
     m->setup();
 

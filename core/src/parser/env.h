@@ -47,7 +47,7 @@ void sub(char* dest, LinkedList<char*> &args)
 
 void read(char* dest, LinkedList<char*> &args)
 {
-    E93c e = E93c66;
+    E93c e = E93c(512, 9, 8);
     e.setup();
     int address = atoi(args.shift());
     
@@ -71,7 +71,7 @@ void removeLast(char* dest, LinkedList<char*> &args)
 
 void write(char* dest, LinkedList<char*> &args)
 {
-    E93c e = E93c66;
+    E93c e = E93c(512, 9, 8);
     e.setup();
     int address = atoi(args.shift());
     int value = atoi(args.shift());

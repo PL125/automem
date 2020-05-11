@@ -9,11 +9,6 @@
 #include "controls.h"
 #include "arch/e.h"
 
-#define ENTER 6
-#define BACK 5
-#define UP 7
-#define DOWN 8
-
 class MenuItem
 {
     public:

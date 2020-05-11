@@ -15,7 +15,7 @@ uint8_t E95c::read(uint16_t address) const {
 
     digitalWrite(CS, LOW);
     
-    SPI.transfer(READ);
+    SPI.transfer(3); // READ
     SPI.transfer(address >> 8);
     SPI.transfer(address);
 
@@ -37,7 +37,7 @@ void E95c::write(uint16_t address, uint8_t data) const {
 
     digitalWrite(CS, LOW);
 
-    SPI.transfer(WRITE);
+    SPI.transfer(2); // WRITE
     SPI.transfer(address >> 8);
     SPI.transfer(address);
 

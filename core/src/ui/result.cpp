@@ -35,7 +35,7 @@ void Result::render()
     lcd->setCursor(1, 1);
     if(strcmp(value, value2) == 0)
     {
-        lcd->print("Km:");
+        lcd->print("Code:");
     }
     lcd->setCursor(1, 2);
     lcd->print(value);

@@ -38,6 +38,6 @@ class E93c : public E
         void print() const;
 };
 
-const E93c E93c66 = E93c(512, 9, 8);
+// const E93c E93c66 = E93c(512, 9, 8);
 
 #endif

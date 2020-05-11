@@ -10,8 +10,9 @@
 //#define WRDI 4
 //#define RDSR 5
 //#define WRSR 1
-#define READ 3
-#define WRITE 2
+
+// #define READ 3
+// #define WRITE 2
 
 #include "e.h"
 #include <Arduino.h>
@@ -31,6 +32,6 @@ class E95c : public E
         void print() const;
 };
 
-#define E95320 E95c(4096)
+// #define E95320 E95c(4096)
 
 #endif

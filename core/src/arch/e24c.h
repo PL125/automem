@@ -19,6 +19,4 @@ class E24c : public E
         void print() const;
 };
 
-#define E24c32 E24c(4096, 0x50)
-
 #endif
