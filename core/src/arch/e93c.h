@@ -1,10 +1,10 @@
 #ifndef E93c_H
 #define E93c_H 
 
-#define CLK 13
-#define CS 10
+#define CLK 14 // 13
+#define CS 15 // 10 
 //#define OUT 11
-#define DI 11
+#define DI 13 // 11
 #define DO 12
 
 #define WREN 6

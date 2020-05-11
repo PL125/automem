@@ -8,6 +8,7 @@
             "includePath": [
                 "/home/paulo/Workspace/automem/core/include",
                 "/home/paulo/Workspace/automem/core/src",
+                "/home/paulo/Workspace/automem/core/.pio/libdeps/uno/Arduino-LiquidCrystal-I2C-library",
                 "/home/paulo/Workspace/automem/core/.pio/libdeps/uno/Bounce2_ID1106/src",
                 "/home/paulo/Workspace/automem/core/lib/LinkedList",
                 "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
@@ -25,6 +26,7 @@
                 "path": [
                     "/home/paulo/Workspace/automem/core/include",
                     "/home/paulo/Workspace/automem/core/src",
+                    "/home/paulo/Workspace/automem/core/.pio/libdeps/uno/Arduino-LiquidCrystal-I2C-library",
                     "/home/paulo/Workspace/automem/core/.pio/libdeps/uno/Bounce2_ID1106/src",
                     "/home/paulo/Workspace/automem/core/lib/LinkedList",
                     "/home/paulo/.platformio/packages/framework-arduino-avr/libraries/SPI/src",

@@ -1,4 +1,5 @@
 #include "ui.h"
+#include "arch/e93c.h"
 
 LinkedList<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
 {
@@ -6,18 +7,36 @@ LinkedList<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
 
     E24c E24c32 = E24c(4096, 0x50);
 
-    Result* view = new Result(
-        lcd,
-        &E24c32,
-        "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
+    // Result* view = new Result(
+    //     lcd,
+    //     &E24c32,
+    //     "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
 
     items->add(MenuItem{
-        .title = "CD5404 (24c32)",
-        .view = view});
+        .title = "Teste 1",
+        .view = nullptr});
 
     items->add(MenuItem{
-        .title = "CD5404 (24c32)",
-        .view = view});
+        .title = "Teste 2",
+        .view = nullptr});
+
+    
+    items->add(MenuItem{
+        .title = "Teste 3",
+        .view = nullptr});
+
+    items->add(MenuItem{
+        .title = "Teste 4",
+        .view = nullptr});
+
+    
+    items->add(MenuItem{
+        .title = "Teste 5",
+        .view = nullptr});
+
+    items->add(MenuItem{
+        .title = "Teste 6",
+        .view = nullptr});
 
     return items;
 }
@@ -32,10 +51,12 @@ Ui::Ui()
 
     // E24c E24c32 = E24c(4096, 0x50);
 
+    E93c e = E93c(512, 9, 8);
+
     Menu* m = new Menu(lcd, radio_fiat(lcd));
     // Result* m = new Result(
     //     lcd,
-    //     &E24c32,
+    //     &e,
     //     "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))");
 
     m->setup();
