@@ -94,7 +94,7 @@ void read(char* dest, LinkedList<char*> &args)
     sprintf(dest, "%02x", e.read(address));
 }
 
-void i(char* dest, LinkedList<char*> &args)
+void hex2num(char* dest, LinkedList<char*> &args)
 {
     char *a = args.shift();
     long value = strtol(a, NULL, 16);

@@ -57,8 +57,8 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
   case 'p':
     position(dest, tk);
     break;
-  case 'i':
-    i(dest, tk);
+  case 'n':
+    hex2num(dest, tk);
     break;
   case 'z':
     format(dest, tk);
