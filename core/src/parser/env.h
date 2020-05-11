@@ -47,8 +47,9 @@ void sub(char* dest, LinkedList<char*> &args)
 
 void read(char* dest, LinkedList<char*> &args)
 {
-    E93c e = E93c(512, 9, 8);
+    E93c e(512, 9, 8);
     e.setup();
+
     int address = atoi(args.shift());
     
     sprintf(dest, "%02x", e.read(address));
@@ -71,16 +72,17 @@ void removeLast(char* dest, LinkedList<char*> &args)
 
 void write(char* dest, LinkedList<char*> &args)
 {
-    E93c e = E93c(512, 9, 8);
+    E93c e(512, 9, 8);
     e.setup();
+
     int address = atoi(args.shift());
     int value = atoi(args.shift());
 
     e.write(address, value);
 
     delay(10);
-    
-    sprintf(dest, "%02x", Parser::e->read(address));
+
+    sprintf(dest, "%02x", e.read(address));
 }
 
 void position(char* dest, LinkedList<char*> &args)

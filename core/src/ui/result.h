@@ -8,7 +8,8 @@
 #include "controls.h"
 
 #include "view.h"
-#include "parser/parser.h"
+#include "arch/e.h"
+// #include "parser/parser.h"
 
 enum ResultType { Show, Edit };
 

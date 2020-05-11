@@ -1,46 +1,52 @@
 #include <Arduino.h>
+#include <MemoryFree.h>
 
-#include "ui/ui.h"
+// #include "ui/ui.h"
+#include "parser/parser.h"
+#include "arch/e93c.h"
 
-#define CMD_MAX_SIZE 64
+#define CMD_MAX_SIZE 128
 
-Ui *ui;
+// Ui *ui;
 char cmd[CMD_MAX_SIZE];
 int current = 0;
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
+  Serial.println("--> Reset");
 
-  delay(100);
+  E93c e(512, 9, 8);
+  e.setup();
+  e.write(0, 10);
+  delay(10);
+  Serial.println(e.read(0));
+    
+  char buf[32];
+  Parser::run(buf, "(z (/ (i (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
+  Serial.println(buf);
 
-  Serial.println("aaaa");
-
-
-  // char buf[8];
-  // Parser::run(buf, "(r 24)");
-  // Serial.print(buf);
-
-  ui = new Ui();
+  // ui = new Ui();
 }
 
 void loop()
 {
   
-  ui->render();
-
-  delay(1);
+  // ui->render();
 
   if (Serial.available())
   {
     char value = Serial.read();
 
-    delay(1);
-
     if (value == '#')
     {
       Parser::run(cmd, cmd);
       Serial.println(cmd);
+
+      delete cmd;
+
+      Serial.print("freeMemory()=");
+      Serial.println(freeMemory());
 
       for (int i = 0; i < CMD_MAX_SIZE; i++)
         cmd[i] = 0;

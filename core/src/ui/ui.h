@@ -9,7 +9,7 @@
 #include "ui/menu.h"
 #include "ui/ui.h"
 
-#include "parser/parser.h"
+// #include "parser/parser.h"
 
 #include "arch/e24c.h"
 

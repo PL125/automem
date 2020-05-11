@@ -103,7 +103,7 @@ void Parser::run(char *dest, char *s)
     memcpy(e, t, ee + 1);
     e[ee + 1] = '\0';
 
-    char r[32];
+    char r[128];
     LinkedList<char *> tk = tokenize(e);
     parse(r, tk);
 

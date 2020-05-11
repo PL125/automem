@@ -1,10 +1,10 @@
 #ifndef E93c_H
 #define E93c_H 
 
-#define CLK 14 // 13
-#define CS 15 // 10 
+#define CLK 13 // 14
+#define CS 10 // 15
 //#define OUT 11
-#define DI 13 // 11
+#define DI 11 // 13
 #define DO 12
 
 #define WREN 6
@@ -16,6 +16,9 @@
 
 #define CLOCK 2000000
 #define HALF_CLOCK_PERIOD 100 // Microseconds
+
+#include <Arduino.h>
+#include <SPI.h>
 
 #include "e.h"
 

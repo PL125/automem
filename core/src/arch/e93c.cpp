@@ -1,6 +1,4 @@
 #include "e93c.h"
-#include <SPI.h>
-#include <Arduino.h>
 
 E93c::E93c(int size, int address_size, int page_size)
 {
