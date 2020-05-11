@@ -5,8 +5,6 @@ LinkedList<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
 {
     LinkedList<MenuItem> *items = new LinkedList<MenuItem>();
 
-    E24c E24c32 = E24c(4096, 0x50);
-
     // Result* view = new Result(
     //     lcd,
     //     &E24c32,
@@ -14,29 +12,29 @@ LinkedList<MenuItem> *radio_fiat(LiquidCrystal_I2C *lcd)
 
     items->add(MenuItem{
         .title = "Teste 1",
-        .view = nullptr});
+    });
 
     items->add(MenuItem{
         .title = "Teste 2",
-        .view = nullptr});
+    });
 
     
     items->add(MenuItem{
         .title = "Teste 3",
-        .view = nullptr});
+    });
 
     items->add(MenuItem{
         .title = "Teste 4",
-        .view = nullptr});
+    });
 
     
     items->add(MenuItem{
         .title = "Teste 5",
-        .view = nullptr});
+    });
 
     items->add(MenuItem{
         .title = "Teste 6",
-        .view = nullptr});
+    });
 
     return items;
 }
