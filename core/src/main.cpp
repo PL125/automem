@@ -43,8 +43,6 @@ void loop()
       Parser::run(cmd, cmd);
       Serial.println(cmd);
 
-      delete cmd;
-
       Serial.print("freeMemory()=");
       Serial.println(freeMemory());
 

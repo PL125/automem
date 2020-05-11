@@ -36,9 +36,9 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
 {
   tk.shift();
 
-  char op = *tk.shift();
+  char *op = tk.shift();
 
-  switch (op)
+  switch (*op)
   {
   case '+':
     add(dest, tk);
@@ -80,6 +80,8 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
     removeLast(dest, tk);
     break;
   }
+
+  delete op;
 }
 
 void Parser::run(char *dest, char *s)
@@ -125,4 +127,6 @@ void Parser::run(char *dest, char *s)
 
   memcpy(dest, s, sz + 1);
   dest[sz + 1] = '\0';
+
+  delete s;
 }

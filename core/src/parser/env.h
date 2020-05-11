@@ -15,8 +15,13 @@
 
 void add(char* dest, LinkedList<char *> &args)
 {
+    Serial.println(args.get(0));
     long initial = atol(args.shift());
-    while(args.size() != 1) initial += atol(args.shift());
+
+    while(args.size() > 0) {
+      Serial.println(args.get(0));
+      initial += atol(args.shift());
+    }
 
     sprintf(dest,"%ld", initial);
 }
