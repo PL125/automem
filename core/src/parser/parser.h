@@ -16,7 +16,6 @@ class Parser
 public:
     Parser();
 
-    static E *e;
     static void run(char *dest, char *s);
 
 private:

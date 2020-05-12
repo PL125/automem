@@ -1,8 +1,6 @@
 #include "parser.h"
 #include "env.h"
 
-E *Parser::e;
-
 LinkedList<char *> Parser::tokenize(char *s)
 {
   LinkedList<char *> ss;

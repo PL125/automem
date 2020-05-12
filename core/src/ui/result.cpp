@@ -1,5 +1,4 @@
 #include "result.h"
-#include <MemoryFree.h>
 
 char value[16];
 char aux[16];
@@ -7,34 +6,34 @@ char aux[16];
 void update()
 {
     char aux[128];
-    // sprintf(aux, "(w 0 (m (p 6 (z (* %s 10) f08x)) (p 7 (z (* %s 10) f08x))))", value);
-    Parser::run(aux, "(w 0 (m (p 6 (z (* 150000 10) f08x)) (p 7 (z (* 150000 10) f08x))))");
+    // sprintf(aux, "(w 0 (m (p 6 (z (* %s 10) f08lx)) (p 7 (z (* %s 10) f08x))))", value);
+    Parser::run(aux, "(w 0 (m (p 6 (z (* 50000 10) f08lx)) (p 7 (z (* 50000 10) f08lx))))");
     // Serial.println(aux);
     
     delay(100);
 
-    // sprintf(aux, "(w 1 (m (p 4 (z (* %s 10) f08x)) (p 5 (z (* %s 10) f08x))))", value);
+    // sprintf(aux, "(w 1 (m (p 4 (z (* %s 10) fl08x)) (p 5 (z (* %s 10) fl08x)))", value);
     
-    Parser::run(aux, "(w 1 (m (p 4 (z (* 150000 10) f08x)) (p 5 (z (* 150000 10) f08x))))");
+    Parser::run(aux, "(w 1 (m (p 4 (z (* 50000 10) f08lx)) (p 5 (z (* 50000 10) f08lx))))");
 
     delay(100);
 
     // Serial.println(aux);
 
-    // sprintf(aux, "(w 2 (m (p 2 (z (* %s 10) f08x)) (p 3 (z (* %s 10) f08x))))", value);
-    Parser::run(aux, "(w 2 (m (p 2 (z (* 150000 10) f08x)) (p 3 (z (* 150000 10) f08x))))");
+    // sprintf(aux, "(w 2 (m (p 2 (z (* %s 10) f08lx)) (p 3 (z (* %s 10) f08lx)))", value);
+    Parser::run(aux, "(w 2 (m (p 2 (z (* 50000 10) f08lx)) (p 3 (z (* 50000 10) f08lx))))");
 
     delay(100);
     // Serial.println(aux);
 
-    // sprintf(aux, "(w 3 (m (p 0 (z (* %s 10) f08x)) (p 1 (z (* %s 10) f08x))))", value);
-    Parser::run(aux, "(w 3 (m (p 0 (z (* 150000 10) f08x)) (p 1 (z (* 150000 10) f08x))))");
+    // sprintf(aux, "(w 3 (m (p 0 (z (* %s 10) f08lx)) (p 1 (z (* %s 10) f08lx)))", value);
+    Parser::run(aux, "(w 3 (m (p 0 (z (* 50000 10) f08lx)) (p 1 (z (* 50000 10) f08lx))))");
 
     // Serial.println(aux);
 
 }
 
-Result::Result(LiquidCrystal_I2C *lcd, E *e, char *script)
+Result::Result(LiquidCrystal_I2C *lcd, char *script)
 {
     this->lcd = lcd;
     this->script = script;
