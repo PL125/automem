@@ -13,8 +13,6 @@ void setup()
   Serial.println("--> Reset");
 }
 
-
-
 char cmd[CMD_MAX_SIZE];
 int current = 0;
 

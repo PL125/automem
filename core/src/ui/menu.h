@@ -8,12 +8,13 @@
 #include "symbols.h"
 #include "controls.h"
 #include "arch/e.h"
+#include "ui.h"
 
 class MenuItem
 {
     public:
-        char *title;
-        View *view;
+        const char *title;
+        View *child;
 };
 
 class Menu : public View
@@ -29,8 +30,8 @@ class Menu : public View
         ~Menu();
 
         void setup();   
-        void render();
-        void action(LinkedList<View*> *views);
+        void draw();
+        void update();
 };
 
 #endif

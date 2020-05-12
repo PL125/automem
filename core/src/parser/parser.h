@@ -23,4 +23,6 @@ private:
     static void parse(char *dest, LinkedList<char *> &tk);
 };
 
+
+
 #endif

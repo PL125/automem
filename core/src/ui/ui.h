@@ -4,22 +4,25 @@
 #include <LiquidCrystal_I2C.h>
 #include <LinkedList.h>
 
-#include "ui/menu.h"
-#include "ui/result.h"
-
 #include "view.h"
 #include "arch/e.h"
 #include "arch/e93c.h"
 #include "arch/e24c.h"
+
+#include "ui/menu.h"
+#include "ui/result.h"
+
+class MenuItem;
 
 class Ui
 {
 private:
     LiquidCrystal_I2C* lcd;
 
+    LinkedList<MenuItem>* getItems(int id);
     View* getView(int id);
     E getE(int id);
-    char *getCmd(int id);
+    char* getCmd(int id);
 
     Ui();
 
@@ -29,8 +32,10 @@ public:
     static Ui& getInstance();
 
     void update();
+
+    void push(View* view);
     View* top();
-    View* shift();
+    View* pop();
 };
 
 #endif

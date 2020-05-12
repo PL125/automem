@@ -127,13 +127,13 @@ void Result::update()
         if (type == ResultType::Show)
         {
             lcd->clear();
-            ui.shift();
+            ui.pop();
         }
         else if (ResultType::Edit)
         {
             lcd->clear();
             type = ResultType::Show;
-            
+
             draw();
         }
     }

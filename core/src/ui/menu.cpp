@@ -12,9 +12,10 @@ Menu::~Menu() {}
 
 void Menu::setup()
 {
+    draw();
 }
 
-void Menu::render()
+void Menu::draw()
 {
 
     lcd->createChar(0, Symbols::arrow_right);
@@ -42,8 +43,9 @@ void Menu::render()
     }
 }
 
-void Menu::action(LinkedList<View *> *views)
+void Menu::update()
 {
+    Ui ui = Ui::getInstance();
     Controls c = Controls::getInstance();
 
     if (c.up->update() && c.up->rose())
@@ -65,6 +67,8 @@ void Menu::action(LinkedList<View *> *views)
             *top = 0;
             lcd->clear();
         }
+
+        draw();
     }
 
     if (c.down->update() && c.down->rose())
@@ -94,22 +98,24 @@ void Menu::action(LinkedList<View *> *views)
             *top = items->size() - 4;
             lcd->clear();
         }
+
+        draw();
     }
 
     if (c.enter->update() && c.enter->rose())
     {
         MenuItem current_menu_item = items->get(*cursor);
-        if (&current_menu_item.view != nullptr)
+        if (&current_menu_item.child != nullptr)
         {
             lcd->clear();
-            views->add(current_menu_item.view);
-            views->get(views->size() - 1)->setup();
+
+            ui.push(current_menu_item.child);
         }
     }
 
     if (c.back->update() && c.back->rose())
     {
         lcd->clear();
-        views->pop();
+        ui.pop();
     }
 }

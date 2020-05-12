@@ -1,5 +1,4 @@
 #include "ui.h"
-#include "arch/e93c.h"
 
 Ui::Ui()
 {
@@ -17,9 +16,56 @@ View* Ui::top()
     return views->get(views->size() - 1);
 }
 
-View* Ui::shift()
+View* Ui::pop()
 {
-    return views->shift();
+    return views->pop();
+}
+
+void Ui::push(View* view)
+{
+    views->add(view);
+    top()->setup();
+}
+
+LinkedList<MenuItem>* Ui::getItems(int id)
+{
+    LinkedList<MenuItem> *items = new LinkedList<MenuItem>();
+
+    switch(id)
+    {
+        case 0:
+            items->add(
+                MenuItem {
+                    .title = "Imobilizador"
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = "Airbag"
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = "Odometro"
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = "Radio"
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = "Configuracoes"
+                }
+            );
+            
+            return items;
+    }
 }
 
 View* Ui::getView(int id)
@@ -27,16 +73,11 @@ View* Ui::getView(int id)
     switch(id)
     {
         case 0:
-            return new Result(
-                lcd,
-                getCmd(0)
-            );
+            return new Menu(lcd, getItems(0));
         case 1:
-            return new Result(
-                lcd,
-                getCmd(1)
-            );
-            break;
+            return new Result(lcd, getCmd(0));
+        case 2:
+            return new Result(lcd, getCmd(1));
     }
 }
 
