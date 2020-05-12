@@ -179,9 +179,9 @@ void format(char* dest, LinkedList<char*> &args)
 {
     char *a = args.shift();
     char *b = args.shift();
+    b[0] = '%';
 
     long initial = atol(a);
-    
     sprintf(dest, b, initial);
 
     delete [] a;

@@ -1,13 +1,13 @@
 #include <Arduino.h>
 #include <MemoryFree.h>
 
-// #include "ui/ui.h"
+#include "ui/ui.h"
 #include "parser/parser.h"
 #include "arch/e93c.h"
 
-#define CMD_MAX_SIZE 512
+#define CMD_MAX_SIZE 128
 
-// Ui *ui;
+Ui *ui;
 char cmd[CMD_MAX_SIZE];
 int current = 0;
 
@@ -18,21 +18,17 @@ void setup()
 
   E93c e(512, 9, 8);
   e.setup();
-  e.write(0, 10);
+  // e.write(0, 10);
   delay(10);
   Serial.println(e.read(0));
     
-  char buf[32];
-  // Parser::run(buf, "(z (/ (i (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
-  Parser::run(buf, "(+ 1 2 (+ 3 4))");
-  Serial.println(buf);
-  // ui = new Ui();
+  ui = new Ui();
 }
 
 void loop()
 {
   
-  // ui->render();
+  ui->render();
 
   if (Serial.available())
   {

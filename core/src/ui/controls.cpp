@@ -11,27 +11,27 @@ Controls::Controls()
 
     back = new Bounce();
     back->attach(BACK);
-    back->interval(50);
+    back->interval(25);
 
     enter = new Bounce();
     enter->attach(ENTER);
-    enter->interval(50);
+    enter->interval(25);
 
     left = new Bounce();
     left->attach(LEFT);
-    left->interval(20);
+    left->interval(25);
 
     right = new Bounce();
     right->attach(RIGHT);
-    right->interval(20);
+    right->interval(25);
 
     up = new Bounce();
     up->attach(UP);
-    up->interval(20);
+    up->interval(25);
 
     down = new Bounce();
     down->attach(DOWN);
-    down->interval(20);
+    down->interval(25);
 }
 
 Controls& Controls::getInstance()

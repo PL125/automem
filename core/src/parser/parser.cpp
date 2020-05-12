@@ -13,7 +13,6 @@ LinkedList<char *> Parser::tokenize(char *s)
       ++s;
     if (*s == '(' || *s == ')')
     {
-      // ss.add(new char(*s++ == '(' ? '(' : ')'));
       s++;
     }
     else
@@ -100,10 +99,6 @@ void Parser::run(char *dest, char *s)
     char e[ee + 2];
     memcpy(e, t, ee + 1);
     e[ee + 1] = '\0';
-
-    Serial.print(">");
-    Serial.print(e);
-    Serial.println("<");
 
     char r[16];
     LinkedList<char *> tk = tokenize(e);

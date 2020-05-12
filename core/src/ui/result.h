@@ -9,9 +9,9 @@
 
 #include "view.h"
 #include "arch/e.h"
-// #include "parser/parser.h"
+#include "parser/parser.h"
 
-enum ResultType { Show, Edit };
+enum ResultType { Show, Edit, Error };
 
 class Result : public View
 {
