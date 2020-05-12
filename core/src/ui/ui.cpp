@@ -148,21 +148,26 @@ char* Ui::getRead(int id)
     }
 }
 
-// LinkedList<char*> Ui::getWrite(int id)
-// {
+void Ui::callWrite(int id, long value)
+{
 
-//     LinkedList<char*> *items = new LinkedList<char*>();
+    LinkedList<char*> *items = new LinkedList<char*>();
 
-//     switch(id)
-//     {
-//         case 0:
-//             "(w 0 (m (p 6 (z (* $ 10) %02x) (p 7 (z (* $ 10) %02x)))))",
-//             "(w 1 (m (p 4 (z (* $ 10) %02x) (p 5 (z (* $ 10) %02x)))))",
-//             "(w 2 (m (p 2 (z (* $ 10) %02x) (p 3 (z (* $ 10) %02x)))))",
-//             "(w 3 (m (p 0 (z (* $ 10) %02x) (p 1 (z (* $ 10) %02x)))))"
+    switch(id)
+    {
+        case 0:
+            char buffer[64];
 
-//     }
-// };
+            sprintf(buffer, "(w 0 (m (p 6 (z (* %ld 10) f02lx) (p 7 (z (* %ld 10) f02lx)))))", value);
+            Parser::run(buffer, buffer);
+            sprintf(buffer, "(w 1 (m (p 4 (z (* %ld 10) f02lx) (p 5 (z (* %ld 10) f02lx)))))", value);
+            Parser::run(buffer, buffer);
+            sprintf(buffer, "(w 2 (m (p 2 (z (* %ld 10) f02lx) (p 3 (z (* %ld 10) f02lx)))))", value);
+            Parser::run(buffer, buffer);
+            sprintf(buffer, "(w 3 (m (p 0 (z (* %ld 10) f02lx) (p 1 (z (* %ld 10) f02lx)))))", value);
+
+    }
+};
 
 Ui& Ui::getInstance()
 {

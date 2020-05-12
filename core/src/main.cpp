@@ -11,6 +11,11 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println("--> Reset");
+
+  E93c e(512, 9, 8);
+  e.setup();
+  // e.write(0, 0);
+  // Serial.println(e.read(0));
 }
 
 char cmd[CMD_MAX_SIZE];

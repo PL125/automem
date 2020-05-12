@@ -23,7 +23,6 @@ private:
     View* getView(int id);
     E getE(int id);
     char* getRead(int id);
-    LinkedList<char*>* getWrite(int id);
 
     Ui();
 
@@ -33,6 +32,8 @@ public:
     static Ui& getInstance();
 
     void update();
+
+    void callWrite(int id, long value);
 
     void push(View* view);
     View* top();

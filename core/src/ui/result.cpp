@@ -118,7 +118,8 @@ void Result::update()
             type = ResultType::Show;
             Serial.println(value);
 
-            update();
+            long v = atol(value);
+            ui.callWrite(0, v);
 
             setup();
         }
