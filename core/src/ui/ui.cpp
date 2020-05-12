@@ -33,7 +33,7 @@ LinkedList<MenuItem>* Ui::getItems(int id)
 
     switch(id)
     {
-        case 0:
+        case 0: // Main Menu
             items->add(
                 MenuItem {
                     .title = "Imobilizador"
@@ -48,13 +48,15 @@ LinkedList<MenuItem>* Ui::getItems(int id)
 
             items->add(
                 MenuItem {
-                    .title = "Odometro"
+                    .title = "Odometro",
+                    .child = getView(3)
                 }
             );
 
             items->add(
                 MenuItem {
-                    .title = "Radio"
+                    .title = "Radio",
+                    .child = getView(4)
                 }
             );
 
@@ -65,6 +67,40 @@ LinkedList<MenuItem>* Ui::getItems(int id)
             );
             
             return items;
+        
+        case 3: // Odometro
+
+            items->add(
+                MenuItem {
+                    .title = "Volkswagen",
+                    .child = getView(301)
+                }
+            );
+
+            return items;
+
+        case 301:
+            
+            items->add(
+                MenuItem {
+                    .title = "Gol G4 (93c66)",
+                    .child = getView(30100)
+                }
+            );
+
+            return items;
+
+        case 4: // Radio
+        
+            items->add(
+                MenuItem {
+                    .title = "Fiat"
+                }
+            );
+
+            return items;
+
+        
     }
 }
 
@@ -74,10 +110,20 @@ View* Ui::getView(int id)
     {
         case 0:
             return new Menu(lcd, getItems(0));
-        case 1:
-            return new Result(lcd, getCmd(0));
+        case 3: // Odometro
+            return new Menu(lcd, getItems(3)); 
+
+        case 301:
+            return new Menu(lcd, getItems(301));
+
+        case 30100:
+            return new Result(lcd, getCmd(1));
+
+        case 4: // Radio
+            return new Menu(lcd, getItems(4));
         case 2:
             return new Result(lcd, getCmd(1));
+        
     }
 }
 
