@@ -117,12 +117,12 @@ View* Ui::getView(int id)
             return new Menu(lcd, getItems(301));
 
         case 30100:
-            return new Result(lcd, getCmd(1));
+            return new Result(lcd, getRead(1), nullptr);
 
         case 4: // Radio
             return new Menu(lcd, getItems(4));
-        case 2:
-            return new Result(lcd, getCmd(1));
+        // case 2:
+        //     return new Result(lcd, getRead(1));
         
     }
 }
@@ -137,7 +137,7 @@ E Ui::getE(int id)
     }
 }
 
-char* Ui::getCmd(int id)
+char* Ui::getRead(int id)
 {
     switch(id)
     {
@@ -147,6 +147,22 @@ char* Ui::getCmd(int id)
             return "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))";
     }
 }
+
+// LinkedList<char*> Ui::getWrite(int id)
+// {
+
+//     LinkedList<char*> *items = new LinkedList<char*>();
+
+//     switch(id)
+//     {
+//         case 0:
+//             "(w 0 (m (p 6 (z (* $ 10) %02x) (p 7 (z (* $ 10) %02x)))))",
+//             "(w 1 (m (p 4 (z (* $ 10) %02x) (p 5 (z (* $ 10) %02x)))))",
+//             "(w 2 (m (p 2 (z (* $ 10) %02x) (p 3 (z (* $ 10) %02x)))))",
+//             "(w 3 (m (p 0 (z (* $ 10) %02x) (p 1 (z (* $ 10) %02x)))))"
+
+//     }
+// };
 
 Ui& Ui::getInstance()
 {

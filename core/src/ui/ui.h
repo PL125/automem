@@ -22,7 +22,8 @@ private:
     LinkedList<MenuItem>* getItems(int id);
     View* getView(int id);
     E getE(int id);
-    char* getCmd(int id);
+    char* getRead(int id);
+    LinkedList<char*>* getWrite(int id);
 
     Ui();
 

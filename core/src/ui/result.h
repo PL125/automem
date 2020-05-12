@@ -17,12 +17,13 @@ enum ResultType { Show, Edit, Error };
 class Result : public View
 {
     private:        
-        char *script;
+        char* read;
+        LinkedList<char*>* write;
 
         ResultType type;
 
     public:
-        Result(LiquidCrystal_I2C *lcd, char* script);
+        Result(LiquidCrystal_I2C *lcd, char* read, LinkedList<char*>* write);
         ~Result();
 
         LiquidCrystal_I2C *lcd;

@@ -33,10 +33,12 @@ void update()
 
 }
 
-Result::Result(LiquidCrystal_I2C *lcd, char *script)
+Result::Result(LiquidCrystal_I2C *lcd, char *read, LinkedList<char*>* write)
 {
     this->lcd = lcd;
-    this->script = script;
+    this->read = read;
+    this->write = write;
+
     this->cursor = new int(0);
     this->type = ResultType::Show;
 }
