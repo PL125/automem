@@ -7,22 +7,21 @@
 
 #define CMD_MAX_SIZE 128
 
-Ui *ui;
-char cmd[CMD_MAX_SIZE];
-int current = 0;
-
 void setup()
 {
   Serial.begin(9600);
   Serial.println("--> Reset");
-
-  ui = new Ui();
 }
+
+
+
+char cmd[CMD_MAX_SIZE];
+int current = 0;
 
 void loop()
 {
-  
-  ui->render();
+  Ui ui = Ui::getInstance();
+  ui.update();
 
   if (Serial.available())
   {

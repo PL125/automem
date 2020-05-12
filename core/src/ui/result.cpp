@@ -54,11 +54,13 @@ void Result::setup()
         type = ResultType::Error;
     }
 
-    render();
+    draw();
 }
 
-void Result::action(LinkedList<View *> *views)
+void Result::update()
 {
+
+    Ui ui = Ui::getInstance();
     Controls c = Controls::getInstance();
 
     if (type == ResultType::Edit)
@@ -66,13 +68,13 @@ void Result::action(LinkedList<View *> *views)
         if (c.up->update() && c.up->rose())
         {
             value[*cursor]++;
-            render();
+            draw();
         }
 
         if (c.down->update() && c.down->rose())
         {
             value[*cursor]--;
-            render();
+            draw();
         }
 
         if (c.right->update() && c.right->rose())
@@ -81,7 +83,8 @@ void Result::action(LinkedList<View *> *views)
             lcd->print(" ");
             *cursor += 1;
             *cursor %= 4;
-            render();
+
+            draw();
         }
 
         if (c.left->update() && c.left->rose())
@@ -96,7 +99,7 @@ void Result::action(LinkedList<View *> *views)
                 *cursor = 0;
             }
 
-            render();
+            draw();
         }
     }
 
@@ -105,7 +108,7 @@ void Result::action(LinkedList<View *> *views)
         if (type == ResultType::Show)
         {
             type = ResultType::Edit;
-            render();
+            draw();
         }
         else if (type == ResultType::Edit)
         {
@@ -124,18 +127,19 @@ void Result::action(LinkedList<View *> *views)
         if (type == ResultType::Show)
         {
             lcd->clear();
-            views->pop();
+            ui.shift();
         }
         else if (ResultType::Edit)
         {
             lcd->clear();
             type = ResultType::Show;
-            render();
+            
+            draw();
         }
     }
 }
 
-void Result::render()
+void Result::draw()
 {
     lcd->createChar(0, Symbols::square);
     lcd->createChar(1, Symbols::enter);

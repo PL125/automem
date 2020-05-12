@@ -11,8 +11,8 @@ class View {
         virtual ~View() {}
 
         virtual void setup() {};
-        virtual void render() {};
-        virtual void action(LinkedList<View*> *views) {};
+        virtual void draw() {};
+        virtual void update() {};
 };
 
 #endif

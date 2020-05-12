@@ -7,6 +7,7 @@
 #include "symbols.h"
 #include "controls.h"
 
+#include "ui.h"
 #include "view.h"
 #include "arch/e.h"
 #include "parser/parser.h"
@@ -17,7 +18,6 @@ class Result : public View
 {
     private:        
         char *script;
-        // char *value;
 
         ResultType type;
 
@@ -29,8 +29,8 @@ class Result : public View
         int *cursor;
 
         void setup();
-        void render();
-        void action(LinkedList<View*> *views);
+        void draw();
+        void update();
 };
 
 #endif

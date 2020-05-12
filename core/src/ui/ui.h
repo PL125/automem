@@ -15,20 +15,22 @@
 class Ui
 {
 private:
-    LiquidCrystal_I2C lcd;
+    LiquidCrystal_I2C* lcd;
 
-    View getView(int id);
+    View* getView(int id);
     E getE(int id);
     char *getCmd(int id);
 
     Ui();
 
 public:
-    LinkedList<View > views;
+    LinkedList<View*> *views;
 
-    static Controls& getInstance();
-    
-    void render();
+    static Ui& getInstance();
+
+    void update();
+    View* top();
+    View* shift();
 };
 
 #endif

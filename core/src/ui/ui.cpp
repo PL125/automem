@@ -3,32 +3,37 @@
 
 Ui::Ui()
 {
-    lcd = LiquidCrystal_I2C(0x27, 20, 4);
-    lcd.begin();
-    lcd.backlight();
+    lcd = new LiquidCrystal_I2C(0x27, 20, 4);
+    lcd->begin();
+    lcd->backlight();
 
-    views = LinkedList<View>();
-    views.add(getView(0));
+    views = new LinkedList<View*>();
+    views->add(getView(0));
+    top()->setup();
 };
 
-void Ui::render()
+View* Ui::top()
 {
-    views.get(views.size() - 1).action(views);
+    return views->get(views->size() - 1);
 }
 
+View* Ui::shift()
+{
+    return views->shift();
+}
 
-View Ui::getView(int id)
+View* Ui::getView(int id)
 {
     switch(id)
     {
         case 0:
-            Result(
-                &lcd,
-                getCmd(1)
+            return new Result(
+                lcd,
+                getCmd(0)
             );
         case 1:
-            Result(
-                &lcd,
+            return new Result(
+                lcd,
                 getCmd(1)
             );
             break;
@@ -54,4 +59,17 @@ char* Ui::getCmd(int id)
         case 1:
             return "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))";
     }
+}
+
+Ui& Ui::getInstance()
+{
+    static Ui instance;
+
+    return instance;
+}
+
+
+void Ui::update()
+{
+    top()->update();
 }
