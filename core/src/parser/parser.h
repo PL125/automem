@@ -17,8 +17,6 @@ class Parser
 private:
     Parser();
 
-    static E *e;
-
     static void setE(char *dest, LinkedList<char *> &args);
 
     static void add(char *dest, LinkedList<char *> &args);

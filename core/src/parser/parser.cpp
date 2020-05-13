@@ -2,8 +2,7 @@
 
 #include "arch/e95.h"
 
-
-E *Parser::e = new E95c(4096);
+E *pMem;
 
 Parser::Parser() {}
 
@@ -34,8 +33,9 @@ void Parser::setE(char *dest, LinkedList<char *> &args)
     // {
     //   delete e;
     // }
-
-    
+    pMem = new E95c(4096);
+    pMem->setup();
+    pMem->print();
     break;
 
   case 2:
@@ -45,7 +45,8 @@ void Parser::setE(char *dest, LinkedList<char *> &args)
     break;
   }
 
-  e->setup();
+  // pMem->setup();
+  // pMem->print();
 }
 
 void Parser::add(char *dest, LinkedList<char *> &args)
@@ -104,7 +105,7 @@ void Parser::div(char *dest, LinkedList<char *> &args)
 
 void Parser::debug(char *dest, LinkedList<char *> &args)
 {
-  e->print();
+  pMem->print();
 }
 
 void Parser::sub(char *dest, LinkedList<char *> &args)
@@ -127,7 +128,7 @@ void Parser::sub(char *dest, LinkedList<char *> &args)
 
 void Parser::read(char *dest, LinkedList<char *> &args)
 {
-  if (e == nullptr)
+  if (pMem == nullptr)
   {
     Serial.println("Error");
     return;
@@ -138,7 +139,7 @@ void Parser::read(char *dest, LinkedList<char *> &args)
 
   delete[] a;
 
-  sprintf(dest, "%02x", e->read(address));
+  sprintf(dest, "%02x", pMem->read(address));
 }
 
 void Parser::hex2num(char *dest, LinkedList<char *> &args)
@@ -153,7 +154,7 @@ void Parser::hex2num(char *dest, LinkedList<char *> &args)
 
 void Parser::write(char *dest, LinkedList<char *> &args)
 {
-  if (e == nullptr)
+  if (pMem == nullptr)
   {
     Serial.println("Error");
     return;
@@ -165,19 +166,19 @@ void Parser::write(char *dest, LinkedList<char *> &args)
   int address = atoi(a);
   int value = atoi(b);
 
-  e->write(address, value);
+  pMem->write(address, value);
 
   delay(10);
 
   delete[] a;
   delete[] b;
 
-  sprintf(dest, "%02x", e->read(address));
+  sprintf(dest, "%02x", pMem->read(address));
 }
 
 void Parser::dump(char *dest, LinkedList<char *> &args)
 {
-  e->dump();
+  pMem->dump();
 }
 
 void Parser::position(char *dest, LinkedList<char *> &args)

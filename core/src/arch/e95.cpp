@@ -5,6 +5,12 @@ E95c::E95c(int size)
     this->size = size;
 }
 
+
+void E95c::dump() const
+{
+
+}
+
 void E95c::setup() const
 {
     SPI.begin();

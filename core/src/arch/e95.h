@@ -28,6 +28,7 @@ class E95c : public E
         // ~E95c();
 
         void setup() const;
+        void dump() const;
         uint8_t read(uint16_t address) const;
         void write(uint16_t address, uint8_t data) const;
         void print() const;

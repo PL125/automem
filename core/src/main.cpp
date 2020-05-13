@@ -12,9 +12,9 @@ void setup()
   Serial.begin(9600);
   Serial.println("--> Reset");
 
-  E95c e(4096);
-  e.setup();
-  e.print();
+  // E95c e(4096);
+  // e.setup();
+  // e.print();
 }
 
 char cmd[CMD_MAX_SIZE];
