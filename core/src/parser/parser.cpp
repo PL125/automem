@@ -1,9 +1,9 @@
 #include "parser.h"
 
-#include "arch/e93c.h"
+#include "arch/e95.h"
 
 
-E *Parser::e = new E93c(512, 9, 8);
+E *Parser::e = new E95c(4096);
 
 Parser::Parser() {}
 

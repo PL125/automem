@@ -3,7 +3,7 @@
 
 // #include "ui/ui.h"
 #include "parser/parser.h"
-#include "arch/e93c.h"
+#include "arch/e95.h"
 
 #define CMD_MAX_SIZE 128
 
@@ -11,6 +11,10 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println("--> Reset");
+
+  E95c e(4096);
+  e.setup();
+  e.print();
 }
 
 char cmd[CMD_MAX_SIZE];
