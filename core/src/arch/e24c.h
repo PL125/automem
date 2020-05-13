@@ -2,6 +2,8 @@
 #define E24C_H 
 
 #include "e.h"
+
+#include <Arduino.h>
 #include <Wire.h>
 
 class E24c : public E

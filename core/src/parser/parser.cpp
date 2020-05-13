@@ -1,5 +1,252 @@
 #include "parser.h"
-#include "env.h"
+
+#include "arch/e93c.h"
+
+Parser *Parser::pInstance = 0;
+
+Parser::Parser() {}
+
+Parser *Parser::getInstance()
+{
+  if (!pInstance)
+  {
+    pInstance = new Parser();
+  }
+
+  return pInstance;
+}
+
+void Parser::setE(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  int id = atoi(a);
+
+  delete[] a;
+
+  switch (id)
+  {
+  case 1:
+
+    char *b = args.shift();
+    char *c = args.shift();
+    char *d = args.shift();
+
+    int sz = atoi(b);
+    int addrsz = atoi(c);
+    int pgsz = atoi(d);
+
+    delete[] b;
+    delete[] c;
+    delete[] d;
+    
+    pInstance->e = new E93c(sz, addrsz, pgsz);
+    break;
+
+  case 2:
+    break;
+
+  case 3:
+    break;
+  }
+
+  pInstance->e->setup();
+  pInstance->e->print();
+}
+
+void Parser::add(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  long initial = atol(a);
+
+  delete[] a;
+
+  while (args.size() > 0)
+  {
+    char *b = args.shift();
+    initial += atol(b);
+
+    delete[] b;
+  }
+
+  sprintf(dest, "%ld", initial);
+}
+
+void Parser::mult(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  long initial = atol(a);
+
+  delete[] a;
+
+  while (args.size() > 0)
+  {
+    char *b = args.shift();
+    initial *= atol(b);
+
+    delete[] b;
+  }
+
+  sprintf(dest, "%ld", initial);
+}
+
+void Parser::div(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  long initial = atol(a);
+
+  delete[] a;
+
+  while (args.size() > 0)
+  {
+    char *b = args.shift();
+    initial /= atol(b);
+
+    delete[] b;
+  }
+
+  sprintf(dest, "%ld", initial);
+}
+
+void Parser::debug(char *dest, LinkedList<char *> &args)
+{
+  pInstance->e->print();
+}
+
+void Parser::sub(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  long initial = atol(a);
+
+  delete[] a;
+
+  while (args.size() > 0)
+  {
+    char *b = args.shift();
+    initial -= atol(b);
+
+    delete[] b;
+  }
+
+  sprintf(dest, "%ld", initial);
+}
+
+void Parser::read(char *dest, LinkedList<char *> &args)
+{
+  if (e == nullptr)
+  {
+    Serial.println("Error");
+    return;
+  }
+
+  char *a = args.shift();
+  int address = atoi(a);
+
+  delete[] a;
+
+  sprintf(dest, "%02x", e->read(address));
+}
+
+void Parser::hex2num(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  long value = strtol(a, NULL, 16);
+
+  delete[] a;
+
+  sprintf(dest, "%ld", value);
+}
+
+void Parser::write(char *dest, LinkedList<char *> &args)
+{
+  if (e == nullptr)
+  {
+    Serial.println("Error");
+    return;
+  }
+
+  char *a = args.shift();
+  char *b = args.shift();
+
+  int address = atoi(a);
+  int value = atoi(b);
+
+  e->write(address, value);
+
+  delay(10);
+
+  delete[] a;
+  delete[] b;
+
+  sprintf(dest, "%02x", e->read(address));
+}
+
+void Parser::dump(char *dest, LinkedList<char *> &args)
+{
+  e->dump();
+}
+
+void Parser::position(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  char *b = args.shift();
+
+  int position = atoi(a);
+
+  dest[0] = b[position];
+  dest[1] = '\0';
+
+  delete[] a;
+  delete[] b;
+}
+
+void Parser::merge(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  strcpy(dest, a);
+
+  delete[] a;
+
+  while (args.size() != 0)
+  {
+    char *b = args.shift();
+    strcat(dest, b);
+
+    delete[] b;
+  }
+}
+
+void Parser::first(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+
+  dest[0] = a[0];
+  dest[1] = '\0';
+
+  delete[] a;
+}
+
+void Parser::last(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+
+  dest[0] = a[strlen(a) - 1];
+  dest[1] = '\0';
+
+  delete[] a;
+}
+
+void Parser::format(char *dest, LinkedList<char *> &args)
+{
+  char *a = args.shift();
+  char *b = args.shift();
+  b[0] = '%';
+
+  long initial = atol(a);
+  sprintf(dest, b, initial);
+
+  delete[] a;
+  delete[] b;
+}
 
 LinkedList<char *> Parser::tokenize(char *s)
 {
@@ -48,8 +295,17 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
   case '/':
     div(dest, tk);
     break;
+  case '@':
+    debug(dest, tk);
+    break;
   case 'r':
     read(dest, tk);
+    break;
+  case 'e':
+    setE(dest, tk);
+    break;
+  case 'd':
+    dump(dest, tk);
     break;
   case 'p':
     position(dest, tk);
@@ -74,10 +330,10 @@ void Parser::parse(char *dest, LinkedList<char *> &tk)
     break;
   }
 
-  delete [] op;
+  delete[] op;
 }
 
-void Parser::run(char *dest, char *s)
+void Parser::call(char *dest, char *s)
 {
   while (strrchr(s, '(') != nullptr && strchr(s, ')') != nullptr)
   {

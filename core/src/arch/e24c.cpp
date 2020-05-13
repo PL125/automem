@@ -1,5 +1,4 @@
 #include "e24c.h"
-#include <Arduino.h>
 
 E24c::E24c(int size, int id)
 {

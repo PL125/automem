@@ -158,13 +158,7 @@ void Ui::callWrite(int id, long value)
         case 0:
             char buffer[64];
 
-            sprintf(buffer, "(w 0 (m (p 6 (z (* %ld 10) f02lx) (p 7 (z (* %ld 10) f02lx)))))", value);
-            Parser::run(buffer, buffer);
-            sprintf(buffer, "(w 1 (m (p 4 (z (* %ld 10) f02lx) (p 5 (z (* %ld 10) f02lx)))))", value);
-            Parser::run(buffer, buffer);
-            sprintf(buffer, "(w 2 (m (p 2 (z (* %ld 10) f02lx) (p 3 (z (* %ld 10) f02lx)))))", value);
-            Parser::run(buffer, buffer);
-            sprintf(buffer, "(w 3 (m (p 0 (z (* %ld 10) f02lx) (p 1 (z (* %ld 10) f02lx)))))", value);
+            
 
     }
 };

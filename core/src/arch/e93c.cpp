@@ -5,8 +5,6 @@ E93c::E93c(int size, int address_size, int page_size)
     this->size = size;
     this->address_size = address_size;
     this->page_size = page_size;
-
-    setup();
 }
 
 void E93c::setup() const
@@ -15,6 +13,8 @@ void E93c::setup() const
     pinMode(CLK, OUTPUT);
     pinMode(DI, OUTPUT);
     pinMode(DO, INPUT);
+
+    Serial.print("aaa");
 }
 
 //https://github.com/tim0s/MicrowireEEPROM
@@ -50,7 +50,6 @@ void E93c::send_opcode(uint8_t op) const
 
 uint8_t E93c::read(uint16_t address) const
 {
-    setup();
     send_opcode(READ);
     transmit(address, 9);
 
@@ -61,17 +60,16 @@ uint8_t E93c::read(uint16_t address) const
     return result;
 }
 
-void E93c::read_all() const
+void E93c::dump() const
 {
     for (int i = 0; i < size; i++)
     {
-        // Serial.write(read(i));
+        Serial.write(read(i));
     }
 }
 
 void E93c::write(uint16_t address, uint8_t data) const
 {
-
     send_opcode(0);
     transmit(0xFF, 9);
     digitalWrite(CS, LOW);
@@ -94,14 +92,13 @@ void E93c::print() const
 
     for (int i = 0; i < size; i++)
     {
-        // if((i&15)==0) {
-        // sprintf(buf, "\n0x%03X: ", i);
-        // Serial.print(buf);
-        // }
-
-        //sprintf(buf, "0x%02X: ", read(i));
+        if((i&15)==0) {
+            sprintf(buf, "\n0x%03X: ", i);
+            Serial.print(buf);
+        }
+        
         sprintf(buf, "0x%02X ", read(i));
-        // Serial.print(buf);
+        Serial.print(buf);
         delay(10);
     }
 

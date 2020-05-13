@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <MemoryFree.h>
 
-#include "ui/ui.h"
+// #include "ui/ui.h"
 #include "parser/parser.h"
 #include "arch/e93c.h"
 
@@ -11,11 +11,6 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println("--> Reset");
-
-  E93c e(512, 9, 8);
-  e.setup();
-  // e.write(0, 0);
-  // Serial.println(e.read(0));
 }
 
 char cmd[CMD_MAX_SIZE];
@@ -23,8 +18,9 @@ int current = 0;
 
 void loop()
 {
-  Ui ui = Ui::getInstance();
-  ui.update();
+  Parser* p = Parser::getInstance();
+  // Ui ui = Ui::getInstance();
+  // ui.update();
 
   if (Serial.available())
   {
@@ -32,11 +28,11 @@ void loop()
 
     if (value == '#')
     {
-      Parser::run(cmd, cmd);
+      p->call(cmd, cmd);
       Serial.println(cmd);
 
-      Serial.print("freeMemory()=");
-      Serial.println(freeMemory());
+      // Serial.print("freeMemory()=");
+      // Serial.println(freeMemory());
 
       for (int i = 0; i < CMD_MAX_SIZE; i++)
         cmd[i] = 0;
