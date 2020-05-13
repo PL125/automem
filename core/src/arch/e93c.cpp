@@ -5,6 +5,8 @@ E93c::E93c(int size, int address_size, int page_size)
     this->size = size;
     this->address_size = address_size;
     this->page_size = page_size;
+
+    setup();
 }
 
 void E93c::setup() const
@@ -13,6 +15,7 @@ void E93c::setup() const
     pinMode(CLK, OUTPUT);
     pinMode(DI, OUTPUT);
     pinMode(DO, INPUT);
+    
 
     Serial.print("aaa");
 }

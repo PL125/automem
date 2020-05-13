@@ -5,31 +5,29 @@ char aux[16];
 
 void update()
 {
-    Parser* p = Parser::getInstance();
-
     char aux[128];
     // sprintf(aux, "(w 0 (m (p 6 (z (* %s 10) f08lx)) (p 7 (z (* %s 10) f08x))))", value);
-    p->call(aux, "(w 0 (m (p 6 (z (* 50000 10) f08lx)) (p 7 (z (* 50000 10) f08lx))))");
+    Parser::call(aux, "(w 0 (m (p 6 (z (* 50000 10) f08lx)) (p 7 (z (* 50000 10) f08lx))))");
     // Serial.println(aux);
     
     delay(100);
 
     // sprintf(aux, "(w 1 (m (p 4 (z (* %s 10) fl08x)) (p 5 (z (* %s 10) fl08x)))", value);
     
-    p->call(aux, "(w 1 (m (p 4 (z (* 50000 10) f08lx)) (p 5 (z (* 50000 10) f08lx))))");
+    Parser::call(aux, "(w 1 (m (p 4 (z (* 50000 10) f08lx)) (p 5 (z (* 50000 10) f08lx))))");
 
     delay(100);
 
     // Serial.println(aux);
 
     // sprintf(aux, "(w 2 (m (p 2 (z (* %s 10) f08lx)) (p 3 (z (* %s 10) f08lx)))", value);
-    p->call(aux, "(w 2 (m (p 2 (z (* 50000 10) f08lx)) (p 3 (z (* 50000 10) f08lx))))");
+    Parser::call(aux, "(w 2 (m (p 2 (z (* 50000 10) f08lx)) (p 3 (z (* 50000 10) f08lx))))");
 
     delay(100);
     // Serial.println(aux);
 
     // sprintf(aux, "(w 3 (m (p 0 (z (* %s 10) f08lx)) (p 1 (z (* %s 10) f08lx)))", value);
-    p->call(aux, "(w 3 (m (p 0 (z (* 50000 10) f08lx)) (p 1 (z (* 50000 10) f08lx))))");
+    Parser::call(aux, "(w 3 (m (p 0 (z (* 50000 10) f08lx)) (p 1 (z (* 50000 10) f08lx))))");
 
     // Serial.println(aux);
 
@@ -49,10 +47,8 @@ Result::~Result() {}
 
 void Result::setup()
 {
-    Parser *p = Parser::getInstance();
-
-    p->call(value, "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
-    p->call(aux, "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
+    Parser::call(value, "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
+    Parser::call(aux, "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
     Serial.println(value);
     Serial.println(aux);
     if(strcmp(value, aux) != 0)

@@ -2,19 +2,10 @@
 
 #include "arch/e93c.h"
 
-Parser *Parser::pInstance = 0;
+
+E *Parser::e = new E93c(512, 9, 8);
 
 Parser::Parser() {}
-
-Parser *Parser::getInstance()
-{
-  if (!pInstance)
-  {
-    pInstance = new Parser();
-  }
-
-  return pInstance;
-}
 
 void Parser::setE(char *dest, LinkedList<char *> &args)
 {
@@ -38,8 +29,13 @@ void Parser::setE(char *dest, LinkedList<char *> &args)
     delete[] b;
     delete[] c;
     delete[] d;
+
+    // if (e)
+    // {
+    //   delete e;
+    // }
+
     
-    pInstance->e = new E93c(sz, addrsz, pgsz);
     break;
 
   case 2:
@@ -49,8 +45,7 @@ void Parser::setE(char *dest, LinkedList<char *> &args)
     break;
   }
 
-  pInstance->e->setup();
-  pInstance->e->print();
+  e->setup();
 }
 
 void Parser::add(char *dest, LinkedList<char *> &args)
@@ -109,7 +104,7 @@ void Parser::div(char *dest, LinkedList<char *> &args)
 
 void Parser::debug(char *dest, LinkedList<char *> &args)
 {
-  pInstance->e->print();
+  e->print();
 }
 
 void Parser::sub(char *dest, LinkedList<char *> &args)

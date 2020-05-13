@@ -18,7 +18,6 @@ int current = 0;
 
 void loop()
 {
-  Parser* p = Parser::getInstance();
   // Ui ui = Ui::getInstance();
   // ui.update();
 
@@ -28,11 +27,11 @@ void loop()
 
     if (value == '#')
     {
-      p->call(cmd, cmd);
+      Parser::call(cmd, cmd);
       Serial.println(cmd);
 
-      // Serial.print("freeMemory()=");
-      // Serial.println(freeMemory());
+      Serial.print("freeMemory()=");
+      Serial.println(freeMemory());
 
       for (int i = 0; i < CMD_MAX_SIZE; i++)
         cmd[i] = 0;
