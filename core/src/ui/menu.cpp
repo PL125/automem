@@ -46,8 +46,9 @@ void Menu::draw()
 void Menu::update()
 {
     Ui ui = Ui::getInstance();
+    Controls c = Controls::getInstance();
 
-    if (Controls::bUp.check() == HIGH)
+    if (c.up->update() && c.up->rose())
     {
         lcd->setCursor(0, *cursor - *top);
         lcd->print(" ");
@@ -70,7 +71,7 @@ void Menu::update()
         draw();
     }
 
-    if (Controls::bDown.check() == HIGH)
+    if (c.down->update() && c.down->rose())
     {
         lcd->setCursor(0, (*cursor - *top) % 4);
         lcd->print(" ");
@@ -101,7 +102,7 @@ void Menu::update()
         draw();
     }
 
-    if (Controls::bEnter.check() == HIGH)
+    if (c.enter->update() && c.enter->rose())
     {
         MenuItem current_menu_item = items->get(*cursor);
         if (&current_menu_item.child != nullptr)
@@ -112,7 +113,7 @@ void Menu::update()
         }
     }
 
-    if (Controls::bBack.check() == HIGH)
+    if (c.back->update() && c.back->rose())
     {
         lcd->clear();
         ui.pop();

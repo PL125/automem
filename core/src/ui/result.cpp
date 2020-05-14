@@ -3,12 +3,6 @@
 char value[16];
 char aux[16];
 
-void update()
-{
-    
-
-}
-
 Result::Result(LiquidCrystal_I2C *lcd, char *read, LinkedList<char*>* write)
 {
     this->lcd = lcd;
@@ -23,8 +17,6 @@ Result::~Result() {}
 
 void Result::setup()
 {
-    Serial.println(value);
-    Serial.println(aux);
     if(strcmp(value, aux) != 0)
     {
         type = ResultType::Error;
@@ -37,22 +29,23 @@ void Result::update()
 {
 
     Ui ui = Ui::getInstance();
+    Controls c = Controls::getInstance();
 
     if (type == ResultType::Edit)
     {
-        if (Controls::bUp.check() == HIGH)
+        if (c.up->update() && c.up->rose())
         {
             value[*cursor]++;
             draw();
         }
 
-        if (Controls::bDown.check() == HIGH)
+        if (c.down->update() && c.down->rose())
         {
             value[*cursor]--;
             draw();
         }
 
-        if (Controls::bRight.check() == HIGH)
+        if (c.right->update() && c.right->rose())
         {
             lcd->setCursor(*cursor + 1, 3);
             lcd->print(" ");
@@ -62,7 +55,7 @@ void Result::update()
             draw();
         }
 
-        if (Controls::bLeft.check() == HIGH)
+        if (c.left->update() && c.left->rose())
         {
             lcd->setCursor(*cursor + 1, 3);
             lcd->print(" ");
@@ -78,7 +71,7 @@ void Result::update()
         }
     }
 
-    if (Controls::bEnter.check() == HIGH)
+    if (c.enter->update() && c.enter->rose())
     {
         if (type == ResultType::Show)
         {
@@ -98,7 +91,7 @@ void Result::update()
         }
     }
 
-    if (Controls::bBack.check() == HIGH)
+    if (c.back->update() && c.back->rose())
     {
         if (type == ResultType::Show)
         {

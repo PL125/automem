@@ -19,11 +19,8 @@ class Ui
 private:
     LiquidCrystal_I2C* lcd;
 
-    LinkedList<MenuItem>* getItems(int id);
     View* getView(int id);
-    E getE(int id);
-    char* getRead(int id);
-
+   
     Ui();
 
 public:
