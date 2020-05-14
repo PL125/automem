@@ -1,5 +1,20 @@
 #include "ui.h"
 
+const char mImmo[] PROGMEM = "Imobilizador";
+const char mAirbag[] PROGMEM = "Airbag";
+const char mOdometer[] PROGMEM = "Airbag";
+const char mRadio[] PROGMEM = "Radio";
+const char mSettings[] PROGMEM = "Configuracoes";
+
+const char mVolkswagen[] PROGMEM = "Volkswagen";
+const char mFiat[] PROGMEM = "Fiat";
+
+const char mGolG493c66[] PROGMEM = "Gol G4 (93c66)";
+const char mGolG493c66Read[] PROGMEM = "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) f06ld)";
+
+const char mFiatCd5404[] PROGMEM = "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))";
+
+
 Ui::Ui()
 {
     lcd = new LiquidCrystal_I2C(0x27, 20, 4);
@@ -36,33 +51,33 @@ LinkedList<MenuItem>* Ui::getItems(int id)
         case 0: // Main Menu
             items->add(
                 MenuItem {
-                    .title = "Imobilizador"
+                    .title = mImmo
                 }
             );
 
             items->add(
                 MenuItem {
-                    .title = "Airbag"
+                    .title = mAirbag
                 }
             );
 
             items->add(
                 MenuItem {
-                    .title = "Odometro",
+                    .title = mOdometer,
                     .child = getView(3)
                 }
             );
 
             items->add(
                 MenuItem {
-                    .title = "Radio",
+                    .title = mRadio,
                     .child = getView(4)
                 }
             );
 
             items->add(
                 MenuItem {
-                    .title = "Configuracoes"
+                    .title = mSettings
                 }
             );
             
@@ -72,7 +87,7 @@ LinkedList<MenuItem>* Ui::getItems(int id)
 
             items->add(
                 MenuItem {
-                    .title = "Volkswagen",
+                    .title = mVolkswagen,
                     .child = getView(301)
                 }
             );
@@ -83,7 +98,7 @@ LinkedList<MenuItem>* Ui::getItems(int id)
             
             items->add(
                 MenuItem {
-                    .title = "Gol G4 (93c66)",
+                    .title = mGolG493c66,
                     .child = getView(30100)
                 }
             );
@@ -94,7 +109,7 @@ LinkedList<MenuItem>* Ui::getItems(int id)
         
             items->add(
                 MenuItem {
-                    .title = "Fiat"
+                    .title = mFiat
                 }
             );
 
@@ -139,13 +154,13 @@ E Ui::getE(int id)
 
 char* Ui::getRead(int id)
 {
-    switch(id)
-    {
-        case 0:
-            return "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) f06ld)";
-        case 1:
-            return "(merge (last (read 24)) (first (read 25)) (last (read 26)) (first (read 27)))";
-    }
+    // switch(id)
+    // {
+    //     case 0:
+    //         return mGolG493c66Read;
+    //     case 1:
+    //         return mFiatCd5404;
+    // }
 }
 
 void Ui::callWrite(int id, long value)

@@ -5,31 +5,7 @@ char aux[16];
 
 void update()
 {
-    char aux[128];
-    // sprintf(aux, "(w 0 (m (p 6 (z (* %s 10) f08lx)) (p 7 (z (* %s 10) f08x))))", value);
-    Parser::call(aux, "(w 0 (m (p 6 (z (* 50000 10) f08lx)) (p 7 (z (* 50000 10) f08lx))))");
-    // Serial.println(aux);
     
-    delay(100);
-
-    // sprintf(aux, "(w 1 (m (p 4 (z (* %s 10) fl08x)) (p 5 (z (* %s 10) fl08x)))", value);
-    
-    Parser::call(aux, "(w 1 (m (p 4 (z (* 50000 10) f08lx)) (p 5 (z (* 50000 10) f08lx))))");
-
-    delay(100);
-
-    // Serial.println(aux);
-
-    // sprintf(aux, "(w 2 (m (p 2 (z (* %s 10) f08lx)) (p 3 (z (* %s 10) f08lx)))", value);
-    Parser::call(aux, "(w 2 (m (p 2 (z (* 50000 10) f08lx)) (p 3 (z (* 50000 10) f08lx))))");
-
-    delay(100);
-    // Serial.println(aux);
-
-    // sprintf(aux, "(w 3 (m (p 0 (z (* %s 10) f08lx)) (p 1 (z (* %s 10) f08lx)))", value);
-    Parser::call(aux, "(w 3 (m (p 0 (z (* 50000 10) f08lx)) (p 1 (z (* 50000 10) f08lx))))");
-
-    // Serial.println(aux);
 
 }
 
@@ -47,8 +23,6 @@ Result::~Result() {}
 
 void Result::setup()
 {
-    Parser::call(value, "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
-    Parser::call(aux, "(z (/ (n (m (r 3) (r 2) (r 1) (r 0))) 10) %06ld)");
     Serial.println(value);
     Serial.println(aux);
     if(strcmp(value, aux) != 0)
@@ -63,23 +37,22 @@ void Result::update()
 {
 
     Ui ui = Ui::getInstance();
-    Controls c = Controls::getInstance();
 
     if (type == ResultType::Edit)
     {
-        if (c.up->update() && c.up->rose())
+        if (Controls::bUp.check() == HIGH)
         {
             value[*cursor]++;
             draw();
         }
 
-        if (c.down->update() && c.down->rose())
+        if (Controls::bDown.check() == HIGH)
         {
             value[*cursor]--;
             draw();
         }
 
-        if (c.right->update() && c.right->rose())
+        if (Controls::bRight.check() == HIGH)
         {
             lcd->setCursor(*cursor + 1, 3);
             lcd->print(" ");
@@ -89,7 +62,7 @@ void Result::update()
             draw();
         }
 
-        if (c.left->update() && c.left->rose())
+        if (Controls::bLeft.check() == HIGH)
         {
             lcd->setCursor(*cursor + 1, 3);
             lcd->print(" ");
@@ -105,7 +78,7 @@ void Result::update()
         }
     }
 
-    if (c.enter->update() && c.enter->rose())
+    if (Controls::bEnter.check() == HIGH)
     {
         if (type == ResultType::Show)
         {
@@ -125,7 +98,7 @@ void Result::update()
         }
     }
 
-    if (c.back->update() && c.back->rose())
+    if (Controls::bBack.check() == HIGH)
     {
         if (type == ResultType::Show)
         {

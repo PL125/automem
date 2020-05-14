@@ -1,8 +1,7 @@
 #ifndef CONTROLS_H
 #define CONTROLS_H
 
-#include <Arduino.h>
-#include <Bounce2.h>
+#include "ui/button.h"
 
 #define BACK 3
 #define ENTER 4
@@ -17,14 +16,12 @@ private:
     Controls();
 
 public:
-    static Controls& getInstance();
-
-    Bounce *back;
-    Bounce *enter;
-    Bounce *left;
-    Bounce *right;
-    Bounce *up;
-    Bounce *down;
+    static Button bBack;
+    static Button bEnter;
+    static Button bLeft;
+    static Button bRight;
+    static Button bUp;
+    static Button bDown;
 };
 
 #endif

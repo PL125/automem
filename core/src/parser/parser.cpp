@@ -1,13 +1,15 @@
 #include "parser.h"
 
-#include "arch/e95.h"
-
 E *pMem;
 
 Parser::Parser() {}
 
 void Parser::setE(char *dest, LinkedList<char *> &args)
 {
+
+  if (pMem)
+    delete pMem;
+
   char *a = args.shift();
   int id = atoi(a);
 
@@ -16,7 +18,21 @@ void Parser::setE(char *dest, LinkedList<char *> &args)
   switch (id)
   {
   case 1:
+  {
+    char *b = args.shift();
+    char *c = args.shift();
 
+    int sz = atoi(b);
+    int addr = atoi(c);
+
+    delete[] b;
+    delete[] c;
+
+    pMem = new E24c(sz, addr);
+  }
+  break;
+  case 2:
+  {
     char *b = args.shift();
     char *c = args.shift();
     char *d = args.shift();
@@ -29,24 +45,24 @@ void Parser::setE(char *dest, LinkedList<char *> &args)
     delete[] c;
     delete[] d;
 
-    // if (e)
-    // {
-    //   delete e;
-    // }
-    pMem = new E95c(4096);
-    pMem->setup();
-    pMem->print();
-    break;
-
-  case 2:
-    break;
+    pMem = new E93c(sz, addrsz, pgsz);
+  }
+  break;
 
   case 3:
-    break;
+  {
+    char *b = args.shift();
+
+    int sz = atoi(b);
+
+    delete[] b;
+
+    pMem = new E95c(sz);
+  }
+  break;
   }
 
-  // pMem->setup();
-  // pMem->print();
+  pMem->setup();
 }
 
 void Parser::add(char *dest, LinkedList<char *> &args)

@@ -10,6 +10,9 @@
 #include <ctype.h>
 
 #include "arch/e.h"
+#include "arch/e24c.h"
+#include "arch/e93c.h"
+#include "arch/e95.h"
 
 class Parser
 {

@@ -16,22 +16,25 @@
 
 #include "e.h"
 
-#include <Arduino.h>
 #include <SPI.h>
 
 class E95c : public E
 {  
-    private:
-        int size;
     public:
-        E95c(int size);
+
+        E95c(int sz);
         // ~E95c();
 
         void setup() const;
-        void dump() const;
         uint8_t read(uint16_t address) const;
         void write(uint16_t address, uint8_t data) const;
+
         void print() const;
+        void dump() const;
+
+    private:
+
+        int sz;
 };
 
 // #define E95320 E95c(4096)

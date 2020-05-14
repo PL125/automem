@@ -1,14 +1,8 @@
 #include "e95.h"
 
-E95c::E95c(int size)
+E95c::E95c(int sz)
 {
-    this->size = size;
-}
-
-
-void E95c::dump() const
-{
-
+    this->sz = sz;
 }
 
 void E95c::setup() const
@@ -16,8 +10,6 @@ void E95c::setup() const
     SPI.begin();
     pinMode(CS, OUTPUT);
     digitalWrite(CS, HIGH);
-
-    print();
 }
 
 uint8_t E95c::read(uint16_t address) const
@@ -60,21 +52,7 @@ void E95c::write(uint16_t address, uint8_t data) const
     SPI.endTransaction();
 }
 
-void E95c::print() const
+void E95c::dump() const
 {
-    char buf[128];
 
-    for (int i = 0; i < size; i++)
-    {
-        if ((i & 15) == 0)
-        {
-            sprintf(buf, "\n0x%03X: ", i);
-            Serial.print(buf);
-        }
-
-        sprintf(buf, " 0x%02X: ", read(i));
-        Serial.print(buf);
-    }
-
-    delay(5000);
 }

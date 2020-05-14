@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <MemoryFree.h>
 
-// #include "ui/ui.h"
+#include "ui/ui.h"
 #include "parser/parser.h"
 #include "arch/e95.h"
 
@@ -11,10 +11,6 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println("--> Reset");
-
-  // E95c e(4096);
-  // e.setup();
-  // e.print();
 }
 
 char cmd[CMD_MAX_SIZE];
@@ -22,8 +18,8 @@ int current = 0;
 
 void loop()
 {
-  // Ui ui = Ui::getInstance();
-  // ui.update();
+  Ui ui = Ui::getInstance();
+  ui.update();
 
   if (Serial.available())
   {
