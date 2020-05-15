@@ -4,13 +4,12 @@
 
 Ui::Ui()
 {
+    views = new LinkedList<View*>();
     lcd = new LiquidCrystal_I2C(0x27, 20, 4);
     lcd->begin();
     lcd->backlight();
 
-    views = new LinkedList<View*>();
-    views->add(getView(0));
-    top()->setup();
+    push(3);
 };
 
 View* Ui::top()
@@ -18,33 +17,85 @@ View* Ui::top()
     return views->get(views->size() - 1);
 }
 
-View* Ui::pop()
+void Ui::pop()
 {
-    return views->pop();
-}
+    views->pop();
 
-void Ui::push(View* view)
-{
-    views->add(view);
     top()->setup();
 }
 
+void Ui::push(int id)
+{
+    Serial.println(id);
+
+    View *view = getView(id);
+    views->add(view);
+    
+    view->setup();
+}
 
 View* Ui::getView(int id)
 {
-    LinkedList<MenuItem> *items;
+    LinkedList<MenuItem> *items = new LinkedList<MenuItem>();
 
     switch(id)
     {
         case 0:
-            items = new LinkedList<MenuItem>();
             items->add(
                 MenuItem {
-                    .title = "Imobilizador"
+                    .title = getString(m0),
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = getString(m1),
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = getString(m2),
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = getString(m3),
+                    .child = 2
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = getString(m4),
                 }
             );
             
             return new Menu(lcd, items);
+        
+        case 1:
+
+            // char buf[30];
+            // strcpy_P(buf, (char *)pgm_read_word(&m1));
+
+            items->add(
+                MenuItem {
+                    .title = "NNNNN",
+                }
+            );
+
+            items->add(
+                MenuItem {
+                    .title = "NNNNN",
+                }
+            );
+
+            return new Menu(lcd, items);
+        
+        case 2:
+
+            return new Result(lcd, getString(m8));
     }
 }
 

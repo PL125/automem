@@ -30,11 +30,10 @@ public:
 
     void update();
 
-    void callWrite(int id, long value);
-
-    void push(View* view);
+    void push(int id);
+    void pop();
+    
     View* top();
-    View* pop();
 };
 
 #endif

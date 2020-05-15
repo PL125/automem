@@ -14,7 +14,7 @@ class MenuItem
 {
     public:
         const char *title;
-        View *child;
+        int child;
 };
 
 class Menu : public View

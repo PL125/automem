@@ -3,11 +3,11 @@
 char value[16];
 char aux[16];
 
-Result::Result(LiquidCrystal_I2C *lcd, char *read, LinkedList<char*>* write)
+Result::Result(LiquidCrystal_I2C *lcd, char *read)
 {
     this->lcd = lcd;
     this->read = read;
-    this->write = write;
+    // this->write = write;
 
     this->cursor = new int(0);
     this->type = ResultType::Show;
@@ -83,9 +83,6 @@ void Result::update()
             lcd->clear();
             type = ResultType::Show;
             Serial.println(value);
-
-            long v = atol(value);
-            ui.callWrite(0, v);
 
             setup();
         }

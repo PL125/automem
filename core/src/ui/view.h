@@ -10,9 +10,9 @@ class View {
     public:
         virtual ~View() {}
 
-        virtual void setup() {};
-        virtual void draw() {};
-        virtual void update() {};
+        virtual void setup();
+        virtual void draw();
+        virtual void update();
 };
 
 #endif

@@ -4,7 +4,7 @@
 #include "ui/ui.h"
 #include "parser/parser.h"
 #include "arch/e95.h"
-
+#include <avr/pgmspace.h>
 #define CMD_MAX_SIZE 128
 
 void setup()
@@ -30,7 +30,7 @@ void loop()
       Parser::call(cmd, cmd);
       Serial.println(cmd);
 
-      Serial.print("freeMemory()=");
+      Serial.print(F("freeMemory()="));
       Serial.println(freeMemory());
 
       for (int i = 0; i < CMD_MAX_SIZE; i++)

@@ -105,7 +105,7 @@ void Menu::update()
     if (c.enter->update() && c.enter->rose())
     {
         MenuItem current_menu_item = items->get(*cursor);
-        if (&current_menu_item.child != nullptr)
+        if (current_menu_item.child)
         {
             lcd->clear();
 

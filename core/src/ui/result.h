@@ -23,7 +23,7 @@ class Result : public View
         ResultType type;
 
     public:
-        Result(LiquidCrystal_I2C *lcd, char* read, LinkedList<char*>* write);
+        Result(LiquidCrystal_I2C *lcd, char* read);
         ~Result();
 
         LiquidCrystal_I2C *lcd;
