@@ -1,11 +1,12 @@
 #include "result.h"
 
-char value[16];
 char aux[16];
 
-Result::Result(LiquidCrystal_I2C *lcd, char *read)
+Result::Result(LiquidCrystal_I2C *lcd, char* e, char *read)
 {
     this->lcd = lcd;
+
+    this->e = e;
     this->read = read;
     // this->write = write;
 
@@ -15,17 +16,25 @@ Result::Result(LiquidCrystal_I2C *lcd, char *read)
 
 Result::~Result() {}
 
-void Result::setup()
+void Result::setup() const
 {
-    if(strcmp(value, aux) != 0)
-    {
-        type = ResultType::Error;
-    }
+    value = new char(16);
+    
+    Parser::call(value, e);
+
+    Serial.println(e);
+    // Parser::call(value, read);
+    // Parser::call(aux, read);
+
+    // if(strcmp(value, aux) != 0)
+    // {
+    //     type = ResultType::Error;
+    // }
 
     draw();
 }
 
-void Result::update()
+void Result::update() const
 {
 
     Ui ui = Ui::getInstance();
@@ -48,7 +57,7 @@ void Result::update()
         if (c.right->update() && c.right->rose())
         {
             lcd->setCursor(*cursor + 1, 3);
-            lcd->print(" ");
+            lcd->print(F(" "));
             *cursor += 1;
             *cursor %= 4;
 
@@ -58,7 +67,7 @@ void Result::update()
         if (c.left->update() && c.left->rose())
         {
             lcd->setCursor(*cursor + 1, 3);
-            lcd->print(" ");
+            lcd->print(F(" "));
 
             *cursor -= 1;
 
@@ -105,7 +114,7 @@ void Result::update()
     }
 }
 
-void Result::draw()
+void Result::draw() const
 {
     lcd->createChar(0, Symbols::square);
     lcd->createChar(1, Symbols::enter);
@@ -114,11 +123,11 @@ void Result::draw()
     lcd->setCursor(1, 1);
     if(type == ResultType::Edit || type == ResultType::Show)
     {
-        lcd->print("Km:");
+        lcd->print(F("Km:"));
     }
     else
     {
-        lcd->print("Erro!");
+        lcd->print(F("Erro!"));
     }
 
     lcd->setCursor(1, 2);
@@ -129,7 +138,7 @@ void Result::draw()
     }
     else
     {
-        lcd->print("Leia novamente");
+        lcd->print(F("Leia novamente"));
     }
 
     lcd->setCursor(19, 3);

@@ -5,12 +5,13 @@
 #include "parser/parser.h"
 #include "arch/e95.h"
 #include <avr/pgmspace.h>
+
 #define CMD_MAX_SIZE 128
 
 void setup()
 {
   Serial.begin(9600);
-  Serial.println("--> Reset");
+  Serial.println(F("--> Reset"));
 }
 
 char cmd[CMD_MAX_SIZE];

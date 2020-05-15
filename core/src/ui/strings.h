@@ -5,7 +5,7 @@
 
 char* getString(const char* s)
 {
-    volatile const int len = strlen_P(s);
+    const int len = strlen_P(s);
 
     char* buf = new char[len];
     for (uint8_t i = 0; i < len; i++) {
@@ -16,6 +16,7 @@ char* getString(const char* s)
     return buf;
 }
 
+const char e93c66[] PROGMEM = "(e 2 512 9 8)";
 const char m0[] PROGMEM = "Imobilizador";
 const char m1[] PROGMEM = "Airbag";
 const char m2[] PROGMEM = "Odometro";

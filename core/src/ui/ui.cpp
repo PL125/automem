@@ -9,7 +9,7 @@ Ui::Ui()
     lcd->begin();
     lcd->backlight();
 
-    push(3);
+    push(0);
 };
 
 View* Ui::top()
@@ -95,7 +95,7 @@ View* Ui::getView(int id)
         
         case 2:
 
-            return new Result(lcd, getString(m8));
+            return new Result(lcd, getString(e93c66), getString(m8));
     }
 }
 

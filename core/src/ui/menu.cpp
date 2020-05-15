@@ -10,12 +10,12 @@ Menu::Menu(LiquidCrystal_I2C *lcd, LinkedList<MenuItem> *items)
 
 Menu::~Menu() {}
 
-void Menu::setup()
+void Menu::setup() const
 {
     draw();
 }
 
-void Menu::draw()
+void Menu::draw() const
 {
 
     lcd->createChar(0, Symbols::arrow_right);
@@ -43,7 +43,7 @@ void Menu::draw()
     }
 }
 
-void Menu::update()
+void Menu::update() const
 {
     Ui ui = Ui::getInstance();
     Controls c = Controls::getInstance();
@@ -51,7 +51,7 @@ void Menu::update()
     if (c.up->update() && c.up->rose())
     {
         lcd->setCursor(0, *cursor - *top);
-        lcd->print(" ");
+        lcd->print(F(" "));
 
         *cursor += 1;
         *cursor %= items->size();
@@ -74,7 +74,7 @@ void Menu::update()
     if (c.down->update() && c.down->rose())
     {
         lcd->setCursor(0, (*cursor - *top) % 4);
-        lcd->print(" ");
+        lcd->print(F(" "));
 
         *cursor -= 1;
 

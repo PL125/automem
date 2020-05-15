@@ -1,10 +1,9 @@
 #ifndef E93c_H
 #define E93c_H 
 
-#define CLK 13 // 14
-#define CS 10 // 15
-//#define OUT 11
-#define DI 11 // 13
+#define CLK 13
+#define CS1 9
+#define DI 11
 #define DO 12
 
 #define WREN 6
@@ -14,12 +13,10 @@
 #define READ 2
 #define WRITE 5
 
-#define CLOCK 2000000
 #define HALF_CLOCK_PERIOD 100 // Microseconds
 
 #include "e.h"
 
-#include <SPI.h>
 
 class E93c : public E
 {  
@@ -41,8 +38,8 @@ class E93c : public E
         int addrsz;
         int pgsz;
 
-        uint16_t transmit(uint16_t data, uint8_t bits) const;
-        void send_opcode(uint8_t op) const;
+        long transmit(int data, int bits) const;
+        void send_opcode(char op) const;
 
 };
 

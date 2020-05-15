@@ -16,22 +16,24 @@ enum ResultType { Show, Edit, Error };
 
 class Result : public View
 {
-    private:        
+    private:       
+        char* e; 
         char* read;
         LinkedList<char*>* write;
 
-        ResultType type;
+        mutable ResultType type;
+        mutable char* value;
 
     public:
-        Result(LiquidCrystal_I2C *lcd, char* read);
+        Result(LiquidCrystal_I2C *lcd, char* e, char* read);
         ~Result();
 
         LiquidCrystal_I2C *lcd;
         int *cursor;
 
-        void setup();
-        void draw();
-        void update();
+        void setup() const;
+        void draw() const;
+        void update() const;
 };
 
 #endif

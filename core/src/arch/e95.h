@@ -2,7 +2,7 @@
 #define E95c_H 
 
 //#define SCK 13
-#define CS 10
+#define CS2 10
 //#define OUT 11
 //#define IN 12
 

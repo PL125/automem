@@ -13,7 +13,7 @@
 class MenuItem
 {
     public:
-        const char *title;
+        char *title;
         int child;
 };
 
@@ -29,9 +29,9 @@ class Menu : public View
         Menu(LiquidCrystal_I2C *lcd, LinkedList<MenuItem> *items);
         ~Menu();
 
-        void setup();   
-        void draw();
-        void update();
+        void setup() const;   
+        void draw() const;
+        void update() const;
 };
 
 #endif

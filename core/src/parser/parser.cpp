@@ -146,7 +146,7 @@ void Parser::read(char *dest, LinkedList<char *> &args)
 {
   if (pMem == nullptr)
   {
-    Serial.println("Error");
+    Serial.println(F("Error"));
     return;
   }
 
@@ -172,7 +172,7 @@ void Parser::write(char *dest, LinkedList<char *> &args)
 {
   if (pMem == nullptr)
   {
-    Serial.println("Error");
+    Serial.println(F("Error"));
     return;
   }
 
