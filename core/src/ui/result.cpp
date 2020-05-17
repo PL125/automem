@@ -1,12 +1,13 @@
 #include "result.h"
 
 char aux[16];
+char value[16];
 
-Result::Result(LiquidCrystal_I2C *lcd, char* e, char *read)
+Result::Result(LiquidCrystal_I2C *lcd, char* pMem, char *read)
 {
     this->lcd = lcd;
 
-    this->e = e;
+    this->pMem = pMem;
     this->read = read;
     // this->write = write;
 
@@ -18,18 +19,18 @@ Result::~Result() {}
 
 void Result::setup() const
 {
-    value = new char(16);
-    
-    Parser::call(value, e);
+    // value = new char(16);
 
-    Serial.println(e);
-    // Parser::call(value, read);
-    // Parser::call(aux, read);
+    Serial.println(read);    
+    Serial.println(pMem);    
+    Parser::call(value, pMem);
+    Parser::call(value, read);
+    Parser::call(aux, read);
 
-    // if(strcmp(value, aux) != 0)
-    // {
-    //     type = ResultType::Error;
-    // }
+    if(strcmp(value, aux) != 0)
+    {
+        type = ResultType::Error;
+    }
 
     draw();
 }

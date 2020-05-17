@@ -5,6 +5,7 @@
 #include "parser/parser.h"
 #include "arch/e95.h"
 #include <avr/pgmspace.h>
+// #include <SD.h>
 
 #define CMD_MAX_SIZE 128
 
@@ -12,6 +13,13 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println(F("--> Reset"));
+
+  pinMode(10, OUTPUT);
+
+  // File testfile = SD.open("test.txt");
+  // while (testfile.available()) {
+  //   Serial.write(testfile.read());
+  // }
 }
 
 char cmd[CMD_MAX_SIZE];

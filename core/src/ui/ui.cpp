@@ -9,7 +9,7 @@ Ui::Ui()
     lcd->begin();
     lcd->backlight();
 
-    push(0);
+    push(2);
 };
 
 View* Ui::top()
@@ -41,6 +41,7 @@ View* Ui::getView(int id)
     switch(id)
     {
         case 0:
+            
             items->add(
                 MenuItem {
                     .title = getString(m0),
@@ -56,13 +57,13 @@ View* Ui::getView(int id)
             items->add(
                 MenuItem {
                     .title = getString(m2),
+                    .child = 2
                 }
             );
 
             items->add(
                 MenuItem {
                     .title = getString(m3),
-                    .child = 2
                 }
             );
 

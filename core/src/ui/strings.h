@@ -7,16 +7,17 @@ char* getString(const char* s)
 {
     const int len = strlen_P(s);
 
-    char* buf = new char[len];
+    char* buf = new char[len+1];
     for (uint8_t i = 0; i < len; i++) {
         buf[i] = pgm_read_byte_near(s + i);
     }
+    
     buf[len] = '\0';
 
     return buf;
 }
 
-const char e93c66[] PROGMEM = "(e 2 512 9 8)";
+const char e93c66[] PROGMEM = "(e 2 256 9 8)";
 const char m0[] PROGMEM = "Imobilizador";
 const char m1[] PROGMEM = "Airbag";
 const char m2[] PROGMEM = "Odometro";
