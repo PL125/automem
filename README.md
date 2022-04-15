@@ -40,7 +40,7 @@ Como a ideia é permitir a utilização do display lcd, é necessário realizar 
 ```
 (m (l (r 24)) (f (r 25)) (l (r 26)) (f (r 27)))
 ```
-<img src="https://github.com/palvs/automem/blob/master/images/tree.jpg?raw=true"/>
+<img src="https://raw.githubusercontent.com/PL125/automem/master/images/tree.jpg"/>
 
 
 Assim qualquer aplicação pode se comunicar.
@@ -48,4 +48,4 @@ Inclusive esse código é utilizado pelo próprio processador para obter o resul
 
 O circuito se encontra nesse dessa maneira no momento
 
-<img src="https://github.com/palvs/automem/blob/master/images/proto.jpg?raw=true"/>
+<img src="https://raw.githubusercontent.com/PL125/automem/master/images/proto.jpg"/>
